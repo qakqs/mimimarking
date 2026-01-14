@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -114,5 +115,15 @@ public class StrategyRepository implements IStrategyRepository {
                 .ruleDesc(strategyRuleRes.getRuleDesc())
                 .build();
     }
+
+    @Override
+    public String queryStrategyRuleValue(Long strategyId, Integer awardId, String ruleModel) {
+        StrategyRule strategyRuleReq = new StrategyRule();
+        strategyRuleReq.setRuleModel(ruleModel);
+        strategyRuleReq.setAwardId(awardId);
+        strategyRuleReq.setStrategyId(strategyId);
+        return strategyRuleDao.queryStrategyRuleValue(strategyRuleReq);
+    }
+
 
 }

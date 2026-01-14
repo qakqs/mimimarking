@@ -18,11 +18,17 @@ import org.apache.commons.lang3.StringUtils;
 @NoArgsConstructor
 public class StrategyEntity {
 
-    /** 抽奖策略ID */
+    /**
+     * 抽奖策略ID
+     */
     private Long strategyId;
-    /** 抽奖策略描述 */
+    /**
+     * 抽奖策略描述
+     */
     private String strategyDesc;
-    /** 抽奖规则模型 rule_weight,rule_blacklist */
+    /**
+     * 抽奖规则模型 rule_weight,rule_blacklist
+     */
     private String ruleModels;
 
     public String[] ruleModels() {
@@ -32,6 +38,10 @@ public class StrategyEntity {
 
     public String getRuleWeight() {
         String[] ruleModels = this.ruleModels();
+        if (null == ruleModels) { // 必须做判空处理
+            return null;
+        }
+
         for (String ruleModel : ruleModels) {
             if ("rule_weight".equals(ruleModel)) return ruleModel;
         }
