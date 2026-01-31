@@ -1,17 +1,22 @@
 package cn.bugstack.test.domain;
 
+import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.service.armory.IStrategyArmory;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
+import cn.bugstack.domain.strategy.service.raffle.DefaultRaffleStrategy;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.RMap;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
+import org.springframework.test.util.ReflectionTestUtils;
+
 import java.util.*;
 
 /**
@@ -30,14 +35,24 @@ public class StrategyTest {
     @Resource
     private IStrategyDispatch strategyDispatch;
 
+    @Resource
+    private DefaultRaffleStrategy raffleStrategy;
+
+
+    @Test
+public void test_performRaffle() {
+
+    RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
+            .userId("user003")
+            .strategyId(100001L)
+            .build();
+    RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
+    log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
+}
+
     /**
      * 策略ID；100001L、100002L 装配的时候创建策略表写入到 Redis Map 中
      */
-    @Before
-    public void test_strategyArmory() {
-        boolean success = strategyArmory.assembleLotteryStrategy(100001L);
-        log.info("测试结果：{}", success);
-    }
 
     /**
      * 从装配的策略中随机获取奖品ID值
@@ -63,7 +78,7 @@ public class StrategyTest {
     @Test
     public void test_map() {
         RMap<Integer, Integer> map = redisService.getMap("strategy_id_100001");
-        map.put(1, 101);
+
         map.put(2, 101);
         map.put(3, 101);
         map.put(4, 102);

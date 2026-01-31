@@ -3,7 +3,7 @@ package cn.bugstack.infrastructure.persistent.redis;
 import org.redisson.api.*;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.time.Duration;
 
 /**

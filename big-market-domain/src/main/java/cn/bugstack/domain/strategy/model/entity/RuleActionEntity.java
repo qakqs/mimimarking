@@ -44,9 +44,6 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     @Data
     @EqualsAndHashCode(callSuper = true)
     @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-
     static public class RaffleCenterEntity extends RaffleEntity {
 
     }
@@ -54,9 +51,6 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     @Data
     @EqualsAndHashCode(callSuper = true)
     @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-
     static public class RaffleAfterEntity extends RaffleEntity {
 
     }

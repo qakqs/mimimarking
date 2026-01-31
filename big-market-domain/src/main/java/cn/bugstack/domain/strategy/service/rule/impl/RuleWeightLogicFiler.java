@@ -8,10 +8,10 @@ import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
 import cn.bugstack.domain.strategy.service.rule.ILogicFilter;
 import cn.bugstack.types.common.Constants;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class RuleWeightLogicFiler implements ILogicFilter<RuleActionEntity.Raffl
     /**
      *
      */
-    private Long userSource = 4096L;
+    private Long userSource = 40500L;
 
     @Override
     public RuleActionEntity<RuleActionEntity.RaffleBeforeEntity> filter(RuleMatterEntity ruleMatterEntity) {
@@ -59,7 +59,10 @@ public class RuleWeightLogicFiler implements ILogicFilter<RuleActionEntity.Raffl
             res.setData(raffleBeforeEntity);
             return res;
         }
-        return null;
+        return RuleActionEntity.<RuleActionEntity.RaffleBeforeEntity>builder()
+                .code(RuleLogicCheckTypeVO.ALLOW.getCode())
+                .info(RuleLogicCheckTypeVO.ALLOW.getInfo())
+                .build();
     }
 
     private Map<Long, String> getAnalyticalValue(String ruleValues) {

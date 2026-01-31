@@ -4,13 +4,14 @@ import cn.bugstack.domain.strategy.model.entity.RuleActionEntity;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
 import cn.bugstack.domain.strategy.service.rule.ILogicFilter;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Service
+@Component
 public class DefaultLogicFactory {
     public Map<String, ILogicFilter<?>> logicFilterMap = new ConcurrentHashMap<>();
 

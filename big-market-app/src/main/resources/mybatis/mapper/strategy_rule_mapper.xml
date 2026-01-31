@@ -28,7 +28,7 @@
     </select>
 
     <select id="queryStrategyRuleValue" parameterType="cn.bugstack.infrastructure.persistent.po.StrategyRule"
-            resultMap="dataMap">
+            >
         select rule_value
         from strategy_rule
         where strategy_id = #{strategyId}
