@@ -3,6 +3,7 @@ package cn.bugstack.infrastructure.persistent.repository;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.bugstack.domain.strategy.model.vo.StrategyAwardRuleModelVO;
 import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.infrastructure.persistent.dao.IStrategyAwardDao;
 import cn.bugstack.infrastructure.persistent.dao.IStrategyDao;
@@ -123,6 +124,14 @@ public class StrategyRepository implements IStrategyRepository {
         strategyRuleReq.setAwardId(awardId);
         strategyRuleReq.setStrategyId(strategyId);
         return strategyRuleDao.queryStrategyRuleValue(strategyRuleReq);
+    }
+
+    @Override
+    public StrategyAwardRuleModelVO queryStrategyAwardRuleModel(Long strategyId, Integer awardId) {
+        StrategyRule strategyRuleReq  = new StrategyRule();
+        StrategyRule strategyRule = strategyRuleDao.queryStrategyRule(strategyRuleReq);
+        return new  StrategyAwardRuleModelVO();
+
     }
 
 

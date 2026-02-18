@@ -12,7 +12,6 @@ import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.stereotype.Component;
 
 import static cn.bugstack.types.enums.ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL;

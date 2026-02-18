@@ -45,6 +45,19 @@ public class RuleActionEntity<T extends RuleActionEntity.RaffleEntity> {
     @EqualsAndHashCode(callSuper = true)
     @Builder
     static public class RaffleCenterEntity extends RaffleEntity {
+        /**
+         * 策略id
+         */
+        private Long strategyId;
+
+        /**
+         * 权重值key，用于抽奖时可以选择抽奖
+         */
+        private String ruleWeightValueKey;
+        /**
+         * 奖品id
+         */
+        private Integer awardId;
 
     }
 

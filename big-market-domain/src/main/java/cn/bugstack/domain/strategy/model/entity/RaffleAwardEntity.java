@@ -24,6 +24,9 @@ public class RaffleAwardEntity {
     private Integer awardCountSurplus;
     /** 奖品中奖概率 */
     private BigDecimal awardRate;
+        /** 奖品中奖概率 */
+    private String awardDesc;
+
 
 
 

@@ -40,15 +40,15 @@ public class StrategyTest {
 
 
     @Test
-public void test_performRaffle() {
+    public void test_performRaffle() {
 
-    RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
-            .userId("user003")
-            .strategyId(100001L)
-            .build();
-    RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
-    log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
-}
+        RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
+                .userId("user003")
+                .strategyId(100001L)
+                .build();
+        RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
+        log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
+    }
 
     /**
      * 策略ID；100001L、100002L 装配的时候创建策略表写入到 Redis Map 中
@@ -59,7 +59,7 @@ public void test_performRaffle() {
      */
     @Test
     public void test_getRandomAwardId() {
-         log.info("测试结果：{} - 奖品ID值", strategyDispatch.getRandomAwardId(100001L));
+        log.info("测试结果：{} - 奖品ID值", strategyDispatch.getRandomAwardId(100001L));
     }
 
     /**
@@ -93,7 +93,7 @@ public void test_performRaffle() {
     }
 
     @Test
-    public void test_shuffle(){
+    public void test_shuffle() {
         Map<Integer, Integer> strategyAwardSearchRateTable = new HashMap<>();
         // 添加内容到Map中
         strategyAwardSearchRateTable.put(1, 10);
@@ -118,6 +118,24 @@ public void test_performRaffle() {
         for (Map.Entry<Integer, Integer> entry : randomizedMap.entrySet()) {
             System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
         }
+    }
+
+
+    @Test
+    public void test_raffle_center_rule_lock() {
+            // 策略装配 100001、100002、100003
+    log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100001L));
+    log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100002L));
+    log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100003L));
+    // 通过反射 mock 规则中的值
+
+        RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
+                .userId("xiaofuge")
+                .strategyId(100003L)
+                .build();
+        RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
+        log.info("请求参数：{}", JSON.toJSONString(raffleFactorEntity));
+        log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
     }
 
 }
