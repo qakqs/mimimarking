@@ -1,11 +1,10 @@
-package cn.bugstack.domain.strategy.service.rule.factory;
+package cn.bugstack.domain.strategy.service.rule.filter.factory;
 
 import cn.bugstack.domain.strategy.model.entity.RuleActionEntity;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
-import cn.bugstack.domain.strategy.service.rule.ILogicFilter;
+import cn.bugstack.domain.strategy.service.rule.filter.ILogicFilter;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;

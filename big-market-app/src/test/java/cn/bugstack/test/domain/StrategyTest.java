@@ -1,10 +1,16 @@
 package cn.bugstack.test.domain;
 
+import cn.bugstack.Application;
 import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.service.armory.IStrategyArmory;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.raffle.DefaultRaffleStrategy;
+import cn.bugstack.domain.strategy.service.rule.chain.ILogicChain;
+import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
+import cn.bugstack.domain.strategy.service.rule.chain.impl.BackListLogicChain;
+import cn.bugstack.domain.strategy.service.rule.chain.impl.DefaultLogicChain;
+import cn.bugstack.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
@@ -12,11 +18,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.redisson.api.RMap;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTestContextBootstrapper;
+import org.springframework.test.context.BootstrapWith;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import jakarta.annotation.Resource;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.annotation.*;
 import java.util.*;
 
 /**
@@ -25,8 +34,8 @@ import java.util.*;
  * @create 2023-12-23 11:33
  */
 @Slf4j
+@SpringBootTest(classes = {Application.class})
 @RunWith(SpringRunner.class)
-@SpringBootTest
 public class StrategyTest {
 
     @Resource
@@ -38,104 +47,53 @@ public class StrategyTest {
     @Resource
     private DefaultRaffleStrategy raffleStrategy;
 
+    @Resource
+    private DefaultLogicChain defaultLogicChain;
+    @Resource
+    private DefaultChainFactory defaultChainFactory;
+    @Resource
+    private RuleWeightLogicChain ruleWeightLogicChain;
+    @Resource
+    private BackListLogicChain backListLogicChain;
+
+    @Resource
+    private IRedisService redisService;
+
 
     @Test
     public void test_performRaffle() {
 
         RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
-                .userId("user003")
-                .strategyId(100001L)
-                .build();
-        RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
-        log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
-    }
-
-    /**
-     * 策略ID；100001L、100002L 装配的时候创建策略表写入到 Redis Map 中
-     */
-
-    /**
-     * 从装配的策略中随机获取奖品ID值
-     */
-    @Test
-    public void test_getRandomAwardId() {
-        log.info("测试结果：{} - 奖品ID值", strategyDispatch.getRandomAwardId(100001L));
-    }
-
-    /**
-     * 根据策略ID+权重值，从装配的策略中随机获取奖品ID值
-     */
-    @Test
-    public void test_getRandomAwardId_ruleWeightValue() {
-        log.info("测试结果：{} - 4000 策略配置", strategyDispatch.getRandomAwardId(100001L, "4000:102,103,104,105"));
-        log.info("测试结果：{} - 5000 策略配置", strategyDispatch.getRandomAwardId(100001L, "5000:102,103,104,105,106,107"));
-        log.info("测试结果：{} - 6000 策略配置", strategyDispatch.getRandomAwardId(100001L, "6000:102,103,104,105,106,107,108,109"));
-    }
-
-    @Resource
-    private IRedisService redisService;
-
-    @Test
-    public void test_map() {
-        RMap<Integer, Integer> map = redisService.getMap("strategy_id_100001");
-
-        map.put(2, 101);
-        map.put(3, 101);
-        map.put(4, 102);
-        map.put(5, 102);
-        map.put(6, 102);
-        map.put(7, 103);
-        map.put(8, 103);
-        map.put(9, 104);
-        map.put(10, 105);
-
-        log.info("测试结果：{}", redisService.getMap("strategy_id_100001").get(1));
-    }
-
-    @Test
-    public void test_shuffle() {
-        Map<Integer, Integer> strategyAwardSearchRateTable = new HashMap<>();
-        // 添加内容到Map中
-        strategyAwardSearchRateTable.put(1, 10);
-        strategyAwardSearchRateTable.put(2, 20);
-        strategyAwardSearchRateTable.put(3, 30);
-        strategyAwardSearchRateTable.put(4, 40);
-
-        // 将Map中的值转换为List
-        List<Integer> valueList = new ArrayList<>(strategyAwardSearchRateTable.values());
-
-        // 使用Collections.shuffle()方法对值的List进行乱序
-        Collections.shuffle(valueList);
-
-        // 将乱序后的值重新放回Map中
-        Map<Integer, Integer> randomizedMap = new LinkedHashMap<>();
-        Iterator<Integer> valueIterator = valueList.iterator();
-        for (Integer key : strategyAwardSearchRateTable.keySet()) {
-            randomizedMap.put(key, valueIterator.next());
-        }
-
-        // 打印乱序后的Map内容
-        for (Map.Entry<Integer, Integer> entry : randomizedMap.entrySet()) {
-            System.out.println("Key: " + entry.getKey() + ", Value: " + entry.getValue());
-        }
-    }
-
-
-    @Test
-    public void test_raffle_center_rule_lock() {
-            // 策略装配 100001、100002、100003
-    log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100001L));
-    log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100002L));
-    log.info("测试结果：{}", strategyArmory.assembleLotteryStrategy(100003L));
-    // 通过反射 mock 规则中的值
-
-        RaffleFactorEntity raffleFactorEntity = RaffleFactorEntity.builder()
                 .userId("xiaofuge")
-                .strategyId(100003L)
+                .strategyId(100001L)
                 .build();
         RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(raffleFactorEntity);
         log.info("请求参数：{}", JSON.toJSONString(raffleFactorEntity));
         log.info("测试结果：{}", JSON.toJSONString(raffleAwardEntity));
     }
+
+    @Test
+    public void test_LogicChain_rule_blacklist() {
+        ILogicChain logicChain = defaultChainFactory.openLogicChain(100001L);
+        Integer awardId = logicChain.logic("user001", 100001L);
+        log.info("测试结果：{}", awardId);
+    }
+
+    @Test
+    public void test_LogicChain_rule_weight() {
+        // 通过反射 mock 规则中的值
+        ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 4900L);
+        ILogicChain logicChain = defaultChainFactory.openLogicChain(100001L);
+        Integer awardId = logicChain.logic("xiaofuge", 100001L);
+        log.info("测试结果：{}", awardId);
+    }
+
+    @Test
+    public void test_LogicChain_rule_default() {
+        ILogicChain logicChain = defaultChainFactory.openLogicChain(100001L);
+        Integer awardId = logicChain.logic("xiaofuge", 100001L);
+        log.info("测试结果：{}", awardId);
+    }
+
 
 }

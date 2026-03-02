@@ -3,6 +3,7 @@ package cn.bugstack;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 
 @SpringBootApplication
 @Configurable
@@ -10,7 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class Application {
 
     public static void main(String[] args){
-        SpringApplication.run(Application.class);
+        ConfigurableApplicationContext run = SpringApplication.run(Application.class);
+        System.out.println();
     }
 
 }

@@ -7,6 +7,7 @@ import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;
@@ -21,7 +22,7 @@ import java.util.*;
  * @create 2023-12-23 10:02
  */
 @Slf4j
-@Service
+@Component
 public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatch {
 
     @Resource

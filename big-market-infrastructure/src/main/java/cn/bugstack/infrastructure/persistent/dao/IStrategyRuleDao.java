@@ -18,5 +18,7 @@ public interface IStrategyRuleDao {
 
     StrategyRule queryStrategyRule(StrategyRule strategyRuleReq);
 
+    String queryStrategyRuleModel(StrategyRule strategyRuleReq);
+
     String queryStrategyRuleValue(StrategyRule strategyRuleReq);
 }
