@@ -1,6 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.chain.impl;
 
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
 import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
 import cn.bugstack.types.common.Constants;
@@ -20,7 +21,7 @@ public class BackListLogicChain extends AbstractLogicChain {
 
 
     @Override
-    public Integer logic(String userId, Long strategyId) {
+    public StrategyAwardVO logic(String userId, Long strategyId) {
 
         log.info("抽奖责任链-黑名单开始 userId: {} strategyId: {} ruleModel: {}", userId, strategyId, ruleModel());
 
@@ -35,7 +36,9 @@ public class BackListLogicChain extends AbstractLogicChain {
         for (String userBlackId : userBlackIds) {
             if (userId.equals(userBlackId)) {
                 log.info("抽奖责任链-黑名单接管 userId: {} strategyId: {} ruleModel: {} awardId: {}", userId, strategyId, ruleModel(), awardId);
-                return awardId;
+                return StrategyAwardVO.builder()
+                        .logicModel(ruleModel())
+                        .awardId(awardId).build();
             }
         }
 

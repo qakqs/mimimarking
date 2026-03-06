@@ -2,16 +2,13 @@ package cn.bugstack.domain.strategy.service.rule.tree.factory.engine.impl;
 
 import cn.bugstack.domain.strategy.model.vo.*;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
-import cn.bugstack.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import cn.bugstack.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 
-import static cn.bugstack.types.enums.ResponseCode.NEXT_NODE_ERROR;
 import static cn.bugstack.types.enums.ResponseCode.NEXT_NODE_ERROR_NODE_NULL;
 @Slf4j
 public class DecisionTreeEngine implements IDecisionTreeEngine {

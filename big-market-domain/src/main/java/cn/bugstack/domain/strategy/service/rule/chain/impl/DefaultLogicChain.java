@@ -1,5 +1,6 @@
 package cn.bugstack.domain.strategy.service.rule.chain.impl;
 
+import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
 import jakarta.annotation.Resource;
@@ -16,10 +17,10 @@ public class DefaultLogicChain extends AbstractLogicChain {
     private IStrategyDispatch strategyArmoryDispatch;
 
     @Override
-    public Integer logic(String userId, Long strategyId) {
+    public StrategyAwardVO logic(String userId, Long strategyId) {
         Integer awardId = strategyArmoryDispatch.getRandomAwardId(strategyId);
         log.info("抽奖责任链-默认处理 userId: {} strategyId: {} ruleModel: {} awardId: {}", userId, strategyId, ruleModel(), awardId);
-        return awardId;
+        return StrategyAwardVO.builder().logicModel(ruleModel()).awardId(awardId).build();
     }
 
     @Override

@@ -13,8 +13,8 @@ import java.util.stream.Stream;
 
 @Getter
 public enum LogicChainEnum {
-    RULE_BLACKLIST("rule_blacklist", "黑名单认责任链", BackListLogicChain.class),
-    RULE_WEIGHT("rule_weight", "权重认责任链", RuleWeightLogicChain.class),
+    RULE_BLACKLIST("rule_blacklist", "黑名单责任链", BackListLogicChain.class),
+    RULE_WEIGHT("rule_weight", "权重责任链", RuleWeightLogicChain.class),
     DEFAULT("default", "默认责任链", DefaultLogicChain.class),
     ;
     public final String chainName;

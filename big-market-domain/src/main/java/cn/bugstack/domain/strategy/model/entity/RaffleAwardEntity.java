@@ -18,6 +18,8 @@ public class RaffleAwardEntity {
     private Long strategyId;
     /** 抽奖奖品ID - 内部流转使用 */
     private Integer awardId;
+
+    private String awardConfig;
     /** 奖品库存总量 */
     private Integer awardCount;
     /** 奖品库存剩余 */

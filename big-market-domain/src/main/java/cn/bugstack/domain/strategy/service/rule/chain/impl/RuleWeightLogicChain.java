@@ -1,6 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.chain.impl;
 
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
 import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
@@ -29,7 +30,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
 
 
     @Override
-    public Integer logic(String userId, Long strategyId) {
+    public StrategyAwardVO logic(String userId, Long strategyId) {
         log.info("抽奖责任链-权重开始 userId: {} strategyId: {} ruleModel: {}", userId, strategyId, ruleModel());
 
         StrategyRuleEntity strategyRuleEntity = repository.queryStrategyRule(strategyId, ruleModel());
@@ -67,7 +68,7 @@ public class RuleWeightLogicChain extends AbstractLogicChain {
         if (null != nextValue) {
             Integer awardId = strategyDispatch.getRandomAwardId(strategyId, analyticalValueGroup.get(nextValue));
             log.info("抽奖责任链-权重接管 userId: {} strategyId: {} ruleModel: {} awardId: {}", userId, strategyId, ruleModel(), awardId);
-            return awardId;
+            return StrategyAwardVO.builder().logicModel(ruleModel()).awardId(awardId).build();
         }
 
         // 5. 过滤其他责任链

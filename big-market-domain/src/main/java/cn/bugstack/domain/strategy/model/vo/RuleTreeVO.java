@@ -20,7 +20,7 @@ public class RuleTreeVO {
     /**
      * 规则数id
      */
-    private Integer treeId;
+    private String treeId;
 
     /**
      * 汇总数名称
