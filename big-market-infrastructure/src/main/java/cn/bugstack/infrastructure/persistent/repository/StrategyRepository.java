@@ -202,10 +202,9 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void cacheStrategyAwardCount(String cacheKey, Integer awardCount) {
-        Long atomicLong = redisService.getAtomicLong(cacheKey);
-        if (null != atomicLong) {
+        if (redisService.isExists(cacheKey)) {
             return;
-        }
+        } ;
         redisService.setAtomicLong(cacheKey, awardCount);
 
     }
@@ -217,9 +216,9 @@ public class StrategyRepository implements IStrategyRepository {
             redisService.setValue(cacheKey, null);
             return false;
         }
-        String lockKey= cacheKey + Constants.UNDERLINE + surplus;
+        String lockKey = cacheKey + Constants.UNDERLINE + surplus;
         Boolean re = redisService.setNx(lockKey);
-        if (!re){
+        if (!re) {
             log.info("策略奖品库存加锁失败{}", lockKey);
         }
         return re;
@@ -245,7 +244,7 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
 
-        StrategyAward strategyAward = new  StrategyAward();
+        StrategyAward strategyAward = new StrategyAward();
         strategyAward.setStrategyId(strategyId);
         strategyAward.setAwardId(awardId);
         strategyAwardDao.updateStrategyAwardStock(strategyAward);
