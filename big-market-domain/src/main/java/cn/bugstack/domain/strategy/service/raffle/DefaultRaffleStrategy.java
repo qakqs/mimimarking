@@ -1,9 +1,6 @@
 package cn.bugstack.domain.strategy.service.raffle;
 
-import cn.bugstack.domain.strategy.model.vo.RuleTreeVO;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardData;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardRuleModelVO;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
+import cn.bugstack.domain.strategy.model.vo.*;
 import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.ILogicChain;
@@ -52,4 +49,14 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy {
     }
 
 
+    @Override
+    public StrategyAwardStockKeyVO takeQueueValue() throws InterruptedException {
+        return strategyRepository.takeQueueValue();
+    }
+
+    @Override
+    public void updateStrategyAwardStock(Long strategyId, Integer awardId) {
+        strategyRepository.updateStrategyAwardStock(strategyId, awardId);
+
+    }
 }

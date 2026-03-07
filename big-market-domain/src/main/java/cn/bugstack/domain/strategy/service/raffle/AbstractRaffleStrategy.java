@@ -4,6 +4,7 @@ import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
 import cn.bugstack.domain.strategy.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.service.IRaffleStock;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
@@ -18,7 +19,7 @@ import org.springframework.util.StringUtils;
 import static cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum.DEFAULT;
 
 @Slf4j
-public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
+public abstract class AbstractRaffleStrategy implements IRaffleStrategy, IRaffleStock {
 
     protected IStrategyRepository strategyRepository;
 
