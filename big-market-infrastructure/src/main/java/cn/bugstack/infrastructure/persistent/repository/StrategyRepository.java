@@ -51,7 +51,7 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public List<StrategyAwardEntity> queryStrategyAwardList(Long strategyId) {
         // 优先从缓存获取
-        String cacheKey = Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId;
+        String cacheKey = Constants.STRATEGY_AWARD_KEY(strategyId);
         List<StrategyAwardEntity> strategyAwardEntities = redisService.getValue(cacheKey);
         if (null != strategyAwardEntities && !strategyAwardEntities.isEmpty()) return strategyAwardEntities;
         // 从库中获取数据
@@ -74,15 +74,15 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public void storeStrategyAwardSearchRateTable(String key, Integer rateRange, Map<Integer, Integer> strategyAwardSearchRateTable) {
         // 1. 存储抽奖策略范围值，如10000，用于生成1000以内的随机数
-        redisService.setValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key, rateRange);
+        redisService.setValue(Constants.STRATEGY_RATE_RANGE_KEY(key), rateRange);
         // 2. 存储概率查找表
-        Map<Integer, Integer> cacheRateTable = redisService.getMap(Constants.RedisKey.STRATEGY_RATE_TABLE_KEY + key);
+        Map<Integer, Integer> cacheRateTable = redisService.getMap(Constants.STRATEGY_RATE_TABLE_KEY(key));
         cacheRateTable.putAll(strategyAwardSearchRateTable);
     }
 
     @Override
     public Integer getStrategyAwardAssemble(String key, Integer rateKey) {
-        return redisService.getFromMap(Constants.RedisKey.STRATEGY_RATE_TABLE_KEY + key, rateKey);
+        return redisService.getFromMap(Constants.STRATEGY_RATE_TABLE_KEY(key), rateKey);
     }
 
     @Override
@@ -92,13 +92,13 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public int getRateRange(String key) {
-        return redisService.getValue(Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key);
+        return redisService.getValue(Constants.STRATEGY_RATE_RANGE_KEY(key));
     }
 
     @Override
     public StrategyEntity queryStrategyEntityByStrategyId(Long strategyId) {
         // 优先从缓存获取
-        String cacheKey = Constants.RedisKey.STRATEGY_KEY + strategyId;
+        String cacheKey = Constants.STRATEGY_KEY(strategyId);
         StrategyEntity strategyEntity = redisService.getValue(cacheKey);
         if (null != strategyEntity) return strategyEntity;
         Strategy strategy = strategyDao.queryStrategyByStrategyId(strategyId);
@@ -150,7 +150,7 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public RuleTreeVO queryRuleTreeVOByTreeId(String treeId) {
         // 优先从缓存获取
-        String cacheKey = Constants.RedisKey.RULE_TREE_VO_KEY + treeId;
+        String cacheKey = Constants.RULE_TREE_VO_KEY(treeId);
         RuleTreeVO ruleTreeVOCache = redisService.getValue(cacheKey);
         if (null != ruleTreeVOCache) return ruleTreeVOCache;
 
@@ -226,7 +226,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public void awardSockConsumeSendQueue(StrategyAwardStockKeyVO strategyAwardStockVO) {
-        String strategyAwardCountQueryKey = Constants.RedisKey.STRATEGY_AWARD_COUNT_QUEUE_KEY;
+        String strategyAwardCountQueryKey = Constants.STRATEGY_AWARD_COUNT_QUEUE_KEY();
 
         RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(strategyAwardCountQueryKey);
         RDelayedQueue<StrategyAwardStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
@@ -237,7 +237,7 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Override
     public StrategyAwardStockKeyVO takeQueueValue() {
-        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(Constants.RedisKey.STRATEGY_AWARD_COUNT_QUEUE_KEY);
+        RBlockingQueue<StrategyAwardStockKeyVO> blockingQueue = redisService.getBlockingQueue(Constants.STRATEGY_AWARD_COUNT_QUEUE_KEY());
         return blockingQueue.poll();
     }
 
