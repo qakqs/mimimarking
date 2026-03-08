@@ -68,7 +68,9 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
                 return ruleTreeNodeLineVO.getRuleNodeTo();
             }
         }
-         throw  new AppException(NEXT_NODE_ERROR_NODE_NULL);
+         // throw  new AppException(NEXT_NODE_ERROR_NODE_NULL);
+
+        return null;
     }
 
 

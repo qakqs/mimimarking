@@ -45,7 +45,7 @@ public class StrategyTest {
         log.info("setUp测试结果：{}", strategyArmory.assembleLotteryStrategy(100006L));
         // 通过反射 mock 规则中的值
         ReflectionTestUtils.setField(ruleWeightLogicChain, "userScore", 4900L);
-        ReflectionTestUtils.setField(ruleLockLogicTreeNode, "userRaffleCount", 10L);
+        ReflectionTestUtils.setField(ruleLockLogicTreeNode, "userRaffleCount", 0L);
     }
 
     @Test

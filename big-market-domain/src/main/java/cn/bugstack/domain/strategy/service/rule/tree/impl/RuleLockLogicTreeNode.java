@@ -18,6 +18,7 @@ public class RuleLockLogicTreeNode implements ILogicTreeNode {
 
     private Long userRaffleCount = 10L;
 
+
     @Override
     public TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
         log.info("规则过滤 次数锁 userid:{} strategyId:{} awardId:{}", logicTreeNodeVO.getUserId()
