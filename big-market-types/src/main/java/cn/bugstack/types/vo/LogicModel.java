@@ -1,6 +1,5 @@
-package cn.bugstack.domain.strategy.model.vo;
+package cn.bugstack.types.vo;
 
-import cn.bugstack.domain.strategy.service.rule.chain.impl.DefaultLogicChain;
 import cn.bugstack.types.exception.AppException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

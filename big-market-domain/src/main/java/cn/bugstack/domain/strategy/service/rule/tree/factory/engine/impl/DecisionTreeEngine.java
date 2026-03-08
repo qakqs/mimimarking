@@ -1,15 +1,13 @@
 package cn.bugstack.domain.strategy.service.rule.tree.factory.engine.impl;
 
-import cn.bugstack.domain.strategy.model.vo.*;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-import cn.bugstack.types.exception.AppException;
+import cn.bugstack.types.vo.*;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
 
-import static cn.bugstack.types.enums.ResponseCode.NEXT_NODE_ERROR_NODE_NULL;
 @Slf4j
 public class DecisionTreeEngine implements IDecisionTreeEngine {
 
@@ -59,11 +57,11 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
         return strategyAwardData;
     }
 
-    private String nextNode(String matterValue, List<RuleTreeNodeLineVO> ruleTreeNodeLineList) {
+    private String nextNode(String matterValue, List<cn.bugstack.types.vo.RuleTreeNodeLineVO> ruleTreeNodeLineList) {
         if (null == ruleTreeNodeLineList || ruleTreeNodeLineList.isEmpty()) {
             return null;
         }
-        for (RuleTreeNodeLineVO ruleTreeNodeLineVO : ruleTreeNodeLineList) {
+        for (cn.bugstack.types.vo.RuleTreeNodeLineVO ruleTreeNodeLineVO : ruleTreeNodeLineList) {
             if (decisionLogic(matterValue, ruleTreeNodeLineVO)) {
                 return ruleTreeNodeLineVO.getRuleNodeTo();
             }
@@ -74,7 +72,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
     }
 
 
-    public boolean decisionLogic(String matterValue, RuleTreeNodeLineVO nodeLine) {
+    public boolean decisionLogic(String matterValue, cn.bugstack.types.vo.RuleTreeNodeLineVO nodeLine) {
         return switch (nodeLine.getRuleLimitType()) {
             case EQUAL -> matterValue.equals(nodeLine.getRuleLimitValue().getCode());
             case GE, LE, LT, GT -> false;

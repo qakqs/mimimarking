@@ -1,4 +1,4 @@
-package cn.bugstack.domain.strategy.model.vo;
+package cn.bugstack.types.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,10 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class LogicTreeNodeVO {
+public class StrategyAwardData {
 
-    String userId;
-    Long strategyId;
-    Integer awardId;
-    String ruleValue;
+    private Integer awardId;
+
+    private String awardRuleValue;
 }

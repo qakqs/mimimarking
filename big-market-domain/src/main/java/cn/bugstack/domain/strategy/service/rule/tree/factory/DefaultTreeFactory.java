@@ -1,7 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.tree.factory;
 
 
-import cn.bugstack.domain.strategy.model.vo.RuleTreeVO;
+import cn.bugstack.types.vo.RuleTreeVO;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.impl.DecisionTreeEngine;

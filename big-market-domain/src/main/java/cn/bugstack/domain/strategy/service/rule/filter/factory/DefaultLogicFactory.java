@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.service.rule.filter.factory;
 
-import cn.bugstack.domain.strategy.model.entity.RuleActionEntity;
+import cn.bugstack.types.entity.RuleActionEntity;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
 import cn.bugstack.domain.strategy.service.rule.filter.ILogicFilter;
 import org.springframework.core.annotation.AnnotationUtils;

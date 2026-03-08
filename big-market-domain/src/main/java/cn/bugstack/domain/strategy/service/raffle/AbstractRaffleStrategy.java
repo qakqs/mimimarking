@@ -1,25 +1,24 @@
 package cn.bugstack.domain.strategy.service.raffle;
 
-import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
-import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
-import cn.bugstack.domain.strategy.repository.IStrategyRepository;
-import cn.bugstack.domain.strategy.service.IRaffleStock;
+import cn.bugstack.types.entity.RaffleAwardEntity;
+import cn.bugstack.types.entity.RaffleFactorEntity;
+import cn.bugstack.types.vo.StrategyAwardVO;
+import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
-import cn.bugstack.domain.strategy.service.rule.filter.factory.DefaultLogicFactory;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
+import cn.bugstack.infrastructure.persistent.dao.IStrategyAwardDao;
+import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
 
 import static cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum.DEFAULT;
 
 @Slf4j
-public abstract class AbstractRaffleStrategy implements IRaffleStrategy, IRaffleStock {
+public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
 
     protected IStrategyRepository strategyRepository;
 
@@ -27,17 +26,27 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy, IRaffle
 
     protected DefaultChainFactory defaultChainFactory;
 
-    protected final DefaultTreeFactory defaultTreeFactory;
-    @Resource
-    private DefaultLogicFactory defaultLogicFactory;
+    protected DefaultTreeFactory defaultTreeFactory;
+
+    protected IRedisService redisService;
+
+    protected IStrategyAwardDao strategyAwardDao;
 
 
-    public AbstractRaffleStrategy(IStrategyRepository strategyRepository, IStrategyDispatch strategyDispatch, DefaultChainFactory defaultChainFactory, DefaultTreeFactory defaultTreeFactory, DefaultLogicFactory defaultLogicFactory) {
+    public AbstractRaffleStrategy(IStrategyRepository strategyRepository
+            , IStrategyDispatch strategyDispatch
+            , DefaultChainFactory defaultChainFactory
+            , DefaultTreeFactory defaultTreeFactory
+            , IRedisService redisService
+            , IStrategyAwardDao strategyAwardDao
+
+    ) {
         this.strategyRepository = strategyRepository;
         this.strategyDispatch = strategyDispatch;
         this.defaultChainFactory = defaultChainFactory;
         this.defaultTreeFactory = defaultTreeFactory;
-        this.defaultLogicFactory = defaultLogicFactory;
+        this.redisService = redisService;
+        this.strategyAwardDao = strategyAwardDao;
     }
 
 

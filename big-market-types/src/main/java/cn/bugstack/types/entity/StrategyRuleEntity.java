@@ -1,4 +1,4 @@
-package cn.bugstack.domain.strategy.model.entity;
+package cn.bugstack.types.entity;
 
 import cn.bugstack.types.common.Constants;
 import lombok.AllArgsConstructor;

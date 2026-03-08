@@ -1,10 +1,10 @@
 package cn.bugstack.domain.strategy.service.rule.filter.impl;
 
-import cn.bugstack.domain.strategy.model.entity.RuleActionEntity;
-import cn.bugstack.domain.strategy.model.entity.RuleMatterEntity;
-import cn.bugstack.domain.strategy.model.vo.LogicModel;
-import cn.bugstack.domain.strategy.model.vo.RuleLogicCheckTypeVO;
-import cn.bugstack.domain.strategy.repository.IStrategyRepository;
+import cn.bugstack.types.entity.RuleActionEntity;
+import cn.bugstack.types.entity.RuleMatterEntity;
+import cn.bugstack.types.vo.LogicModel;
+import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
 import cn.bugstack.domain.strategy.service.rule.filter.ILogicFilter;
 import jakarta.annotation.Resource;

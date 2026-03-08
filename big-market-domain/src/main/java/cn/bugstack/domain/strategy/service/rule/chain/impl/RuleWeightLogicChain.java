@@ -1,8 +1,8 @@
 package cn.bugstack.domain.strategy.service.rule.chain.impl;
 
-import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
-import cn.bugstack.domain.strategy.repository.IStrategyRepository;
+import cn.bugstack.types.entity.StrategyRuleEntity;
+import cn.bugstack.types.vo.StrategyAwardVO;
+import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
 import cn.bugstack.types.common.Constants;

@@ -1,6 +1,6 @@
-package cn.bugstack.domain.strategy.model.entity;
+package cn.bugstack.types.entity;
 
-import cn.bugstack.domain.strategy.model.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
 import lombok.*;
 
 @Data

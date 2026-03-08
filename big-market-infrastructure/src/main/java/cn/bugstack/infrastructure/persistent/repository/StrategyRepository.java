@@ -1,14 +1,13 @@
 package cn.bugstack.infrastructure.persistent.repository;
 
-import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
-import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
-import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
-import cn.bugstack.domain.strategy.model.vo.*;
-import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.types.common.Constants;
+import cn.bugstack.types.entity.StrategyAwardEntity;
+import cn.bugstack.types.entity.StrategyEntity;
+import cn.bugstack.types.entity.StrategyRuleEntity;
+import cn.bugstack.types.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;

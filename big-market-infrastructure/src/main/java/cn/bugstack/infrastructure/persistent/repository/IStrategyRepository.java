@@ -1,11 +1,12 @@
-package cn.bugstack.domain.strategy.repository;
+package cn.bugstack.infrastructure.persistent.repository;
 
-import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
-import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
-import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
-import cn.bugstack.domain.strategy.model.vo.RuleTreeVO;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardRuleModelVO;
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardStockKeyVO;
+
+import cn.bugstack.types.entity.StrategyAwardEntity;
+import cn.bugstack.types.entity.StrategyEntity;
+import cn.bugstack.types.entity.StrategyRuleEntity;
+import cn.bugstack.types.vo.RuleTreeVO;
+import cn.bugstack.types.vo.StrategyAwardRuleModelVO;
+import cn.bugstack.types.vo.StrategyAwardStockKeyVO;
 
 import java.util.List;
 import java.util.Map;

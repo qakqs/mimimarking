@@ -1,4 +1,4 @@
-package cn.bugstack.domain.strategy.model.vo;
+package cn.bugstack.types.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

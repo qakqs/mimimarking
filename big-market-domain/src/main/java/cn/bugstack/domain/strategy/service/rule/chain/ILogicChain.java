@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.service.rule.chain;
 
-import cn.bugstack.domain.strategy.model.vo.StrategyAwardVO;
+import cn.bugstack.types.vo.StrategyAwardVO;
 
 public interface ILogicChain extends ILogicChainArmory {
 

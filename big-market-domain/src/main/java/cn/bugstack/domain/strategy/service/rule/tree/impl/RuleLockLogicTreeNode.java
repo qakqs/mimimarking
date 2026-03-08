@@ -1,8 +1,8 @@
 package cn.bugstack.domain.strategy.service.rule.tree.impl;
 
-import cn.bugstack.domain.strategy.model.vo.LogicTreeNodeVO;
-import cn.bugstack.domain.strategy.model.vo.RuleLogicCheckTypeVO;
-import cn.bugstack.domain.strategy.model.vo.TreeActionEntity;
+import cn.bugstack.types.vo.LogicTreeNodeVO;
+import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.types.vo.TreeActionEntity;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;

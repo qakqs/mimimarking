@@ -43,6 +43,10 @@
             <groupId>cn.bugstack</groupId>
             <artifactId>big-market-types</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.bugstack</groupId>
+            <artifactId>big-market-infrastructure</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
