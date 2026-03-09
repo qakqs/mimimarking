@@ -1,16 +1,15 @@
-package cn.bugstack.infrastructure.persistent.po;
+package cn.bugstack.types.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-
-import java.util.Date;
+import lombok.NoArgsConstructor;
 
 @Data
-public class RaffleActivityCount {
-
-    /**
-     * 自增ID
-     */
-    private Long id;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class ActivityCountEntity {
 
     /**
      * 活动次数编号
@@ -31,15 +30,5 @@ public class RaffleActivityCount {
      * 月次数
      */
     private Integer monthCount;
-
-    /**
-     * 创建时间
-     */
-    private Date createTime;
-
-    /**
-     * 更新时间
-     */
-    private Date updateTime;
 
 }

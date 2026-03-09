@@ -1,4 +1,4 @@
-package cn.bugstack.types.vo;
+package cn.bugstack.types.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,5 +1,6 @@
 package cn.bugstack.types.vo;
 
+import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

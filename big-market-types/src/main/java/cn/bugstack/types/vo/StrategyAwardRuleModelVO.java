@@ -1,6 +1,7 @@
 package cn.bugstack.types.vo;
 
 import cn.bugstack.types.common.Constants;
+import cn.bugstack.types.enums.LogicModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

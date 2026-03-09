@@ -2,8 +2,8 @@ package cn.bugstack.domain.strategy.service.rule.filter.impl;
 
 import cn.bugstack.types.entity.RuleActionEntity;
 import cn.bugstack.types.entity.RuleMatterEntity;
-import cn.bugstack.types.vo.LogicModel;
-import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.types.enums.LogicModel;
+import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
 import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
 import cn.bugstack.domain.strategy.service.rule.filter.ILogicFilter;

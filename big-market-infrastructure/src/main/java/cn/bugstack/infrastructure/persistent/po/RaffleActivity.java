@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Date;
 @Data
 public class RaffleActivity {
-        /**
+    /**
      * 自增ID
      */
     private Long id;
@@ -34,21 +34,6 @@ public class RaffleActivity {
      * 结束时间
      */
     private Date endDateTime;
-
-    /**
-     * 库存总量
-     */
-    private Integer stockCount;
-
-    /**
-     * 剩余库存
-     */
-    private Integer stockCountSurplus;
-
-    /**
-     * 活动参与次数配置
-     */
-    private Long activityCountId;
 
     /**
      * 抽奖策略ID

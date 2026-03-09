@@ -2,6 +2,7 @@ package cn.bugstack.domain.strategy.service.rule.tree.factory.engine.impl;
 
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
+import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
 import cn.bugstack.types.vo.*;
 import lombok.extern.slf4j.Slf4j;
 

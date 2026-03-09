@@ -4,7 +4,7 @@ import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.vo.LogicTreeNodeVO;
-import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
 import cn.bugstack.types.vo.StrategyAwardData;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

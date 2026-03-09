@@ -13,7 +13,7 @@ import cn.bugstack.trigger.api.dto.RaffleRequestDTO;
 import cn.bugstack.trigger.api.dto.RaffleResponseDTO;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import cn.bugstack.types.model.Response;
+import cn.bugstack.trigger.api.dto.Response;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

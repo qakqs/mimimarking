@@ -1,4 +1,4 @@
-package cn.bugstack.types.vo;
+package cn.bugstack.types.enums;
 
 import cn.bugstack.types.exception.AppException;
 import lombok.AllArgsConstructor;

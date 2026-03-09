@@ -1,7 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.tree.impl;
 
 import cn.bugstack.types.vo.LogicTreeNodeVO;
-import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
 import cn.bugstack.types.vo.StrategyAwardData;
 import cn.bugstack.types.vo.TreeActionEntity;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;

@@ -1,6 +1,6 @@
 package cn.bugstack.types.entity;
 
-import cn.bugstack.types.vo.RuleLogicCheckTypeVO;
+import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
 import lombok.*;
 
 @Data
