@@ -1,8 +1,9 @@
 package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.RaffleActivityCount;
+import org.apache.ibatis.annotations.Mapper;
 
-public class IRaffleActivityCountDao {
-    public RaffleActivityCount queryRaffleActivityCountByActivityCountId(Long activityCountId) {
-    }
+@Mapper
+public interface IRaffleActivityCountDao {
+    public RaffleActivityCount queryRaffleActivityCountByActivityCountId(Long activityCountId);
 }

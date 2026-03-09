@@ -18,7 +18,7 @@ public class UpdateAwardStockJob {
     @Resource
     private IRaffleStock raffleStock;
 
-    @Scheduled(cron = "0/5 * * * * ?")
+    @Scheduled(cron = "0/59 2 * * * ?")
     public void process() {
         try {
             log.info("定时任务 更新奖品消耗库存 start ");

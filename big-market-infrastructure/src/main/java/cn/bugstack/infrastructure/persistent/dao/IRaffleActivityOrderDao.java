@@ -7,7 +7,7 @@ import java.util.List;
 
 @Mapper
 public interface IRaffleActivityOrderDao {
-    int insert();
+    int insert(RaffleActivityOrder raffleActivityOrder);
 
     List<RaffleActivityOrder> queryRaffleActivityOrderByUserId();
 }

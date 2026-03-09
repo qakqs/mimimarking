@@ -1,7 +1,6 @@
 package cn.bugstack.types.entity;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ActivityShopCartEntity {
+
+public class SkuRechargeEntity {
+
 
     /**
      * 用户ID
@@ -35,6 +36,6 @@ public class ActivityShopCartEntity {
      * 外部幂等键
      */
     @NotNull(message = "outBusinessNo不能为空")
-    private Long outBusinessNo;
+    private String outBusinessNo;
 
 }

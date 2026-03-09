@@ -1,6 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.chain;
 
 
+import cn.bugstack.domain.strategy.service.rule.chain.impl.AbstractLogicChain;
 import cn.bugstack.domain.strategy.service.rule.chain.impl.BackListLogicChain;
 import cn.bugstack.domain.strategy.service.rule.chain.impl.DefaultLogicChain;
 import cn.bugstack.domain.strategy.service.rule.chain.impl.RuleWeightLogicChain;
@@ -24,14 +25,10 @@ public enum LogicChainEnum {
     public final static Map<String, LogicChainEnum> chainEnumMap = Stream.of(LogicChainEnum.values()).
             collect(Collectors.toMap(LogicChainEnum::getChainName, logicChainEnum -> logicChainEnum, (a, b) -> a));
 
-    LogicChainEnum(String chainName, String description, Class logicChain) {
+    LogicChainEnum(String chainName, String description, Class<? extends AbstractLogicChain> logicChain) {
         this.chainName = chainName;
         this.description = description;
         this.logicChain = logicChain;
-    }
-
-    public String getChainName() {
-        return this.chainName;
     }
 
     public Object getChain() {

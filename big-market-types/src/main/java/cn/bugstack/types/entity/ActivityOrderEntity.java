@@ -45,6 +45,17 @@ public class ActivityOrderEntity {
     private String orderId;
 
     /**
+     * 商品SKU - activity + activity count
+     */
+    private Long sku;
+
+    /**
+     * 外部幂等键
+     */
+    private String outBusinessNo;
+
+
+    /**
      * 下单时间
      */
     private Date orderTime;

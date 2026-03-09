@@ -23,6 +23,12 @@ public class RaffleActivityOrder {
     private Long activityId;
 
     /**
+     * 商品SKU - activity + activity count
+     */
+    private Long sku;
+
+
+    /**
      * 活动名称
      */
     private String activityName;
@@ -61,6 +67,10 @@ public class RaffleActivityOrder {
      * 订单状态
      */
     private String state;
+    /**
+     * 外部幂等键
+     */
+    private String outBusinessNo;
 
     /**
      * 创建时间
