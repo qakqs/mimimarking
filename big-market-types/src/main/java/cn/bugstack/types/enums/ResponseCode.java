@@ -16,7 +16,10 @@ public enum ResponseCode {
     STRATEGY_RULE_LUCK_AWARD_IS_NULL("ERR_BIZ_001", "业务异常，策略规则中 奖品未配置"),
     NEXT_NODE_ERROR("003", "决策树引擎计算失败"),
     NEXT_NODE_ERROR_NODE_NULL("004", "决策树引擎计算失败未找到可执行节点"),
-    CREATE_RAFFLE_ACTIVITY_ORDER_ERROR("005", "以sku创建抽奖活动订单失败")
+    CREATE_RAFFLE_ACTIVITY_ORDER_ERROR("005", "以sku创建抽奖活动订单失败"),
+    ACTIVITY_STATE_ERROR("006", "活动状态异常"),
+    ACTIVITY_DATE_ERROR("007", "活动时间异常"),
+    ACTIVITY_SKU_STOCK_ERROR("008", "sku库存扣减异常"),
     ;
 
     private String code;

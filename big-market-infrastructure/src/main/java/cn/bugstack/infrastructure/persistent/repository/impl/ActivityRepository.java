@@ -1,5 +1,7 @@
 package cn.bugstack.infrastructure.persistent.repository.impl;
 
+import cn.bugstack.infrastructure.event.ActivitySkuStockZeroMessageEvent;
+import cn.bugstack.infrastructure.event.EventPublisher;
 import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
@@ -13,11 +15,18 @@ import cn.bugstack.types.entity.ActivitySkuEntity;
 import cn.bugstack.types.enums.ActivityStateVO;
 import cn.bugstack.types.enums.ResponseCode;
 import cn.bugstack.types.exception.AppException;
+import cn.bugstack.types.vo.ActivitySkuStockKeyVO;
+import cn.bugstack.types.vo.StrategyAwardStockKeyVO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RBlockingQueue;
+import org.redisson.api.RDelayedQueue;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
+
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 @Repository
@@ -36,6 +45,10 @@ public class ActivityRepository implements IActivityRepository {
     private IRaffleActivityOrderDao raffleActivityOrderDao;
     @Resource
     private IRaffleActivityAccountDao raffleActivityAccountDao;
+    @Resource
+    private EventPublisher eventPublisher;
+    @Resource
+    private ActivitySkuStockZeroMessageEvent activitySkuStockZeroMessageEvent;
 
     @Override
     public ActivitySkuEntity queryActivitySku(Long sku) {
@@ -113,6 +126,71 @@ public class ActivityRepository implements IActivityRepository {
             }
             return 1;
         });
+    }
+
+    @Override
+    public void cacheActivitySkuStockCount(String cacheKey, Integer stockCount) {
+        if (!redisService.isExists(cacheKey)) {
+            redisService.setAtomicLong(cacheKey, stockCount);
+        }
+
+    }
+
+    @Override
+    public boolean subtractionActivitySkuStock(Long sku, String cacheKey, Date endDateTime) {
+        long decr = redisService.decr(cacheKey);
+        if (decr == 0) {
+            // todo 库存消耗没了，发mq消息
+            eventPublisher.publish(activitySkuStockZeroMessageEvent.topic(),
+                    activitySkuStockZeroMessageEvent.buildEventMessage(sku));
+            return true;
+        } else if (decr < 0) {
+            redisService.setAtomicLong(cacheKey, 0);
+            return false;
+        }
+        // 1 按照cachekey decr后的值如 99 98 97 和key组成为库存锁的key进行使用
+        // 2 加锁兜底
+        // 3 设置加锁时间 活动到期加一天
+        String lockKey = cacheKey + Constants.UNDERLINE + decr;
+        long lockTime = endDateTime.getTime() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
+        Boolean lock = redisService.setNx(lockKey, lockTime, TimeUnit.MILLISECONDS);
+        if (!lock) {
+            log.info("活动sku库存加锁失败 {}", lockKey);
+        }
+        return lock;
+    }
+
+    @Override
+    public void activitySkuStockConsumeSendQueue(ActivitySkuStockKeyVO activitySkuStockKeyVO) {
+        String key = Constants.STRATEGY_SKU_COUNT_QUEUE_KEY();
+        RBlockingQueue<ActivitySkuStockKeyVO> blockingQueue = redisService.getBlockingQueue(key);
+        RDelayedQueue<ActivitySkuStockKeyVO> delayedQueue = redisService.getDelayedQueue(blockingQueue);
+        delayedQueue.offer(activitySkuStockKeyVO, 3, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public ActivitySkuStockKeyVO takeQueueValue() throws InterruptedException {
+        String key = Constants.STRATEGY_SKU_COUNT_QUEUE_KEY();
+        RBlockingQueue<ActivitySkuStockKeyVO> blockingQueue = redisService.getBlockingQueue(key);
+        return blockingQueue.poll();
+    }
+
+    @Override
+    public void clearQueueValue() {
+        String key = Constants.STRATEGY_SKU_COUNT_QUEUE_KEY();
+        RBlockingQueue<ActivitySkuStockKeyVO> blockingQueue = redisService.getBlockingQueue(key);
+        blockingQueue.clear();
+    }
+
+    @Override
+    public void updateActivitySkuStock(Long sku) {
+        raffleActivitySkuDao.updateActivitySkuStock(sku);
+    }
+
+    @Override
+    public void clearActivitySkuStock(Long sku) {
+        raffleActivitySkuDao.clearActivitySkuStock(sku);
+
     }
 
     private RaffleActivityAccount buildRaffleActivityAccount(CreateOrderAggregate createOrderAggregate) {

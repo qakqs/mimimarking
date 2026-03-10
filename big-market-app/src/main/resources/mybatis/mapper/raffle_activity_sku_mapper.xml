@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRaffleActivitySkuDao">
-
     <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.RaffleActivitySku">
         <id column="id" property="id"/>
         <result column="sku" property="sku"/>
@@ -19,4 +18,18 @@
         where sku = #{sku}
     </select>
 
+    <update id="updateActivitySkuStock">
+        update raffle_activity_sku
+        set stock_count_surplus = stock_count_surplus - 1,
+            update_time         = now()
+        where sku = #{sku}
+          and stock_count_surplus > 0
+    </update>
+
+    <update id="clearActivitySkuStock">
+        update raffle_activity_sku
+        set stock_count_surplus = 0,
+            update_time         = now()
+        where sku = #{sku}
+    </update>
 </mapper>

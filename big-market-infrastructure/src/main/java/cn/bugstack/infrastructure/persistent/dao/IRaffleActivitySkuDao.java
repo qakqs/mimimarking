@@ -8,4 +8,8 @@ import java.util.List;
 @Mapper
 public interface IRaffleActivitySkuDao {
     RaffleActivitySku queryActivitySku(Long sku);
+
+    void updateActivitySkuStock(Long sku);
+
+    void clearActivitySkuStock(Long sku);
 }
