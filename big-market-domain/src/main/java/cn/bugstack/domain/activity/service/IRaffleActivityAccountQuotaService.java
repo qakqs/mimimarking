@@ -3,7 +3,10 @@ package cn.bugstack.domain.activity.service;
 
 import cn.bugstack.types.entity.SkuRechargeEntity;
 
-public interface IRaffleOrder {
+/**
+ * 抽奖活动账户额度服务
+ */
+public interface IRaffleActivityAccountQuotaService {
 
         /**
      * 以sku创建抽奖活动订单，获得参与抽奖资格（可消耗的次数）

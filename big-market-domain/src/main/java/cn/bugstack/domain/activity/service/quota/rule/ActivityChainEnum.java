@@ -1,8 +1,8 @@
-package cn.bugstack.domain.activity.service.rule;
+package cn.bugstack.domain.activity.service.quota.rule;
 
-import cn.bugstack.domain.activity.service.rule.impl.AbstractActivityChain;
-import cn.bugstack.domain.activity.service.rule.impl.ActivitySkuStockActionChain;
-import cn.bugstack.domain.activity.service.rule.impl.BaseActivityChain;
+import cn.bugstack.domain.activity.service.quota.rule.impl.AbstractActivityChain;
+import cn.bugstack.domain.activity.service.quota.rule.impl.ActivitySkuStockActionChain;
+import cn.bugstack.domain.activity.service.quota.rule.impl.BaseActivityChain;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 

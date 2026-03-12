@@ -1,8 +1,8 @@
-package cn.bugstack.domain.activity.service.impl;
+package cn.bugstack.domain.activity.service.quota;
 
-import cn.bugstack.domain.activity.service.IRaffleOrder;
-import cn.bugstack.domain.activity.service.rule.IActivityChain;
-import cn.bugstack.domain.activity.service.rule.factory.DefaultActivityChainFactory;
+import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
+import cn.bugstack.domain.activity.service.quota.rule.IActivityChain;
+import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
 import cn.bugstack.types.aggregate.CreateOrderAggregate;
 import cn.bugstack.types.entity.*;
@@ -13,9 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 @Slf4j
-public abstract class AbstractRaffleActivity extends RaffleActivitySupport implements IRaffleOrder {
+public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityAccountQuotaSupport implements IRaffleActivityAccountQuotaService {
 
-    public AbstractRaffleActivity(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
+    public AbstractRaffleActivityAccountQuota(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         super(activityRepository, defaultActivityChainFactory);
     }
 

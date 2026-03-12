@@ -1,6 +1,6 @@
-package cn.bugstack.domain.activity.service.rule.impl;
+package cn.bugstack.domain.activity.service.quota.rule.impl;
 
-import cn.bugstack.domain.activity.service.rule.IActivityChain;
+import cn.bugstack.domain.activity.service.quota.rule.IActivityChain;
 
 public abstract class AbstractActivityChain implements IActivityChain {
 

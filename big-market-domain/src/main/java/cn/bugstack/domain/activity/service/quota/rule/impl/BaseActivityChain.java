@@ -1,4 +1,4 @@
-package cn.bugstack.domain.activity.service.rule.impl;
+package cn.bugstack.domain.activity.service.quota.rule.impl;
 
 import cn.bugstack.types.enums.ActivityStateVO;
 import cn.bugstack.types.enums.ResponseCode;

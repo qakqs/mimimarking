@@ -1,7 +1,7 @@
-package cn.bugstack.domain.activity.service.rule.factory;
+package cn.bugstack.domain.activity.service.quota.rule.factory;
 
-import cn.bugstack.domain.activity.service.rule.ActivityChainEnum;
-import cn.bugstack.domain.activity.service.rule.IActivityChain;
+import cn.bugstack.domain.activity.service.quota.rule.ActivityChainEnum;
+import cn.bugstack.domain.activity.service.quota.rule.IActivityChain;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;

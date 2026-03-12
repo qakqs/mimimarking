@@ -1,7 +1,7 @@
-package cn.bugstack.domain.activity.service.impl;
+package cn.bugstack.domain.activity.service.quota;
 
-import cn.bugstack.domain.activity.service.ISkuStock;
-import cn.bugstack.domain.activity.service.rule.factory.DefaultActivityChainFactory;
+import cn.bugstack.domain.activity.service.IRaffleActivitySkuStockService;
+import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
 import cn.bugstack.types.aggregate.CreateOrderAggregate;
 import cn.bugstack.types.entity.*;
@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class RaffleActivityService extends AbstractRaffleActivity implements ISkuStock {
-    public RaffleActivityService(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
+public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAccountQuota implements IRaffleActivitySkuStockService {
+    public RaffleActivityAccountQuotaService(IActivityRepository activityRepository, DefaultActivityChainFactory defaultActivityChainFactory) {
         super(activityRepository, defaultActivityChainFactory);
     }
 

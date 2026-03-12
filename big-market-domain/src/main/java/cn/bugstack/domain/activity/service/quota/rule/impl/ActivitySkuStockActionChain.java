@@ -1,4 +1,4 @@
-package cn.bugstack.domain.activity.service.rule.impl;
+package cn.bugstack.domain.activity.service.quota.rule.impl;
 
 import cn.bugstack.domain.activity.service.armory.IActivityDispatch;
 import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;

@@ -1,7 +1,7 @@
 package cn.bugstack.test.domain;
 
 import cn.bugstack.Application;
-import cn.bugstack.domain.activity.service.IRaffleOrder;
+import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.activity.service.armory.IActivityArmory;
 import cn.bugstack.types.entity.SkuRechargeEntity;
 import cn.bugstack.types.exception.AppException;
@@ -23,7 +23,7 @@ import java.util.concurrent.CountDownLatch;
 public class RaffleOrderTest {
 
     @Resource
-    private IRaffleOrder raffleOrder;
+    private IRaffleActivityAccountQuotaService raffleOrder;
     @Resource
     private IActivityArmory activityArmory;
     @Before
