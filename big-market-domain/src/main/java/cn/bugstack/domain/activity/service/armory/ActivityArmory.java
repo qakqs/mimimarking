@@ -1,8 +1,8 @@
 package cn.bugstack.domain.activity.service.armory;
 
-import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
+import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.types.common.Constants;
-import cn.bugstack.types.entity.ActivitySkuEntity;
+import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

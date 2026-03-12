@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.service.rule.chain.impl;
 
-import cn.bugstack.types.vo.StrategyAwardVO;
+import cn.bugstack.domain.strategy.model.valobj.StrategyAwardVO;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
 import jakarta.annotation.Resource;

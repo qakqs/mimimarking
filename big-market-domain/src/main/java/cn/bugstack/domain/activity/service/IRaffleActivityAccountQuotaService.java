@@ -1,7 +1,7 @@
 package cn.bugstack.domain.activity.service;
 
 
-import cn.bugstack.types.entity.SkuRechargeEntity;
+import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 
 /**
  * 抽奖活动账户额度服务

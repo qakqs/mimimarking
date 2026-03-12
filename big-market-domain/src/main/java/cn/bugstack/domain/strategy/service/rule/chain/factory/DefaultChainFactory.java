@@ -1,7 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.chain.factory;
 
-import cn.bugstack.types.entity.StrategyEntity;
-import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.rule.chain.ILogicChain;
 import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
 import org.springframework.stereotype.Component;

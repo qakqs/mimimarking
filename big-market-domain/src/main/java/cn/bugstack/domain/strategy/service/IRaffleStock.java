@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.service;
 
-import cn.bugstack.types.vo.StrategyAwardStockKeyVO;
+import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 
 public interface IRaffleStock {
     /**

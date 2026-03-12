@@ -1,8 +1,8 @@
 package cn.bugstack.trigger.http;
 
-import cn.bugstack.types.entity.RaffleAwardEntity;
-import cn.bugstack.types.entity.RaffleFactorEntity;
-import cn.bugstack.types.entity.StrategyAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
+import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.bugstack.domain.strategy.service.IRaffleAward;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyArmory;
@@ -11,7 +11,7 @@ import cn.bugstack.trigger.api.dto.RaffleAwardListRequestDTO;
 import cn.bugstack.trigger.api.dto.RaffleAwardListResponseDTO;
 import cn.bugstack.trigger.api.dto.RaffleRequestDTO;
 import cn.bugstack.trigger.api.dto.RaffleResponseDTO;
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.trigger.api.dto.Response;
 import com.alibaba.fastjson.JSON;

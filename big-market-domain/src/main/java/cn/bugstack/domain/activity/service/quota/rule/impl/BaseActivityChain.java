@@ -1,9 +1,9 @@
 package cn.bugstack.domain.activity.service.quota.rule.impl;
 
-import cn.bugstack.types.enums.ActivityStateVO;
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.domain.activity.model.valobj.ActivityStateVO;
+import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import cn.bugstack.types.model.ActionChainModel;
+import cn.bugstack.domain.strategy.model.entity.ActionChainModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 

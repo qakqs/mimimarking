@@ -1,7 +1,7 @@
 package cn.bugstack.domain.strategy.service;
 
-import cn.bugstack.types.entity.RaffleAwardEntity;
-import cn.bugstack.types.entity.RaffleFactorEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 
 public interface IRaffleStrategy {
 

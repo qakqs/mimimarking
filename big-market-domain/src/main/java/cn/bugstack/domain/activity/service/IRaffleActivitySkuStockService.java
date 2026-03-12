@@ -1,6 +1,6 @@
 package cn.bugstack.domain.activity.service;
 
-import cn.bugstack.types.vo.ActivitySkuStockKeyVO;
+import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 
 /**
  * 抽奖活动SKU库存服务

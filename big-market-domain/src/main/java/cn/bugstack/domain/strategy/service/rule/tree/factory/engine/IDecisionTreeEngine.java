@@ -1,7 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.tree.factory.engine;
 
 
-import cn.bugstack.types.vo.StrategyAwardData;
+import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
 
 public interface IDecisionTreeEngine {
 

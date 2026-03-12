@@ -1,13 +1,13 @@
 package cn.bugstack.domain.activity.service.partake;
 
 import cn.bugstack.domain.activity.service.IRaffleActivityPartakeService;
-import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
-import cn.bugstack.types.aggregate.CreatePartakeOrderAggregate;
-import cn.bugstack.types.entity.ActivityEntity;
-import cn.bugstack.types.entity.PartakeRaffleActivityEntity;
-import cn.bugstack.types.entity.UserRaffleOrderEntity;
-import cn.bugstack.types.enums.ActivityStateVO;
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.domain.activity.repository.IActivityRepository;
+import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
+import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
+import cn.bugstack.domain.activity.model.entity.PartakeRaffleActivityEntity;
+import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
+import cn.bugstack.domain.activity.model.valobj.ActivityStateVO;
+import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;

@@ -1,7 +1,7 @@
 package cn.bugstack.domain.strategy.service.rule.tree;
 
-import cn.bugstack.types.vo.LogicTreeNodeVO;
-import cn.bugstack.types.vo.TreeActionEntity;
+import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
+import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
 
 public interface ILogicTreeNode {
 

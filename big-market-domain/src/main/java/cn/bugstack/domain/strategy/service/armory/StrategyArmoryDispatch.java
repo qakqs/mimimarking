@@ -1,11 +1,11 @@
 package cn.bugstack.domain.strategy.service.armory;
 
-import cn.bugstack.types.entity.StrategyAwardEntity;
-import cn.bugstack.types.entity.StrategyEntity;
-import cn.bugstack.types.entity.StrategyRuleEntity;
-import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
+import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.types.common.Constants;
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

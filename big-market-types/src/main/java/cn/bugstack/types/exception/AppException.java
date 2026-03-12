@@ -1,6 +1,6 @@
 package cn.bugstack.types.exception;
 
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.types.common.ResponseCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,7 +20,7 @@ public class AppException extends RuntimeException {
      */
     private String info;
 
-    public AppException(ResponseCode  responseCode) {
+    public AppException(ResponseCode responseCode) {
         this.code = responseCode.getCode();
         this.info = responseCode.getInfo();
     }

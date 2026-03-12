@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.service.annoation;
 
-import cn.bugstack.types.enums.LogicModel;
+import cn.bugstack.enums.LogicModel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

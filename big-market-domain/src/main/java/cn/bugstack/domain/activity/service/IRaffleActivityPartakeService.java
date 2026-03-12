@@ -1,7 +1,7 @@
 package cn.bugstack.domain.activity.service;
 
-import cn.bugstack.types.entity.PartakeRaffleActivityEntity;
-import cn.bugstack.types.entity.UserRaffleOrderEntity;
+import cn.bugstack.domain.activity.model.entity.PartakeRaffleActivityEntity;
+import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
 
 public interface IRaffleActivityPartakeService {
 

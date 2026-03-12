@@ -1,16 +1,15 @@
 package cn.bugstack.infrastructure.persistent.repository.impl;
 
+import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
+import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
+import cn.bugstack.domain.strategy.model.valobj.*;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
+import cn.bugstack.enums.RuleLogicCheckTypeVO;
 import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
-import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
 import cn.bugstack.types.common.Constants;
-import cn.bugstack.types.entity.StrategyAwardEntity;
-import cn.bugstack.types.entity.StrategyEntity;
-import cn.bugstack.types.entity.StrategyRuleEntity;
-import cn.bugstack.types.enums.RuleLimitTypeVO;
-import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
-import cn.bugstack.types.vo.*;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
@@ -80,6 +79,34 @@ public class StrategyRepository implements IStrategyRepository {
         // 2. 存储概率查找表
         Map<Integer, Integer> cacheRateTable = redisService.getMap(Constants.STRATEGY_RATE_TABLE_KEY(key));
         cacheRateTable.putAll(strategyAwardSearchRateTable);
+    }
+
+    @Override
+    public List<StrategyAwardEntity> queryRaffleStrategyAwardList(Long strategyId) {
+        // 优先从缓存获取
+        String cacheKey = Constants.STRATEGY_AWARD_LIST_KEY(strategyId);
+        List<StrategyAwardEntity> strategyAwardEntities = redisService.getValue(cacheKey);
+        if (null != strategyAwardEntities && !strategyAwardEntities.isEmpty()) {
+            return strategyAwardEntities;
+        }
+        // 从库中获取数据
+        List<StrategyAward> strategyAwards = strategyAwardDao.queryStrategyAwardListByStrategyId(strategyId);
+        strategyAwardEntities = new ArrayList<>(strategyAwards.size());
+        for (StrategyAward strategyAward : strategyAwards) {
+            StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder()
+                    .strategyId(strategyAward.getStrategyId())
+                    .awardId(strategyAward.getAwardId())
+                    .awardTitle(strategyAward.getAwardTitle())
+                    .awardSubtitle(strategyAward.getAwardSubtitle())
+                    .awardCount(strategyAward.getAwardCount())
+                    .awardCountSurplus(strategyAward.getAwardCountSurplus())
+                    .awardRate(strategyAward.getAwardRate())
+                    .sort(strategyAward.getSort())
+                    .build();
+            strategyAwardEntities.add(strategyAwardEntity);
+        }
+        redisService.setValue(cacheKey, strategyAwardEntities);
+        return strategyAwardEntities;
     }
 
     @Override

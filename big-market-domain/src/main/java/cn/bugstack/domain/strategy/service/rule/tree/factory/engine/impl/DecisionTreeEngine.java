@@ -1,9 +1,14 @@
 package cn.bugstack.domain.strategy.service.rule.tree.factory.engine.impl;
 
+import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
+import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
+import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
+import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeLineVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleTreeVO;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
-import cn.bugstack.types.vo.*;
+import cn.bugstack.enums.RuleLogicCheckTypeVO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -58,11 +63,11 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
         return strategyAwardData;
     }
 
-    private String nextNode(String matterValue, List<cn.bugstack.types.vo.RuleTreeNodeLineVO> ruleTreeNodeLineList) {
+    private String nextNode(String matterValue, List<RuleTreeNodeLineVO> ruleTreeNodeLineList) {
         if (null == ruleTreeNodeLineList || ruleTreeNodeLineList.isEmpty()) {
             return null;
         }
-        for (cn.bugstack.types.vo.RuleTreeNodeLineVO ruleTreeNodeLineVO : ruleTreeNodeLineList) {
+        for (RuleTreeNodeLineVO ruleTreeNodeLineVO : ruleTreeNodeLineList) {
             if (decisionLogic(matterValue, ruleTreeNodeLineVO)) {
                 return ruleTreeNodeLineVO.getRuleNodeTo();
             }
@@ -73,7 +78,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
     }
 
 
-    public boolean decisionLogic(String matterValue, cn.bugstack.types.vo.RuleTreeNodeLineVO nodeLine) {
+    public boolean decisionLogic(String matterValue, RuleTreeNodeLineVO nodeLine) {
         return switch (nodeLine.getRuleLimitType()) {
             case EQUAL -> matterValue.equals(nodeLine.getRuleLimitValue().getCode());
             case GE, LE, LT, GT -> false;

@@ -1,11 +1,11 @@
 package cn.bugstack.domain.activity.service.quota.rule.impl;
 
 import cn.bugstack.domain.activity.service.armory.IActivityDispatch;
-import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.domain.activity.repository.IActivityRepository;
+import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import cn.bugstack.types.model.ActionChainModel;
-import cn.bugstack.types.vo.ActivitySkuStockKeyVO;
+import cn.bugstack.domain.strategy.model.entity.ActionChainModel;
+import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

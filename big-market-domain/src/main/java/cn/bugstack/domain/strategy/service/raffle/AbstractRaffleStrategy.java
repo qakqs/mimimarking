@@ -1,16 +1,14 @@
 package cn.bugstack.domain.strategy.service.raffle;
 
-import cn.bugstack.types.entity.RaffleAwardEntity;
-import cn.bugstack.types.entity.RaffleFactorEntity;
-import cn.bugstack.types.vo.StrategyAwardVO;
-import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
+import cn.bugstack.domain.strategy.model.valobj.StrategyAwardVO;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
-import cn.bugstack.infrastructure.persistent.dao.IStrategyAwardDao;
-import cn.bugstack.infrastructure.persistent.redis.IRedisService;
-import cn.bugstack.types.enums.ResponseCode;
+import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
@@ -28,25 +26,18 @@ public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
 
     protected DefaultTreeFactory defaultTreeFactory;
 
-    protected IRedisService redisService;
-
-    protected IStrategyAwardDao strategyAwardDao;
 
 
     public AbstractRaffleStrategy(IStrategyRepository strategyRepository
             , IStrategyDispatch strategyDispatch
             , DefaultChainFactory defaultChainFactory
             , DefaultTreeFactory defaultTreeFactory
-            , IRedisService redisService
-            , IStrategyAwardDao strategyAwardDao
 
     ) {
         this.strategyRepository = strategyRepository;
         this.strategyDispatch = strategyDispatch;
         this.defaultChainFactory = defaultChainFactory;
         this.defaultTreeFactory = defaultTreeFactory;
-        this.redisService = redisService;
-        this.strategyAwardDao = strategyAwardDao;
     }
 
 

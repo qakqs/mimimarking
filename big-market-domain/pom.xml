@@ -44,8 +44,8 @@
             <artifactId>big-market-types</artifactId>
         </dependency>
         <dependency>
-            <groupId>cn.bugstack</groupId>
-            <artifactId>big-market-infrastructure</artifactId>
+            <groupId>org.springframework.amqp</groupId>
+            <artifactId>spring-rabbit</artifactId>
         </dependency>
     </dependencies>
 

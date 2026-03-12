@@ -1,10 +1,14 @@
 package cn.bugstack.domain.activity.service.partake;
 
-import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
-import cn.bugstack.types.aggregate.CreatePartakeOrderAggregate;
-import cn.bugstack.types.entity.*;
-import cn.bugstack.types.enums.ResponseCode;
-import cn.bugstack.types.enums.UserRaffleOrderStateVO;
+import cn.bugstack.domain.activity.model.entity.ActivityAccountDayEntity;
+import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
+import cn.bugstack.domain.activity.model.entity.ActivityAccountMonthEntity;
+import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
+import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
+import cn.bugstack.domain.activity.repository.IActivityRepository;
+import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
+import cn.bugstack.types.common.ResponseCode;
+import cn.bugstack.domain.activity.model.valobj.UserRaffleOrderStateVO;
 import cn.bugstack.types.exception.AppException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;

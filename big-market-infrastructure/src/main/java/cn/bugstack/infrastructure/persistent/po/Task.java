@@ -1,6 +1,9 @@
 package cn.bugstack.infrastructure.persistent.po;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
@@ -9,10 +12,21 @@ import java.util.Date;
  * @create 2024-04-03 15:30
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Task {
 
     /** 自增ID */
     private String id;
+
+    /**
+     * 用户id
+     */
+    private String userId;
+
+    private String messageId;
+
     /** 消息主题 */
     private String topic;
     /** 消息主体 */

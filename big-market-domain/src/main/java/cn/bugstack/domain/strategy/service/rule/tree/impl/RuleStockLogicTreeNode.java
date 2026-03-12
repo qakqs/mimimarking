@@ -1,11 +1,13 @@
 package cn.bugstack.domain.strategy.service.rule.tree.impl;
 
-import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
-import cn.bugstack.types.vo.LogicTreeNodeVO;
-import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
-import cn.bugstack.types.vo.StrategyAwardData;
+import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
+import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
+import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
+import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -24,7 +26,7 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
     private IStrategyRepository strategyRepository;
 
     @Override
-    public cn.bugstack.types.vo.TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
+    public TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
         log.info("规则过滤 库存扣减 userid:{} strategyId:{} awardId:{}", logicTreeNodeVO.getUserId()
                 , logicTreeNodeVO.getStrategyId(), logicTreeNodeVO.getAwardId());
 
@@ -33,13 +35,13 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
                 ,logicTreeNodeVO.getAwardId()
         );
         if (status) {
-            strategyRepository.awardSockConsumeSendQueue(cn.bugstack.types.vo.StrategyAwardStockKeyVO
+            strategyRepository.awardSockConsumeSendQueue(StrategyAwardStockKeyVO
                     .builder()
                     .awardId(logicTreeNodeVO.getAwardId())
                     .strategyId(logicTreeNodeVO.getStrategyId())
                     .build()
             );
-            return cn.bugstack.types.vo.TreeActionEntity.builder()
+            return TreeActionEntity.builder()
                     .ruleLogicCheckType(RuleLogicCheckTypeVO.TAKE_OVER)
                     .strategyAwardData(StrategyAwardData.builder()
                             .awardId(logicTreeNodeVO.getAwardId())
@@ -49,7 +51,7 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
 
         }
 
-        return cn.bugstack.types.vo.TreeActionEntity.builder()
+        return TreeActionEntity.builder()
                 .ruleLogicCheckType(RuleLogicCheckTypeVO.TAKE_OVER)
                 .build();
     }

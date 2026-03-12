@@ -1,8 +1,8 @@
 package cn.bugstack.test.domain;
 
 import cn.bugstack.Application;
-import cn.bugstack.types.entity.RaffleAwardEntity;
-import cn.bugstack.types.entity.RaffleFactorEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
+import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.service.armory.IStrategyArmory;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.raffle.DefaultRaffleStrategy;

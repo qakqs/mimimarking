@@ -1,10 +1,10 @@
 package cn.bugstack.domain.activity.service.quota;
 
 import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
-import cn.bugstack.infrastructure.persistent.repository.IActivityRepository;
-import cn.bugstack.types.entity.ActivityCountEntity;
-import cn.bugstack.types.entity.ActivityEntity;
-import cn.bugstack.types.entity.ActivitySkuEntity;
+import cn.bugstack.domain.activity.repository.IActivityRepository;
+import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
+import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
+import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
 
 public class RaffleActivityAccountQuotaSupport {
 

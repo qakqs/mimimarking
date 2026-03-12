@@ -1,10 +1,10 @@
 package cn.bugstack.domain.strategy.service.rule.filter.impl;
 
-import cn.bugstack.types.entity.RuleActionEntity;
-import cn.bugstack.types.entity.RuleMatterEntity;
-import cn.bugstack.types.enums.LogicModel;
-import cn.bugstack.types.enums.RuleLogicCheckTypeVO;
-import cn.bugstack.infrastructure.persistent.repository.IStrategyRepository;
+import cn.bugstack.domain.strategy.model.entity.RuleActionEntity;
+import cn.bugstack.domain.strategy.model.entity.RuleMatterEntity;
+import cn.bugstack.enums.LogicModel;
+import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.annoation.LogicStrategy;
 import cn.bugstack.domain.strategy.service.rule.filter.ILogicFilter;
 import cn.bugstack.types.common.Constants;
@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import static cn.bugstack.types.enums.ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL;
+import static cn.bugstack.types.common.ResponseCode.STRATEGY_RULE_WEIGHT_IS_NULL;
 
 
 @Slf4j

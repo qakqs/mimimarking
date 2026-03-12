@@ -3,7 +3,7 @@ package cn.bugstack.test.domain;
 import cn.bugstack.Application;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.activity.service.armory.IActivityArmory;
-import cn.bugstack.types.entity.SkuRechargeEntity;
+import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -68,7 +68,7 @@ public class RaffleOrderTest {
         new CountDownLatch(1).await();
     }
 
-        /**
+    /**
      * 测试库存消耗和最终一致更新
      * 1. raffle_activity_sku 库表库存可以设置20个
      * 2. 清空 redis 缓存 flushall
