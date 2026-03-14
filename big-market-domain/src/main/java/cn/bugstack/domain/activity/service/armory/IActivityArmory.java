@@ -7,9 +7,18 @@ public interface IActivityArmory {
 
     /**
      * 预热sku
+     *
      * @param sku
      * @return
      */
     boolean assembleActivitySku(Long sku);
+
+    /**
+     * 预热sku by activityId
+     *
+     * @param activityId
+     * @return
+     */
+    boolean assembleActivitySkuByActivityId(Long activityId);
 
 }

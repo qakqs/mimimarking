@@ -1,4 +1,4 @@
-package cn.bugstack.trigger.api.dto;
+package cn.bugstack.trigger.api.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,11 +1,13 @@
 package cn.bugstack.domain.strategy.service.rule.tree.impl;
 
 import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
-import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
+import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +18,9 @@ import org.springframework.stereotype.Component;
 @Component("rule_lock")
 public class RuleLockLogicTreeNode implements ILogicTreeNode {
 
-    private Long userRaffleCount = 10L;
 
+    @Resource
+    private IStrategyRepository strategyRepository;
 
     @Override
     public TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
@@ -31,7 +34,7 @@ public class RuleLockLogicTreeNode implements ILogicTreeNode {
             log.error("转换失败", e);
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER);
         }
-
+        Integer userRaffleCount = strategyRepository.queryTodayUserRaffleCount(logicTreeNodeVO.getUserId(), logicTreeNodeVO.getStrategyId());
         if (userRaffleCount >= raffleCount) {
             // 放行（抽奖次数大于限定值）
             return TreeActionEntity.builder()

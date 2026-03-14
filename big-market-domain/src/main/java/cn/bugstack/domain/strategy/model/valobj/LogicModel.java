@@ -1,4 +1,4 @@
-package cn.bugstack.enums;
+package cn.bugstack.domain.strategy.model.valobj;
 
 import cn.bugstack.types.exception.AppException;
 import lombok.AllArgsConstructor;

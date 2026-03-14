@@ -28,6 +28,12 @@ public class RaffleAwardEntity {
      * 奖品库存总量
      */
     private Integer awardCount;
+
+    /**
+     * 奖品标题（名称）
+     */
+    private String awardTitle;
+
     /**
      * 奖品库存剩余
      */

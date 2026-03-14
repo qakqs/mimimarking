@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Component
@@ -27,6 +28,21 @@ public class ActivityArmory implements IActivityArmory, IActivityDispatch {
 
         // 预热活动次数【查询时预热到缓存】
         activityRepository.queryRaffleActivityCountByActivityCountId(activitySkuEntity.getActivityCountId());
+
+        return true;
+    }
+
+    @Override
+    public boolean assembleActivitySkuByActivityId(Long activityId) {
+        List<ActivitySkuEntity> activitySkuEntityList = activityRepository.queryRaffleActivitySkuListByActivityId(activityId);
+        for (ActivitySkuEntity activitySkuEntity : activitySkuEntityList) {
+            cacheActivitySkuStockCount(activitySkuEntity.getSku(), activitySkuEntity.getStockCount());
+
+            // 预热活动次数【查询时预热到缓存】
+            activityRepository.queryRaffleActivityCountByActivityCountId(activitySkuEntity.getActivityCountId());
+        }
+        // 预热活动【查询时预热到缓存】
+        activityRepository.queryRaffleActivityByActivityId(activityId);
 
         return true;
     }

@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.model.entity;
 
-import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

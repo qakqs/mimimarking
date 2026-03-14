@@ -4,7 +4,7 @@ import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
-import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;

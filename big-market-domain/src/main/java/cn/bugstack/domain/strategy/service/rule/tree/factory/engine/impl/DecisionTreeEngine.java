@@ -8,7 +8,7 @@ import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeVO;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeVO;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
@@ -41,7 +41,6 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
             ILogicTreeNode logicTreeNode = logicTreeNodeHashMap.get(ruleTreeNode.getRuleKey());
 
             // 决策节点计算
-
             TreeActionEntity logicEntity = logicTreeNode.logic(LogicTreeNodeVO
                     .builder()
                     .awardId(awardId)

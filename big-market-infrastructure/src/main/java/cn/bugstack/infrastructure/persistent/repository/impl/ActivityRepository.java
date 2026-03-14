@@ -24,7 +24,9 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -393,6 +395,22 @@ public class ActivityRepository implements IActivityRepository {
             return 1;
         });
 
+    }
+
+    @Override
+    public List<ActivitySkuEntity> queryRaffleActivitySkuListByActivityId(Long activityId) {
+        List<RaffleActivitySku> activitySkuEntityList = raffleActivitySkuDao.queryActivitySkuListByActivityId(activityId);
+        List<ActivitySkuEntity> result = new ArrayList<ActivitySkuEntity>();
+        for (RaffleActivitySku raffleActivitySku : activitySkuEntityList) {
+            ActivitySkuEntity activitySkuEntity = new ActivitySkuEntity();
+            activitySkuEntity.setActivityId(raffleActivitySku.getActivityId());
+            activitySkuEntity.setActivityCountId(raffleActivitySku.getActivityCountId());
+            activitySkuEntity.setStockCount(raffleActivitySku.getStockCount());
+            activitySkuEntity.setStockCountSurplus(activitySkuEntity.getStockCountSurplus());
+            activitySkuEntity.setSku(raffleActivitySku.getSku());
+            result.add(activitySkuEntity);
+        }
+        return result;
     }
 
     private RaffleActivityAccount buildRaffleActivityAccount(CreateOrderAggregate createOrderAggregate) {

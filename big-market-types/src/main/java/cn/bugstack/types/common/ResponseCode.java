@@ -23,6 +23,7 @@ public enum ResponseCode {
     ACTIVITY_NULL_ERROR("ACTIVITY_NULL_ERROR", "没有该活动"),
     ACTIVITY_COUNT_ZERO_ERROR("ACTIVITY_COUNT_ZERO_ERROR", "该活动物剩余次数"),
     AWARD_INDEX_DUP("AWARD_INDEX_DUP", "该活动物剩余次数"),
+    AWARD_ORDER_USED("AWARD_ORDER_USED", "改活动单已使用"),
     ;
 
     private String code;

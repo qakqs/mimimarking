@@ -19,4 +19,17 @@
         from raffle_activity
         where activity_id = #{activityId}
     </select>
+
+    <select id="queryActivityIdByStrategyId" resultType="java.lang.Long">
+        select activity_id
+        from raffle_activity
+        where strategy_id = #{strategyId}
+    </select>
+
+    <select id="queryStrategyIdByActivityId" resultType="java.lang.Long">
+                select strategy_id
+        from raffle_activity
+                where activity_id = #{activityId}
+
+    </select>
 </mapper>

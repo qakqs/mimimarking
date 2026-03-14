@@ -8,6 +8,7 @@ import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
 
 import java.util.Date;
+import java.util.List;
 
 public interface IActivityRepository {
 
@@ -42,4 +43,6 @@ public interface IActivityRepository {
     UserRaffleOrderEntity queryNoUsedRaffleOrder(PartakeRaffleActivityEntity partakeRaffleActivityEntity);
 
     void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
+
+    List<ActivitySkuEntity>queryRaffleActivitySkuListByActivityId(Long activityId);
 }

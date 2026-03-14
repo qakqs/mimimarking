@@ -5,7 +5,7 @@ import cn.bugstack.domain.strategy.model.entity.StrategyEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.bugstack.domain.strategy.model.valobj.*;
 import cn.bugstack.domain.strategy.respository.IStrategyRepository;
-import cn.bugstack.enums.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
@@ -13,6 +13,7 @@ import cn.bugstack.types.common.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.Resource;
@@ -47,6 +48,11 @@ public class StrategyRepository implements IStrategyRepository {
     private IRuleTreeNodeDao ruleTreeNodeDao;
     @Resource
     private IRuleTreeNodeLineDao ruleTreeNodeLineDao;
+    @Resource
+    private IRaffleActivityDao raffleActivityDao;
+
+    @Resource
+    private IRaffleActivityAccountDayDao raffleActivityAccountDayDao;
 
 
     @Override
@@ -233,7 +239,8 @@ public class StrategyRepository implements IStrategyRepository {
     public void cacheStrategyAwardCount(String cacheKey, Integer awardCount) {
         if (redisService.isExists(cacheKey)) {
             return;
-        } ;
+        }
+        ;
         redisService.setAtomicLong(cacheKey, awardCount);
 
     }
@@ -277,6 +284,49 @@ public class StrategyRepository implements IStrategyRepository {
         strategyAward.setStrategyId(strategyId);
         strategyAward.setAwardId(awardId);
         strategyAwardDao.updateStrategyAwardStock(strategyAward);
+    }
+
+    @Override
+    public Integer queryTodayUserRaffleCount(String userId, Long strategyId) {
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+        RaffleActivityAccountDay req = new RaffleActivityAccountDay();
+        req.setUserId(userId);
+        req.setActivityId(activityId);
+        req.setDay(req.currentDay());
+        RaffleActivityAccountDay raffleActivityAccountDay = raffleActivityAccountDayDao.queryActivityAccountDayByUserId(req);
+        if (null == raffleActivityAccountDay) {
+            return 0;
+        }
+        return raffleActivityAccountDay.getDayCount() - raffleActivityAccountDay.getDayCountSurplus();
+    }
+
+    @Override
+    public Long queryStrategyIdByActivityId(Long activityId) {
+
+        return raffleActivityDao.queryStrategyIdByActivityId(activityId);
+    }
+
+    @Override
+    public StrategyAwardEntity queryStrategyAwardEntity(Long strategyId, Integer awardId) {
+        // 优先从缓存获取
+        // 查询数据
+        StrategyAward strategyAwardReq = new StrategyAward();
+        strategyAwardReq.setStrategyId(strategyId);
+        strategyAwardReq.setAwardId(awardId);
+        StrategyAward strategyAwardRes = strategyAwardDao.queryStrategyAward(strategyAwardReq);
+        // 转换数据
+        StrategyAwardEntity strategyAwardEntity = StrategyAwardEntity.builder()
+                .strategyId(strategyAwardRes.getStrategyId())
+                .awardId(strategyAwardRes.getAwardId())
+                .awardTitle(strategyAwardRes.getAwardTitle())
+                .awardSubtitle(strategyAwardRes.getAwardSubtitle())
+                .awardCount(strategyAwardRes.getAwardCount())
+                .awardCountSurplus(strategyAwardRes.getAwardCountSurplus())
+                .awardRate(strategyAwardRes.getAwardRate())
+                .sort(strategyAwardRes.getSort())
+                .build();
+        // 返回数据
+        return strategyAwardEntity;
     }
 
 

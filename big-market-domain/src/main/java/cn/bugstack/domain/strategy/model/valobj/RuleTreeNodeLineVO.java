@@ -1,6 +1,5 @@
 package cn.bugstack.domain.strategy.model.valobj;
 
-import cn.bugstack.enums.RuleLogicCheckTypeVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

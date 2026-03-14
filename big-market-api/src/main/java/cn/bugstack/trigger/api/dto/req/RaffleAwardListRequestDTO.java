@@ -1,9 +1,8 @@
-package cn.bugstack.trigger.api.dto;
+package cn.bugstack.trigger.api.dto.req;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
 
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
@@ -11,7 +10,10 @@ import lombok.NoArgsConstructor;
  * @create 2024-02-14 09:46
  */
 @Data
-public class RaffleAwardListRequestDTO {
+public class RaffleAwardListRequestDTO implements Serializable {
+
+    private static final long serialVersionUID = 6227145633719326140L;
+
 
     // 抽奖策略ID
     private Long strategyId;

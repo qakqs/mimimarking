@@ -1,4 +1,4 @@
-package cn.bugstack.trigger.api.dto;
+package cn.bugstack.trigger.api.dto.resp;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RaffleResponseDTO {
+public class RaffleStrategyResponseDTO {
 
     // 奖品ID
     private Integer awardId;
