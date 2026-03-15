@@ -24,8 +24,7 @@ public class RuleLockLogicTreeNode implements ILogicTreeNode {
 
     @Override
     public TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
-        log.info("规则过滤 次数锁 userid:{} strategyId:{} awardId:{}", logicTreeNodeVO.getUserId()
-                , logicTreeNodeVO.getStrategyId(), logicTreeNodeVO.getAwardId());
+        log.info("规则过滤 次数锁 logicTreeNodeVO:{}", logicTreeNodeVO);
 
         long raffleCount = 0L;
         try {

@@ -15,8 +15,17 @@ public class RaffleAwardListRequestDTO implements Serializable {
     private static final long serialVersionUID = 6227145633719326140L;
 
 
-    // 抽奖策略ID
+    // 用户
+    private String userId;
+
+    /**
+     * 活动ID
+     */
+    private Long activityId;
+
+    @Deprecated
     private Long strategyId;
+
 
 }
 

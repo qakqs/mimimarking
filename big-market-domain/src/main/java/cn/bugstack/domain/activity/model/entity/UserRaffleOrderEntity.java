@@ -35,11 +35,13 @@ public class UserRaffleOrderEntity {
      */
     private String orderId;
     /**
-     * 订单状态；create-创建、used-已使用、cancel-已作废
+     * 创建时间
      */
     private Date orderTime;
+
+    private Date endDateTime;
     /**
-     * 创建时间
+     * 订单状态；create-创建、used-已使用、cancel-已作废
      */
     private UserRaffleOrderStateVO orderState;
 

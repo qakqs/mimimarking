@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IRaffleStrategyService {
 
-        /**
+    /**
      * 策略装配接口
      *
      * @param strategyId 策略ID

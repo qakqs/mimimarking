@@ -413,6 +413,16 @@ public class ActivityRepository implements IActivityRepository {
         return result;
     }
 
+    @Override
+    public Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId) {
+        RaffleActivityAccountDay raffleActivityAccountDayReq = new RaffleActivityAccountDay();
+        raffleActivityAccountDayReq.setUserId(userId);
+        raffleActivityAccountDayReq.setActivityId(activityId);
+        raffleActivityAccountDayReq.setDay(raffleActivityAccountDayReq.currentDay());
+        Integer dayPartakeCount = raffleActivityAccountDayDao.queryRaffleActivityAccountDayPartakeCount(raffleActivityAccountDayReq);
+        return null == dayPartakeCount ? 0 : dayPartakeCount;
+    }
+
     private RaffleActivityAccount buildRaffleActivityAccount(CreateOrderAggregate createOrderAggregate) {
         // 账户对象
         RaffleActivityAccount raffleActivityAccount = new RaffleActivityAccount();

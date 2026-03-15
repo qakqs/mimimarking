@@ -3,11 +3,16 @@ package cn.bugstack.types.exception;
 import cn.bugstack.types.common.ResponseCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import java.io.Serial;
 
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Data
 public class AppException extends RuntimeException {
 
+    @Serial
     private static final long serialVersionUID = 5317680961212299217L;
 
     /**
@@ -20,7 +25,12 @@ public class AppException extends RuntimeException {
      */
     private String info;
 
+    public AppException() {
+        super();
+    }
+
     public AppException(ResponseCode responseCode) {
+        super(responseCode.getCode());
         this.code = responseCode.getCode();
         this.info = responseCode.getInfo();
     }
@@ -44,14 +54,6 @@ public class AppException extends RuntimeException {
         this.code = code;
         this.info = message;
         super.initCause(cause);
-    }
-
-    @Override
-    public String toString() {
-        return "cn.bugstack.x.api.types.exception.XApiException{" +
-                "code='" + code + '\'' +
-                ", info='" + info + '\'' +
-                '}';
     }
 
 }

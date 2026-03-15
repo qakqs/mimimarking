@@ -32,7 +32,7 @@ public class RuleStockLogicTreeNode implements ILogicTreeNode {
 
         // 扣减库存
         Boolean status = strategyDispatch.submitStrategyAwardStock(logicTreeNodeVO.getStrategyId()
-                ,logicTreeNodeVO.getAwardId()
+                ,logicTreeNodeVO.getAwardId(), logicTreeNodeVO.getEndDateTime()
         );
         if (status) {
             strategyRepository.awardSockConsumeSendQueue(StrategyAwardStockKeyVO

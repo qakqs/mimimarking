@@ -134,9 +134,14 @@ public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatc
     }
 
     @Override
-    public Boolean submitStrategyAwardStock(Long strategyId, Integer awardId) {
+    public Boolean submitStrategyAwardStock(Long strategyId, Integer awardId, Date endDateTime) {
         String cacheKey = Constants.STRATEGY_AWARD_COUNT_KEY(strategyId, awardId);
-        return repository.submitStrategyAwardStock(cacheKey);
+        return repository.submitStrategyAwardStock(cacheKey, endDateTime);
+    }
+
+    @Override
+    public Boolean submitStrategyAwardStock(Long strategyId, Integer awardId) {
+        return this.submitStrategyAwardStock(strategyId, awardId, null);
     }
 
 }

@@ -1,5 +1,7 @@
 package cn.bugstack.domain.strategy.service.armory;
 
+import java.util.Date;
+
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
  * @description 策略抽奖调度
@@ -18,5 +20,7 @@ public interface IStrategyDispatch {
     Integer getRandomAwardId(Long strategyId, String ruleWeightValue);
 
     Boolean submitStrategyAwardStock(Long strategyId, Integer awardId);
+
+    Boolean submitStrategyAwardStock(Long strategyId, Integer awardId, Date endDateTime);
 
 }

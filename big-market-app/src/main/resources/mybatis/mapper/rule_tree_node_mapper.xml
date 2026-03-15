@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.bugstack.infrastructure.persistent.dao.IRuleTreeNodeDao">
-
     <resultMap id="dataMap" type="cn.bugstack.infrastructure.persistent.po.RuleTreeNode">
         <id column="id" property="id"/>
         <result column="tree_id" property="treeId"/>
@@ -18,4 +17,13 @@
         where tree_id = #{treeId}
     </select>
 
+    <select id="queryRuleLocks" resultMap="dataMap">
+        select tree_id, rule_key, rule_desc, rule_value
+        from rule_tree_node
+        where rule_key = 'rule_lock'
+        and tree_id in
+            <foreach collection="treeIds" item="treeId" index="index" open="(" separator="," close=")">
+                #{treeId}
+            </foreach>
+    </select>
 </mapper>

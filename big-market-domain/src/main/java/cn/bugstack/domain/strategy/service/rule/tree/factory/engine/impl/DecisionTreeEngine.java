@@ -11,6 +11,7 @@ import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTre
 import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
     }
 
     @Override
-    public StrategyAwardData process(String userId, Long strategyId, Integer awardId) {
+    public StrategyAwardData process(String userId, Long strategyId, Integer awardId,  Date endDateTime) {
         StrategyAwardData strategyAwardData = null;
 
         // 获取基础信息

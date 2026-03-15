@@ -15,7 +15,6 @@ import cn.bugstack.trigger.api.IRaffleActivityService;
 import cn.bugstack.trigger.api.dto.req.ActivityDrawRequestDTO;
 import cn.bugstack.trigger.api.dto.resp.ActivityDrawResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.Response;
-import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
@@ -32,7 +31,7 @@ import static cn.bugstack.types.common.ResponseCode.*;
 @Slf4j
 @RestController
 @RequestMapping("/api/raffle/activity")
-public class IRaffleActivityController implements IRaffleActivityService {
+public class RaffleActivityController implements IRaffleActivityService {
     @Resource
     private IActivityArmory activityArmory;
 
@@ -103,6 +102,7 @@ public class IRaffleActivityController implements IRaffleActivityService {
                     .builder()
                     .userId(order.getUserId())
                     .strategyId(order.getStrategyId())
+                    .endDateTime(order.getEndDateTime())
                     .build()
             );
             // 4 存放结果

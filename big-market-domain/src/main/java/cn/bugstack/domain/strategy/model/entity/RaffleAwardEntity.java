@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Data
 @Builder
@@ -46,6 +47,7 @@ public class RaffleAwardEntity {
      * 奖品中奖概率
      */
     private String awardDesc;
+
     /**
      * 奖品顺序号
      */
