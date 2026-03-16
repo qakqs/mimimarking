@@ -1,6 +1,6 @@
 package cn.bugstack.domain.rebate.service.impl;
 
-import cn.bugstack.domain.rebate.event.SendRebateMessageEvent;
+import cn.bugstack.types.event.SendRebateMessageEvent;
 import cn.bugstack.domain.rebate.model.aggregate.BehaviorRebateAggregate;
 import cn.bugstack.domain.rebate.model.entity.BehaviorEntity;
 import cn.bugstack.domain.rebate.model.entity.BehaviorRebateOrderEntity;
@@ -59,6 +59,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
             RebateMessage rebateMessage = RebateMessage.builder()
                     .userId(behaviorEntity.getUserId())
                     .rebateType(dailyBehaviorRebateVO.getRebateType())
+                    .behaviorType(dailyBehaviorRebateVO.getBehaviorType())
                     .rebateConfig(dailyBehaviorRebateVO.getRebateConfig())
                     .bizId(bizId)
                     .build();

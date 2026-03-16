@@ -7,6 +7,10 @@ import cn.bugstack.domain.activity.service.armory.IActivityArmory;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.service.IAwardService;
+import cn.bugstack.domain.rebate.model.entity.BehaviorEntity;
+import cn.bugstack.domain.rebate.model.valobj.BehaviorTypeVO;
+import cn.bugstack.domain.rebate.service.IBehaviorRebateService;
+import cn.bugstack.domain.rebate.service.impl.BehaviorRebateService;
 import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
@@ -24,7 +28,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static cn.bugstack.types.common.ResponseCode.*;
 
@@ -47,6 +54,10 @@ public class RaffleActivityController implements IRaffleActivityService {
     @Resource
     private IAwardService awardService;
 
+    @Resource
+    private IBehaviorRebateService behaviorRebateService;
+
+    DateFormat dateFormatDay = new SimpleDateFormat("yyyy-MM-dd");
 
     @RequestMapping(value = "armory", method = RequestMethod.GET)
     @Override
@@ -143,6 +154,43 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .info(UN_ERROR.getInfo())
                     .build();
 
+        }
+    }
+
+    @RequestMapping(value = "calender_sign_rebate", method = RequestMethod.POST)
+    @Override
+    public Response<Boolean> calenderSignRebate(String userId) {
+        try {
+            log.info("日历签到返利 开始 userId:{}", userId);
+            if (userId == null) {
+                throw new AppException(ILLEGAL_PARAMETER);
+            }
+            BehaviorEntity behaviorEntity = new BehaviorEntity();
+            behaviorEntity.setUserId(userId);
+            behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
+            behaviorEntity.setOutBusinessNo(dateFormatDay.format(new Date()));
+
+            List<String> orderList = behaviorRebateService.createOrder(behaviorEntity);
+            log.info("日历签到返利 结束 orderList:{}", orderList);
+
+            return Response.<Boolean>builder()
+                    .code(SUCCESS.getCode())
+                    .info(SUCCESS.getInfo())
+                    .data(true)
+                    .build();
+        } catch (AppException appException) {
+            log.error("日历签到返利 业务异常 ", appException);
+            return Response.<Boolean>builder()
+                    .code(appException.getCode())
+                    .info(appException.getInfo())
+                    .build();
+
+        } catch (Exception e) {
+            log.error("日历签到返利 系统异常 ", e);
+            return Response.<Boolean>builder()
+                    .code(UN_ERROR.getCode())
+                    .info(UN_ERROR.getInfo())
+                    .build();
         }
     }
 }

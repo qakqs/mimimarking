@@ -18,7 +18,7 @@ public class SendMessageTaskJob {
     @Resource
     private ThreadPoolExecutor executor;
 
-    @Scheduled(cron = "0 */5 * * * *")
+    @Scheduled(cron = "0/5 * * * * ?")
     public void execute() {
         try {
             List<TaskEntity> taskEntities = taskService.queryNoSendMessageTaskList();

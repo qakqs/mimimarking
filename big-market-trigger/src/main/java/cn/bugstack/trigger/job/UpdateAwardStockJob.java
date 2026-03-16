@@ -21,7 +21,6 @@ public class UpdateAwardStockJob {
     @Scheduled(cron = "0/5 * * * * ?")
     public void process() {
         try {
-            log.info("定时任务 更新奖品消耗库存 start ");
 
             StrategyAwardStockKeyVO strategyAwardStockKeyVO = raffleStock.takeQueueValue();
             if (strategyAwardStockKeyVO == null) {
