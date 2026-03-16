@@ -1,6 +1,6 @@
 package cn.bugstack.domain.task.service.impl;
 
-import cn.bugstack.domain.task.model.entity.TaskEntity;
+import cn.bugstack.types.common.TaskEntity;
 import cn.bugstack.domain.task.service.ITaskService;
 import cn.bugstack.domain.task.repository.ITaskRepository;
 import jakarta.annotation.Resource;

@@ -1,6 +1,5 @@
-package cn.bugstack.domain.task.model.entity;
+package cn.bugstack.types.common;
 
-import cn.bugstack.domain.award.model.valobj.TaskStateVO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 public class TaskEntity {
 
-        /**
+    /**
      * 用户id
      */
     private String userId;

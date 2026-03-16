@@ -6,7 +6,7 @@ import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
-import cn.bugstack.domain.award.model.valobj.TaskStateVO;
+import cn.bugstack.types.common.TaskStateVO;
 import cn.bugstack.types.event.BaseEvent;
 import cn.bugstack.types.event.SendAwardMessage;
 import jakarta.annotation.Resource;

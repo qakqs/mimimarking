@@ -2,7 +2,7 @@ package cn.bugstack.domain.task.repository;
 
 
 
-import cn.bugstack.domain.task.model.entity.TaskEntity;
+import cn.bugstack.types.common.TaskEntity;
 
 import java.util.List;
 

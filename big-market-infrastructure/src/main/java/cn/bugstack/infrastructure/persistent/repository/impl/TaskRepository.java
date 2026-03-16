@@ -1,6 +1,6 @@
 package cn.bugstack.infrastructure.persistent.repository.impl;
 
-import cn.bugstack.domain.task.model.entity.TaskEntity;
+import cn.bugstack.types.common.TaskEntity;
 import cn.bugstack.domain.task.repository.ITaskRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
 import cn.bugstack.infrastructure.persistent.dao.ITaskDao;

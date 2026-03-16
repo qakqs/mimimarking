@@ -28,7 +28,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
     }
 
     @Override
-    public StrategyAwardData process(String userId, Long strategyId, Integer awardId,  Date endDateTime) {
+    public StrategyAwardData process(String userId, Long strategyId, Integer awardId, Date endDateTime) {
         StrategyAwardData strategyAwardData = null;
 
         // 获取基础信息
@@ -48,6 +48,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
                     .userId(userId)
                     .strategyId(strategyId)
                     .ruleValue(ruleTreeNode.getRuleValue())
+                    .endDateTime(endDateTime)
                     .build()
             );
             RuleLogicCheckTypeVO ruleLogicCheckTypeVO = logicEntity.getRuleLogicCheckType();
@@ -72,7 +73,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
                 return ruleTreeNodeLineVO.getRuleNodeTo();
             }
         }
-         // throw  new AppException(NEXT_NODE_ERROR_NODE_NULL);
+        // throw  new AppException(NEXT_NODE_ERROR_NODE_NULL);
 
         return null;
     }

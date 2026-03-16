@@ -1,7 +1,7 @@
 package cn.bugstack.domain.task.service;
 
 
-import cn.bugstack.domain.task.model.entity.TaskEntity;
+import cn.bugstack.types.common.TaskEntity;
 
 import java.util.List;
 

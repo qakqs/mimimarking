@@ -40,6 +40,11 @@
             <groupId>cn.bugstack</groupId>
             <artifactId>big-market-domain</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+
 
     </dependencies>
 

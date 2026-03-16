@@ -1,4 +1,4 @@
-package cn.bugstack.domain.award.model.valobj;
+package cn.bugstack.types.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

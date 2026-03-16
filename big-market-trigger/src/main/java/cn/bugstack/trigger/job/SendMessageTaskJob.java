@@ -1,6 +1,6 @@
 package cn.bugstack.trigger.job;
 
-import cn.bugstack.domain.task.model.entity.TaskEntity;
+import cn.bugstack.types.common.TaskEntity;
 import cn.bugstack.domain.task.service.ITaskService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
