@@ -51,6 +51,8 @@ public class StrategyRepository implements IStrategyRepository {
 
     @Resource
     private IRaffleActivityAccountDayDao raffleActivityAccountDayDao;
+    @Resource
+    private IRaffleActivityAccountDao raffleActivityAccountDao;
 
 
     @Override
@@ -225,6 +227,7 @@ public class StrategyRepository implements IStrategyRepository {
     public Boolean submitStrategyAwardStock(String cacheKey) {
         return this.submitStrategyAwardStock(cacheKey, null);
     }
+
     @Override
     public Boolean submitStrategyAwardStock(String cacheKey, Date endDateTime) {
         long surplus = redisService.decr(cacheKey);
@@ -234,9 +237,9 @@ public class StrategyRepository implements IStrategyRepository {
         }
         String lockKey = cacheKey + Constants.UNDERLINE + surplus;
         Boolean re = true;
-        if (null == endDateTime){
-             re = redisService.setNx(lockKey);
-        }else {
+        if (null == endDateTime) {
+            re = redisService.setNx(lockKey);
+        } else {
             long expireMills = endDateTime.getTime() - System.currentTimeMillis() + TimeUnit.DAYS.toMillis(1);
             re = redisService.setNx(lockKey, expireMills, TimeUnit.MICROSECONDS);
         }
@@ -329,6 +332,60 @@ public class StrategyRepository implements IStrategyRepository {
             res.put(treeId, ruleValue);
         }
         return res;
+    }
+
+    @Override
+    public Integer queryActivityAccountTotalUseCount(String userId, Long strategyId) {
+        Long activityId = raffleActivityDao.queryActivityIdByStrategyId(strategyId);
+        RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(RaffleActivityAccount
+                .builder()
+                .activityId(activityId)
+                .userId(userId)
+                .build()
+        );
+
+        return raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus();
+    }
+
+    @Override
+    public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
+        StrategyRule strategyRule = new StrategyRule();
+        strategyRule.setStrategyId(strategyId);
+        strategyRule.setRuleModel(LogicModel.RULE_WIGHT.getCode());
+        String ruleValue = strategyRuleDao.queryStrategyRuleValue(strategyRule);
+        StrategyRuleEntity strategyRuleEntity = new StrategyRuleEntity();
+        strategyRuleEntity.setRuleValue(ruleValue);
+        strategyRuleEntity.setRuleModel(LogicModel.RULE_WIGHT.getCode());
+        // 权重拆解的值
+        Map<String, List<Integer>> ruleWeightValueMap = strategyRuleEntity.getRuleWeightValues();
+        Set<String> keySet = ruleWeightValueMap.keySet();
+        List<RuleWeightVO>  ruleWeightVOList = new ArrayList<>();
+
+        for (String ruleWeightKey : keySet) {
+            List<Integer> awardIds = ruleWeightValueMap.get(ruleWeightKey);
+            List<RuleWeightVO.Award> awardList = new ArrayList<>();
+            // 也可以修改为一次从数据库查询
+            for (Integer awardId : awardIds) {
+                StrategyAward strategyAwardReq = new StrategyAward();
+                strategyAwardReq.setStrategyId(strategyId);
+                strategyAwardReq.setAwardId(awardId);
+                StrategyAward strategyAward = strategyAwardDao.queryStrategyAward(strategyAwardReq);
+                if (null == strategyAward) {
+                    break;
+                }
+                awardList.add(RuleWeightVO.Award.builder()
+                        .awardId(strategyAward.getAwardId())
+                        .awardTitle(strategyAward.getAwardTitle())
+                        .build());
+            }
+            ruleWeightVOList.add(RuleWeightVO.builder()
+                    .ruleValue(ruleValue)
+                    .weight(Integer.valueOf(ruleWeightKey.split(Constants.COLON)[0]))
+                    .awardIds(awardIds)
+                    .awardList(awardList)
+                    .build());
+        }
+        return ruleWeightVOList;
     }
 
 

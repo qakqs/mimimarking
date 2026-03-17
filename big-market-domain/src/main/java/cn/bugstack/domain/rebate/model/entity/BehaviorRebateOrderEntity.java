@@ -24,6 +24,12 @@ public class BehaviorRebateOrderEntity {
      * 订单ID
      */
     private String orderId;
+
+    /**
+     * 业务仿重ID
+     */
+    private String outBusinessNo;
+
     /**
      * 行为类型（sign 签到、openai_pay 支付）
      */

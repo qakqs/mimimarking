@@ -1,13 +1,16 @@
 package cn.bugstack.trigger.http;
 
+import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
 import cn.bugstack.domain.activity.model.entity.PartakeRaffleActivityEntity;
 import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
+import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.activity.service.IRaffleActivityPartakeService;
 import cn.bugstack.domain.activity.service.armory.IActivityArmory;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
 import cn.bugstack.domain.award.model.valobj.AwardStateVO;
 import cn.bugstack.domain.award.service.IAwardService;
 import cn.bugstack.domain.rebate.model.entity.BehaviorEntity;
+import cn.bugstack.domain.rebate.model.entity.BehaviorRebateOrderEntity;
 import cn.bugstack.domain.rebate.model.valobj.BehaviorTypeVO;
 import cn.bugstack.domain.rebate.service.IBehaviorRebateService;
 import cn.bugstack.domain.rebate.service.impl.BehaviorRebateService;
@@ -17,12 +20,15 @@ import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyArmory;
 import cn.bugstack.trigger.api.IRaffleActivityService;
 import cn.bugstack.trigger.api.dto.req.ActivityDrawRequestDTO;
+import cn.bugstack.trigger.api.dto.req.UserActivityAccountRequestDTO;
 import cn.bugstack.trigger.api.dto.resp.ActivityDrawResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.Response;
+import cn.bugstack.trigger.api.dto.resp.UserActivityAccountResponseDTO;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -56,6 +62,9 @@ public class RaffleActivityController implements IRaffleActivityService {
 
     @Resource
     private IBehaviorRebateService behaviorRebateService;
+
+    @Resource
+    private IRaffleActivityAccountQuotaService raffleActivityAccountQuotaService;
 
     DateFormat dateFormatDay = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -192,5 +201,80 @@ public class RaffleActivityController implements IRaffleActivityService {
                     .info(UN_ERROR.getInfo())
                     .build();
         }
+    }
+
+    @RequestMapping(value = "is_calender_sign_rebate", method = RequestMethod.POST)
+    @Override
+    public Response<Boolean> isCalenderSignRebate(String userId) {
+        try {
+            log.info("日历签到是否返利 开始 userId:{}", userId);
+            String outBusinessNo = dateFormatDay.format(new Date());
+            List<BehaviorRebateOrderEntity> orderByOutBusinessNo = behaviorRebateService.getOrderByOutBusinessNo(userId, outBusinessNo);
+            log.info("日历签到是否返利 完成 userId:{}， orderSize:{}", userId, orderByOutBusinessNo.size());
+
+            return Response.<Boolean>builder()
+                    .code(SUCCESS.getCode())
+                    .info(SUCCESS.getInfo())
+                    .data(!orderByOutBusinessNo.isEmpty())
+                    .build();
+
+        } catch (AppException appException) {
+            log.error("日历签到是否返利 业务异常 ", appException);
+            return Response.<Boolean>builder()
+                    .code(appException.getCode())
+                    .info(appException.getInfo())
+                    .build();
+
+        } catch (Exception e) {
+            log.error("日历签到是否返利 系统异常 ", e);
+            return Response.<Boolean>builder()
+                    .code(UN_ERROR.getCode())
+                    .info(UN_ERROR.getInfo())
+                    .build();
+
+        }
+    }
+
+    @RequestMapping(value = "query_user_activity_account", method = RequestMethod.POST)
+    @Override
+    public Response<UserActivityAccountResponseDTO> queryUserActivityAccount(@RequestBody UserActivityAccountRequestDTO request) {
+        try {
+
+            log.info("查询用户活动账户 开始 request:{}", request);
+            ActivityAccountEntity activityAccountEntity = raffleActivityAccountQuotaService.queryActivityAccount(request.getUserId(), request.getActivityId());
+            UserActivityAccountResponseDTO userActivityAccountResponseDTO = getUserActivityAccountResponseDTO(activityAccountEntity);
+
+            return Response.<UserActivityAccountResponseDTO>builder()
+                    .code(SUCCESS.getCode())
+                    .info(SUCCESS.getInfo())
+                    .data(userActivityAccountResponseDTO)
+                    .build();
+
+        } catch (AppException appException) {
+            log.error("日历签到是否返利 业务异常 ", appException);
+            return Response.<UserActivityAccountResponseDTO>builder()
+                    .code(appException.getCode())
+                    .info(appException.getInfo())
+                    .build();
+
+        } catch (Exception e) {
+            log.error("日历签到是否返利 系统异常 ", e);
+            return Response.<UserActivityAccountResponseDTO>builder()
+                    .code(UN_ERROR.getCode())
+                    .info(UN_ERROR.getInfo())
+                    .build();
+
+        }
+    }
+
+    private static UserActivityAccountResponseDTO getUserActivityAccountResponseDTO(ActivityAccountEntity activityAccountEntity) {
+        UserActivityAccountResponseDTO userActivityAccountResponseDTO = new UserActivityAccountResponseDTO();
+        userActivityAccountResponseDTO.setTotalCount(activityAccountEntity.getTotalCount());
+        userActivityAccountResponseDTO.setTotalCountSurplus(activityAccountEntity.getTotalCountSurplus());
+        userActivityAccountResponseDTO.setDayCount(activityAccountEntity.getDayCount());
+        userActivityAccountResponseDTO.setDayCountSurplus(activityAccountEntity.getDayCountSurplus());
+        userActivityAccountResponseDTO.setMonthCount(activityAccountEntity.getMonthCount());
+        userActivityAccountResponseDTO.setMonthCountSurplus(activityAccountEntity.getMonthCountSurplus());
+        return userActivityAccountResponseDTO;
     }
 }

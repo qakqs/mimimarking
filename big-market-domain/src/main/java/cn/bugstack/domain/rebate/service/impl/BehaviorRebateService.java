@@ -24,6 +24,7 @@ import java.util.List;
 @Component
 public class BehaviorRebateService implements IBehaviorRebateService {
 
+
     @Resource
     private IBehaviorRebateRepository behaviorRebateRepository;
 
@@ -47,6 +48,7 @@ public class BehaviorRebateService implements IBehaviorRebateService {
                     .builder()
                     .userId(behaviorEntity.getUserId())
                     .orderId(RandomStringUtils.randomNumeric(12))
+                    .outBusinessNo(behaviorEntity.getOutBusinessNo())
                     .behaviorType(dailyBehaviorRebateVO.getBehaviorType())
                     .rebateDesc(dailyBehaviorRebateVO.getRebateDesc())
                     .rebateType(dailyBehaviorRebateVO.getRebateType())
@@ -91,6 +93,11 @@ public class BehaviorRebateService implements IBehaviorRebateService {
 
         //返回订单集合
         return orderList;
+    }
+
+    @Override
+    public List<BehaviorRebateOrderEntity> getOrderByOutBusinessNo(String userId, String outBusinessNo) {
+       return behaviorRebateRepository.getOrderByOutBusinessNo(userId, outBusinessNo);
     }
 
 

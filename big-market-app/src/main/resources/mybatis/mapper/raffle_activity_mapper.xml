@@ -27,7 +27,7 @@
     </select>
 
     <select id="queryStrategyIdByActivityId" resultType="java.lang.Long">
-                select strategy_id
+        select strategy_id
         from raffle_activity
                 where activity_id = #{activityId}
 

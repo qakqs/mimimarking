@@ -1,9 +1,11 @@
 package cn.bugstack.trigger.api;
 
 import cn.bugstack.trigger.api.dto.req.RaffleAwardListRequestDTO;
+import cn.bugstack.trigger.api.dto.req.RaffleStrategyRuleWeightRequestDTO;
 import cn.bugstack.trigger.api.dto.resp.RaffleAwardListResponseDTO;
 import cn.bugstack.trigger.api.dto.req.RaffleStrategyRequestDTO;
 import cn.bugstack.trigger.api.dto.resp.RaffleStrategyResponseDTO;
+import cn.bugstack.trigger.api.dto.resp.RaffleStrategyRuleWeightResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.Response;
 
 import java.util.List;
@@ -34,4 +36,11 @@ public interface IRaffleStrategyService {
      */
     Response<RaffleStrategyResponseDTO> randomRaffle(RaffleStrategyRequestDTO requestDTO);
 
+
+    /**
+     * 查询抽奖策略权重规则，给用户展示出抽奖N次后必中奖奖品范围
+     * @param request
+     * @return
+     */
+    Response<List<RaffleStrategyRuleWeightResponseDTO>> queryRaffleStrategyRuleWeight(RaffleStrategyRuleWeightRequestDTO request);
 }
