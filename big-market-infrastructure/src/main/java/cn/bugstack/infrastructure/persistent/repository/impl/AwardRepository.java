@@ -1,16 +1,18 @@
 package cn.bugstack.infrastructure.persistent.repository.impl;
 
+import cn.bugstack.domain.award.model.aggregate.GiveOutPrizesAggregate;
 import cn.bugstack.domain.award.model.aggregate.UserAwardRecordAggregate;
 import cn.bugstack.domain.award.model.entity.TaskEntity;
 import cn.bugstack.domain.award.model.entity.UserAwardRecordEntity;
+import cn.bugstack.domain.award.model.entity.UserCreditAwardEntity;
 import cn.bugstack.domain.award.repository.IAwardRepository;
 import cn.bugstack.infrastructure.event.EventPublisher;
-import cn.bugstack.infrastructure.persistent.dao.ITaskDao;
-import cn.bugstack.infrastructure.persistent.dao.IUserAwardRecordDao;
-import cn.bugstack.infrastructure.persistent.dao.IUserRaffleOrderDao;
+import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
+import cn.bugstack.infrastructure.persistent.po.UserCreditAccount;
 import cn.bugstack.infrastructure.persistent.po.UserRaffleOrder;
+import cn.bugstack.infrastructure.util.AwardConvert;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
@@ -31,6 +33,8 @@ public class AwardRepository implements IAwardRepository {
     @Resource
     private IUserAwardRecordDao userAwardRecordDao;
 
+    @Resource
+    private IAwardDao awardDao;
 
     @Resource
     private TransactionTemplate transactionTemplate;
@@ -39,6 +43,12 @@ public class AwardRepository implements IAwardRepository {
 
     @Resource
     private IUserRaffleOrderDao userRaffleOrderDao;
+
+    @Resource
+    private AwardConvert awardConvert;
+
+    @Resource
+    private IUserCreditAccountDao userCreditAccountDao;
 
     @Override
     public void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate) {
@@ -100,5 +110,43 @@ public class AwardRepository implements IAwardRepository {
             taskDao.updateTaskSendMessageFail(task);
         }
 
+    }
+
+    @Override
+    public String queryAwardConfig(Integer awardId) {
+        return awardDao.queryAwardConfigAwardId(awardId);
+    }
+
+    @Override
+    public void saveOutPrizesAggregate(GiveOutPrizesAggregate prizesAggregate) {
+        UserCreditAwardEntity userCreditAwardEntity = prizesAggregate.getUserCreditAwardEntity();
+        UserAwardRecordEntity userAwardRecordEntity = prizesAggregate.getUserAwardRecord();
+        UserCreditAccount userCreditAccount = awardConvert.UserCreditAccountConvert(userCreditAwardEntity);
+        userCreditAccount.setAccountStatus(userAwardRecordEntity.getAwardState().getCode());
+        UserAwardRecord userAwardRecord = awardConvert.userAwardRecordConvert(userAwardRecordEntity);
+        transactionTemplate.execute(status -> {
+            try {
+                // 更新积分 || 创建积分账户
+                int count2 = userCreditAccountDao.updateUserCreditAccount(userCreditAccount);
+                if (0 == count2) {
+                    userCreditAccountDao.insert(userCreditAccount);
+                }
+
+                // 更新中奖记录
+                int count1 = userAwardRecordDao.updateAwardRecordCompletedState(userAwardRecord);
+                if (0 == count1) {
+                    status.setRollbackOnly();
+                }
+                return 1;
+            } catch (Exception e) {
+                status.setRollbackOnly();
+                throw new RuntimeException();
+            }
+        });
+    }
+
+    @Override
+    public String queryAwardKey(Integer awardId) {
+        return awardDao.queryAwardConfigAwardId(awardId);
     }
 }

@@ -37,6 +37,7 @@ public class AppException extends RuntimeException {
 
 
     public AppException(String code) {
+        super(code);
         this.code = code;
     }
 

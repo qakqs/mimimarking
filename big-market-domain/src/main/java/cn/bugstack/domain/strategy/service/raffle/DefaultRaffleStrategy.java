@@ -60,6 +60,7 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
         return StrategyAwardVO.builder()
                 .logicModel(res.getAwardRuleValue())
                 .awardId(res.getAwardId())
+                .awardRuleValue(res.getAwardRuleValue())
                 .build();
     }
 

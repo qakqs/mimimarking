@@ -1,4 +1,4 @@
-package cn.bugstack.domain.rebate.event;
+package cn.bugstack.trigger.listener;
 
 import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;

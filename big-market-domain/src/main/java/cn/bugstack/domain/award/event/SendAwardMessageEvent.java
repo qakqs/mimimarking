@@ -1,7 +1,12 @@
 package cn.bugstack.domain.award.event;
 
+import cn.bugstack.domain.award.model.entity.DistributeAwardEntity;
+import cn.bugstack.domain.award.service.IAwardService;
 import cn.bugstack.types.event.BaseEvent;
 import cn.bugstack.types.event.SendAwardMessage;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -18,15 +23,6 @@ public class SendAwardMessageEvent extends BaseEvent<SendAwardMessage> {
     private String topic;
 
 
-    @RabbitListener(queuesToDeclare = @Queue(value = "${spring.rabbitmq.topic.send_award}"))
-    public void listener(String message) {
-        try {
-            log.info("监听用户奖品发送消息 topic: {} message: {}", topic, message);
-        } catch (Exception e) {
-            log.error("监听用户奖品发送消息，消费失败 topic: {} message: {}", topic, message);
-            throw e;
-        }
-    }
 
 
     @Override

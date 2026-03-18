@@ -1,4 +1,4 @@
-package cn.bugstack.domain.strategy.model.valobj;
+package cn.bugstack.domain.award.model.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,13 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class StrategyAwardVO {
-
+public class DistributeAwardEntity {
+    private String userId;
     private Integer awardId;
-    private String logicModel;
-
-    /**
-     * 抽奖精品规则
-     */
-    private String awardRuleValue;
+    private String orderId;
+    private String awardConfig;
 }

@@ -47,4 +47,10 @@ public class UserAwardRecordEntity {
      */
     private AwardStateVO awardState;
 
+        /**
+     * 奖品配置信息
+     */
+    private String awardConfig;
+
+
 }
