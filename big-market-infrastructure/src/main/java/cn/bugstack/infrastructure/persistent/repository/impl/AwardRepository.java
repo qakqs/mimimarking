@@ -12,16 +12,21 @@ import cn.bugstack.infrastructure.persistent.po.Task;
 import cn.bugstack.infrastructure.persistent.po.UserAwardRecord;
 import cn.bugstack.infrastructure.persistent.po.UserCreditAccount;
 import cn.bugstack.infrastructure.persistent.po.UserRaffleOrder;
+import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.infrastructure.util.AwardConvert;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.concurrent.TimeUnit;
+
+import static cn.bugstack.types.common.Constants.ACTIVITY_ACCOUNT_LOCK;
 import static cn.bugstack.types.common.ResponseCode.AWARD_ORDER_USED;
 
 @Repository
@@ -49,6 +54,9 @@ public class AwardRepository implements IAwardRepository {
 
     @Resource
     private IUserCreditAccountDao userCreditAccountDao;
+
+    @Resource
+    private IRedisService redisService;
 
     @Override
     public void saveUserAwardRecord(UserAwardRecordAggregate userAwardRecordAggregate) {
@@ -79,6 +87,7 @@ public class AwardRepository implements IAwardRepository {
         userRaffleOrder.setUserId(userAwardRecordEntity.getUserId());
         userRaffleOrder.setOrderId(userAwardRecordEntity.getOrderId());
         transactionTemplate.execute(status -> {
+
             try {
                 // 写入记录
                 userAwardRecordDao.insert(userAwardRecord);
@@ -125,7 +134,9 @@ public class AwardRepository implements IAwardRepository {
         userCreditAccount.setAccountStatus(userAwardRecordEntity.getAwardState().getCode());
         UserAwardRecord userAwardRecord = awardConvert.userAwardRecordConvert(userAwardRecordEntity);
         transactionTemplate.execute(status -> {
+            RLock lock = redisService.getLock(ACTIVITY_ACCOUNT_LOCK(prizesAggregate.getUserId()));
             try {
+                lock.lock(3, TimeUnit.SECONDS);
                 // 更新积分 || 创建积分账户
                 int count2 = userCreditAccountDao.updateUserCreditAccount(userCreditAccount);
                 if (0 == count2) {
@@ -141,6 +152,8 @@ public class AwardRepository implements IAwardRepository {
             } catch (Exception e) {
                 status.setRollbackOnly();
                 throw new RuntimeException();
+            }finally {
+                lock.unlock();
             }
         });
     }

@@ -21,10 +21,20 @@ public class Constants {
         public static final String ACTIVITY_COUNT_KEY = "big_market_activity_count_key_";
         public static final String ACTIVITY_SKU_STOCK_COUNT_KEY = "big_market_activity_sku_stock_count_key_";
         public static final String STRATEGY_SKU_COUNT_QUEUE_KEY = "big_market_sku_award_query_key_";
+        public static final String ACTIVITY_ACCOUNT_LOCK = "big_market_activity_account_lock_";
+        public static final String USER_CREDIT_ACCOUNT_LOCK = "big_market_user_credit_account_lock_";
+    }
+
+
+    public static String USER_CREDIT_ACCOUNT_LOCK(String userId, String outBusinessNo){
+        return RedisKey.USER_CREDIT_ACCOUNT_LOCK+userId + UNDERLINE +  outBusinessNo;
     }
 
     public static String RULE_TREE_VO_KEY(String treeId) {
         return Constants.RedisKey.RULE_TREE_VO_KEY + treeId;
+    }
+    public static String ACTIVITY_ACCOUNT_LOCK(String userId) {
+        return Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + userId;
     }
 
     public static String STRATEGY_AWARD_LIST_KEY(Long strategyId) {

@@ -23,7 +23,7 @@ public class SendAwardCustomer {
     @Resource
     private IAwardService awardService;
 
-        @RabbitListener(queuesToDeclare = @Queue(value = "${spring.rabbitmq.topic.send_award}"))
+    @RabbitListener(queuesToDeclare = @Queue(value = "${spring.rabbitmq.topic.send_award}"))
     public void listener(String message) {
         try {
             log.info("监听用户奖品发送消息 topic: {} message: {}", topic, message);
