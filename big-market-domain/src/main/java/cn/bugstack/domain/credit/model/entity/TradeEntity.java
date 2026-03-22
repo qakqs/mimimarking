@@ -1,5 +1,6 @@
 package cn.bugstack.domain.credit.model.entity;
 
+import cn.bugstack.domain.activity.model.valobj.OrderTradeTypeVO;
 import cn.bugstack.domain.credit.model.valobj.TradeNameVO;
 import cn.bugstack.domain.credit.model.valobj.TradeTypeVO;
 import lombok.AllArgsConstructor;
@@ -35,5 +36,11 @@ public class TradeEntity {
      * 业务仿重ID - 外部透传。返利、行为等唯一标识
      */
     private String outBusinessNo;
+
+    /**
+     * 交易类型
+     */
+    private OrderTradeTypeVO orderTradeType = OrderTradeTypeVO.rebate_no_pay_trade;
+
 
 }

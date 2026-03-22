@@ -2,6 +2,7 @@ package cn.bugstack.domain.activity.service;
 
 
 import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
+import cn.bugstack.domain.activity.model.entity.DeliveryOrderEntity;
 import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 
 /**
@@ -17,6 +18,12 @@ public interface IRaffleActivityAccountQuotaService {
      */
     String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity);
 
+    /**
+     * 更新抽奖活动订单订单
+     * @param deliveryOrderEntity
+     * @return
+     */
+    void updateSkuRechargeOrder(DeliveryOrderEntity deliveryOrderEntity);
 
     Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
 

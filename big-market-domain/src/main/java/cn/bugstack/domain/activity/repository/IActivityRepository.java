@@ -1,7 +1,7 @@
 package cn.bugstack.domain.activity.repository;
 
 
-import cn.bugstack.domain.activity.model.aggreate.CreateOrderAggregate;
+import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
 import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
 import cn.bugstack.domain.activity.model.entity.*;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
@@ -18,7 +18,9 @@ public interface IActivityRepository {
 
     ActivityCountEntity queryRaffleActivityCountByActivityCountId(Long activityCountId);
 
-    void doSaveOrder(CreateOrderAggregate createOrderAggregate);
+    void doSaveCreditNoPayOrder(CreateQuotaOrderAggregate createOrderAggregate);
+
+    void doSaveCreditPayOrder(CreateQuotaOrderAggregate createQuotaOrderAggregate);
 
     void cacheActivitySkuStockCount(String cacheKey, Integer stockCount);
 
@@ -44,7 +46,7 @@ public interface IActivityRepository {
 
     void saveCreatePartakeOrderAggregate(CreatePartakeOrderAggregate createPartakeOrderAggregate);
 
-    List<ActivitySkuEntity>queryRaffleActivitySkuListByActivityId(Long activityId);
+    List<ActivitySkuEntity> queryRaffleActivitySkuListByActivityId(Long activityId);
 
     Integer queryRaffleActivityAccountDayPartakeCount(Long activityId, String userId);
 
@@ -52,4 +54,5 @@ public interface IActivityRepository {
 
     Integer queryRaffleActivityAccountPartakeCount(Long activityId, String userId);
 
+    void updateSkuRechargeOrder(DeliveryOrderEntity deliveryOrderEntity);
 }

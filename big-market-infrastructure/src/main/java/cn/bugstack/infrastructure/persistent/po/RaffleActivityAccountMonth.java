@@ -13,7 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RaffleActivityAccountMonth {
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM");
     /**
      * 自增ID
      */
@@ -47,7 +47,7 @@ public class RaffleActivityAccountMonth {
      */
     private Date updateTime;
 
-    public String currDay() {
+    public static String currDay() {
         return dateFormat.format(new Date());
     }
 

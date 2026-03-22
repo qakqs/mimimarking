@@ -1,5 +1,6 @@
 package cn.bugstack.domain.activity.model.entity;
 
+import cn.bugstack.domain.activity.model.valobj.OrderTradeTypeVO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -37,5 +38,10 @@ public class SkuRechargeEntity {
      */
     @NotNull(message = "outBusinessNo不能为空")
     private String outBusinessNo;
+
+    /**
+     * 交易类型
+     */
+    private OrderTradeTypeVO orderTradeType = OrderTradeTypeVO.rebate_no_pay_trade;
 
 }

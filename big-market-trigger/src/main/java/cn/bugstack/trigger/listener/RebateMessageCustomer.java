@@ -1,6 +1,7 @@
 package cn.bugstack.trigger.listener;
 
 import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
+import cn.bugstack.domain.activity.model.valobj.OrderTradeTypeVO;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.credit.model.entity.TradeEntity;
 import cn.bugstack.domain.credit.model.valobj.TradeNameVO;
@@ -51,6 +52,7 @@ public class RebateMessageCustomer {
                             .userId(rebateMessage.getUserId())
                             .sku(Long.valueOf(rebateMessage.getRebateConfig()))
                             .outBusinessNo(rebateMessage.getBizId())
+                            .orderTradeType(OrderTradeTypeVO.rebate_no_pay_trade)
                             .build();
                     // 2. 入账奖励
                     raffleActivityAccountQuotaService.createSkuRechargeOrder(skuRechargeEntity);
@@ -62,6 +64,7 @@ public class RebateMessageCustomer {
                     tradeEntity.setTradeType(TradeTypeVO.FORWARD);
                     tradeEntity.setAmount(new BigDecimal(rebateMessage.getRebateConfig()));
                     tradeEntity.setOutBusinessNo(rebateMessage.getBizId());
+                    tradeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
                     creditAdjustService.createOrder(tradeEntity);
                     break;
 

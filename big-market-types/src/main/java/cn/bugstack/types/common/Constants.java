@@ -23,62 +23,66 @@ public class Constants {
         public static final String STRATEGY_SKU_COUNT_QUEUE_KEY = "big_market_sku_award_query_key_";
         public static final String ACTIVITY_ACCOUNT_LOCK = "big_market_activity_account_lock_";
         public static final String USER_CREDIT_ACCOUNT_LOCK = "big_market_user_credit_account_lock_";
+        public static final String UPDATE_USER_CREDIT_ACCOUNT_LOCK = "big_market_update_user_credit_account_lock_";
     }
 
 
-    public static String USER_CREDIT_ACCOUNT_LOCK(String userId, String outBusinessNo){
-        return RedisKey.USER_CREDIT_ACCOUNT_LOCK+userId + UNDERLINE +  outBusinessNo;
+    public static String UPDATE_USER_CREDIT_ACCOUNT_LOCK(String userId, String outBusinessNo) {
+        return RedisKey.UPDATE_USER_CREDIT_ACCOUNT_LOCK + userId + UNDERLINE + outBusinessNo;
     }
+        public static String USER_CREDIT_ACCOUNT_LOCK (String userId, String outBusinessNo){
+            return RedisKey.USER_CREDIT_ACCOUNT_LOCK + userId + UNDERLINE + outBusinessNo;
+        }
 
-    public static String RULE_TREE_VO_KEY(String treeId) {
-        return Constants.RedisKey.RULE_TREE_VO_KEY + treeId;
-    }
-    public static String ACTIVITY_ACCOUNT_LOCK(String userId) {
-        return Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + userId;
-    }
+        public static String RULE_TREE_VO_KEY (String treeId){
+            return Constants.RedisKey.RULE_TREE_VO_KEY + treeId;
+        }
+        public static String ACTIVITY_ACCOUNT_LOCK (String userId){
+            return Constants.RedisKey.ACTIVITY_ACCOUNT_LOCK + userId;
+        }
 
-    public static String STRATEGY_AWARD_LIST_KEY(Long strategyId) {
-        return RedisKey.STRATEGY_AWARD_LIST_KEY + strategyId;
-    }
+        public static String STRATEGY_AWARD_LIST_KEY (Long strategyId){
+            return RedisKey.STRATEGY_AWARD_LIST_KEY + strategyId;
+        }
 
-    public static String STRATEGY_KEY(Long strategyId) {
-        return Constants.RedisKey.STRATEGY_KEY + strategyId;
-    }
+        public static String STRATEGY_KEY (Long strategyId){
+            return Constants.RedisKey.STRATEGY_KEY + strategyId;
+        }
 
-    public static String STRATEGY_AWARD_KEY(Long strategyId) {
-        return Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId;
-    }
+        public static String STRATEGY_AWARD_KEY (Long strategyId){
+            return Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId;
+        }
 
-    public static String STRATEGY_RATE_TABLE_KEY(String key) {
-        return Constants.RedisKey.STRATEGY_RATE_TABLE_KEY + key;
-    }
+        public static String STRATEGY_RATE_TABLE_KEY (String key){
+            return Constants.RedisKey.STRATEGY_RATE_TABLE_KEY + key;
+        }
 
-    public static String STRATEGY_RATE_RANGE_KEY(String key) {
-        return Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key;
-    }
+        public static String STRATEGY_RATE_RANGE_KEY (String key){
+            return Constants.RedisKey.STRATEGY_RATE_RANGE_KEY + key;
+        }
 
-    public static String STRATEGY_AWARD_COUNT_KEY(Long strategyId, Integer awardId) {
-        return Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId +
-                Constants.UNDERLINE + awardId;
-    }
+        public static String STRATEGY_AWARD_COUNT_KEY (Long strategyId, Integer awardId){
+            return Constants.RedisKey.STRATEGY_AWARD_COUNT_KEY + strategyId +
+                    Constants.UNDERLINE + awardId;
+        }
 
-    public static String STRATEGY_AWARD_COUNT_QUEUE_KEY() {
-        return Constants.RedisKey.STRATEGY_AWARD_COUNT_QUEUE_KEY;
-    }
+        public static String STRATEGY_AWARD_COUNT_QUEUE_KEY () {
+            return Constants.RedisKey.STRATEGY_AWARD_COUNT_QUEUE_KEY;
+        }
 
-    public static String ACTIVITY_KEY(Long activityId) {
-        return Constants.RedisKey.ACTIVITY_KEY + activityId;
-    }
-    public static String ACTIVITY_COUNT_KEY(Long activityId) {
-        return Constants.RedisKey.ACTIVITY_COUNT_KEY + activityId;
-    }
+        public static String ACTIVITY_KEY (Long activityId){
+            return Constants.RedisKey.ACTIVITY_KEY + activityId;
+        }
+        public static String ACTIVITY_COUNT_KEY (Long activityId){
+            return Constants.RedisKey.ACTIVITY_COUNT_KEY + activityId;
+        }
 
-    public static String STRATEGY_SKU_COUNT_QUEUE_KEY() {
-        return Constants.RedisKey.STRATEGY_SKU_COUNT_QUEUE_KEY;
-    }
-    public static String ACTIVITY_SKU_STOCK_COUNT_KEY(long key) {
-        return Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + key;
-    }
+        public static String STRATEGY_SKU_COUNT_QUEUE_KEY () {
+            return Constants.RedisKey.STRATEGY_SKU_COUNT_QUEUE_KEY;
+        }
+        public static String ACTIVITY_SKU_STOCK_COUNT_KEY ( long key){
+            return Constants.RedisKey.ACTIVITY_SKU_STOCK_COUNT_KEY + key;
+        }
 
 
-}
+    }

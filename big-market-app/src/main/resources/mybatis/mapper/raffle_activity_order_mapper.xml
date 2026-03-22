@@ -15,6 +15,7 @@
         <result column="month_count" property="monthCount"/>
         <result column="state" property="state"/>
         <result column="out_business_no" property="outBusinessNo"/>
+        <result column="pay_amount" property="payAmount"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -37,8 +38,37 @@
                strategy_id,
                order_id,
                order_time,
-               state
+               state,
+               pay_amount
         from raffle_activity_order
         where user_id = #{userId}
     </select>
+
+    <select id="queryRaffleActivityOrder" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityOrder"
+            resultMap="dataMap">
+        select user_id,
+               sku,
+               activity_id,
+               activity_name,
+               strategy_id,
+               order_id,
+               order_time,
+               total_count,
+               day_count,
+               month_count,
+               pay_amount,
+               state
+        from raffle_activity_order
+        where user_id = #{userId}
+          and out_business_no = #{outBusinessNo}
+    </select>
+
+    <update id="updateOrderCompleted" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityOrder">
+        update raffle_activity_order
+        set state       = 'completed',
+            update_time = now()
+        where user_id = #{userId}
+          and out_business_no = #{outBusinessNo}
+          and state = 'wait_pay'
+    </update>
 </mapper>
