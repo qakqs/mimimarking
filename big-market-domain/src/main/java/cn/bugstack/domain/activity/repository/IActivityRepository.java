@@ -55,4 +55,9 @@ public interface IActivityRepository {
     Integer queryRaffleActivityAccountPartakeCount(Long activityId, String userId);
 
     void updateSkuRechargeOrder(DeliveryOrderEntity deliveryOrderEntity);
+
+    ActivityOrderEntity queryUnpayActivityOrder(SkuRechargeEntity skuRechargeEntity);
+
+    List<SkuProductEntity> querySkuProductEntityListByActivityId(Long activityId);
+
 }

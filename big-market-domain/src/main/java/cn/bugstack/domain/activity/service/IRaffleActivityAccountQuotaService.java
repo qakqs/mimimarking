@@ -1,9 +1,7 @@
 package cn.bugstack.domain.activity.service;
 
 
-import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;
-import cn.bugstack.domain.activity.model.entity.DeliveryOrderEntity;
-import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
+import cn.bugstack.domain.activity.model.entity.*;
 
 /**
  * 抽奖活动账户额度服务
@@ -16,7 +14,7 @@ public interface IRaffleActivityAccountQuotaService {
      * @param skuRechargeEntity 活动sku实体，通过sku领取活动。
      * @return 活动参与记录实体
      */
-    String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity);
+    ActivityOrderEntity createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity);
 
     /**
      * 更新抽奖活动订单订单

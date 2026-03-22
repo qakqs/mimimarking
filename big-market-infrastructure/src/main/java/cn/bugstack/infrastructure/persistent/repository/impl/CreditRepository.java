@@ -60,6 +60,14 @@ public class CreditRepository implements ICreditRepository {
         UserCreditAccount userCreditAccount = convert.creditAccountConvert(creditAccountEntity);
 
         UserCreditOrder userCreditOrder = convert.userCreditOrderConvert(creditOrderEntity);
+
+        // 积分账户
+        UserCreditAccount userCreditAccountReq = new UserCreditAccount();
+        userCreditAccountReq.setUserId(userId);
+        userCreditAccountReq.setTotalAmount(creditAccountEntity.getAdjustAmount());
+        // 知识；仓储往上有业务语义，仓储往下到 dao 操作是没有业务语义的。所以不用在乎这块使用的字段名称，直接用持久化对象即可。
+        userCreditAccountReq.setAvailableAmount(creditAccountEntity.getAdjustAmount());
+
         Task task = convert.taskConvert(taskEntity);
         RLock lock = redisService.getLock(USER_CREDIT_ACCOUNT_LOCK(userId, creditOrderEntity.getOutBusinessNo()));
 
@@ -68,11 +76,11 @@ public class CreditRepository implements ICreditRepository {
             transactionTemplate.execute(status -> {
                 try {
                     // 1. 保存账户积分
-                    UserCreditAccount creditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccount);
+                    UserCreditAccount creditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
                     if (null == creditAccount) {
-                        userCreditAccountDao.insert(userCreditAccount);
+                        userCreditAccountDao.insert(userCreditAccountReq);
                     } else {
-                        userCreditAccountDao.updateUserCreditAccount(userCreditAccount);
+                        userCreditAccountDao.updateUserCreditAccount(userCreditAccountReq);
                     }
                     // 2. 保存账户订单
                     userCreditOrderDao.insert(userCreditOrder);
@@ -84,11 +92,13 @@ public class CreditRepository implements ICreditRepository {
                 } catch (Exception e) {
                     log.error("调整账户积分额度失败 userId:{} orderId:{}", userId, creditOrderEntity.getOrderId(), e);
                     status.setRollbackOnly();
+                    throw e;
                 }
                 return 1;
             });
         } catch (Exception e) {
             log.error("调整账户积分额度失败 userId:{} orderId:{}", userId, creditOrderEntity.getOrderId(), e);
+            throw e;
         } finally {
             lock.unlock();
         }
@@ -104,5 +114,13 @@ public class CreditRepository implements ICreditRepository {
             taskDao.updateTaskSendMessageFail(task);
         }
 
+    }
+
+    @Override
+    public CreditAccountEntity queryUserCreditAccount(String userId) {
+        UserCreditAccount userCreditAccountReq = new UserCreditAccount();
+        userCreditAccountReq.setUserId(userId);
+        UserCreditAccount userCreditAccount = userCreditAccountDao.queryUserCreditAccount(userCreditAccountReq);
+        return convert.CreditAccountEntityConvert(userCreditAccount);
     }
 }

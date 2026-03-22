@@ -42,6 +42,7 @@ public class RaffleActivityAccountQuotaService extends AbstractRaffleActivityAcc
         activityOrderEntity.setMonthCount(activityCountEntity.getMonthCount());
         activityOrderEntity.setState(OrderStateVO.completed);
         activityOrderEntity.setOutBusinessNo(skuRechargeEntity.getOutBusinessNo());
+        activityOrderEntity.setPayAmount(activitySkuEntity.getProductAmount());
 
         // 构建聚合对象
         return CreateQuotaOrderAggregate.builder()

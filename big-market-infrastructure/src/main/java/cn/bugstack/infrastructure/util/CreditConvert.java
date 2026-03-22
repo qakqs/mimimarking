@@ -23,4 +23,7 @@ public interface CreditConvert {
 
     Task taskConvert(TaskEntity taskEntity);
 
+    @Mapping(target = "adjustAmount", source = "availableAmount")
+    CreditAccountEntity CreditAccountEntityConvert(UserCreditAccount userCreditAccount);
+
 }

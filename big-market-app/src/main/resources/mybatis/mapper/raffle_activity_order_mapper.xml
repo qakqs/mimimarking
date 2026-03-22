@@ -24,10 +24,10 @@
         insert into raffle_activity_order
         (user_id, sku, activity_id, activity_name, strategy_id, order_id, order_time, state, out_business_no,
          total_count, day_count, month_count,
-         create_time, update_time)
+         create_time, update_time, pay_amount)
         values (#{userId}, #{sku}, #{activityId}, #{activityName}, #{strategyId}, #{orderId}, #{orderTime}, #{state},
                 #{outBusinessNo}, #{totalCount}, #{dayCount}, #{monthCount},
-                now(), now())
+                now(), now(), #{payAmount})
     </insert>
 
     <select id="queryRaffleActivityOrderByUserId" parameterType="java.lang.String" resultMap="dataMap">
@@ -71,4 +71,26 @@
           and out_business_no = #{outBusinessNo}
           and state = 'wait_pay'
     </update>
+
+    <select id="queryUnpayActivityOrder" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivityOrder"
+            resultMap="dataMap">
+        SELECT user_id,
+               sku,
+               activity_id,
+               activity_name,
+               strategy_id,
+               order_id,
+               order_time,
+               total_count,
+               day_count,
+               month_count,
+               pay_amount,
+               state
+        FROM raffle_activity_order
+        WHERE user_id = #{userId}
+          AND sku = #{sku}
+          AND state = 'wait_pay'
+          AND order_time >= now() - INTERVAL 1 MONTH
+        LIMIT 1
+    </select>
 </mapper>

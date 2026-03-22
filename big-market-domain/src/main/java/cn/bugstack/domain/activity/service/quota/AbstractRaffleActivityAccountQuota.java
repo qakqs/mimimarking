@@ -1,14 +1,12 @@
 package cn.bugstack.domain.activity.service.quota;
 
+import cn.bugstack.domain.activity.model.entity.*;
 import cn.bugstack.domain.activity.service.IRaffleActivityAccountQuotaService;
 import cn.bugstack.domain.activity.service.quota.policy.ITradePolicy;
 import cn.bugstack.domain.activity.service.quota.rule.IActivityChain;
 import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
-import cn.bugstack.domain.activity.model.entity.ActivityCountEntity;
 import cn.bugstack.domain.credit.model.valobj.TradeTypeVO;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
-import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
-import cn.bugstack.domain.activity.model.entity.SkuRechargeEntity;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
 import cn.bugstack.types.common.ResponseCode;
@@ -34,13 +32,18 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
 
 
     @Override
-    public String createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity) {
+    public ActivityOrderEntity createSkuRechargeOrder(SkuRechargeEntity skuRechargeEntity) {
         // 1. 参数校验
         String userId = skuRechargeEntity.getUserId();
         Long sku = skuRechargeEntity.getSku();
         String outBusinessNo = skuRechargeEntity.getOutBusinessNo();
         if (null == sku || StringUtils.isBlank(userId) || StringUtils.isBlank(outBusinessNo)) {
             throw new AppException(ResponseCode.ILLEGAL_PARAMETER);
+        }
+
+        ActivityOrderEntity raffleActivityOrderEntity = activityRepository.queryUnpayActivityOrder(skuRechargeEntity);
+        if (null != raffleActivityOrderEntity) {
+            return raffleActivityOrderEntity;
         }
 
         // 1. 通过sku查询活动信息
@@ -51,7 +54,7 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
         ActivityCountEntity activityCountEntity = activityRepository.queryRaffleActivityCountByActivityCountId(activitySkuEntity.getActivityCountId());
         // 4. 活动规则校验
         IActivityChain activityChain = defaultActivityChainFactory.openActionChain();
-        Boolean actionResult = activityChain.action(ActionChainModel
+        activityChain.action(ActionChainModel
                 .builder().activityEntity(activityEntity)
                 .activitySkuEntity(activitySkuEntity)
                 .activityCountEntity(activityCountEntity)
@@ -63,7 +66,7 @@ public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityA
         tradePolicy.trade(createOrderAggregate);
         // 7. 返回单号
 
-        return createOrderAggregate.getActivityOrderEntity().getOrderId();
+        return createOrderAggregate.getActivityOrderEntity();
 
     }
 

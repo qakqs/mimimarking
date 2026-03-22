@@ -1,11 +1,16 @@
 package cn.bugstack.trigger.api;
 
 import cn.bugstack.trigger.api.dto.req.ActivityDrawRequestDTO;
+import cn.bugstack.trigger.api.dto.req.SkuProductShopCartRequestDTO;
 import cn.bugstack.trigger.api.dto.req.UserActivityAccountRequestDTO;
 import cn.bugstack.trigger.api.dto.resp.ActivityDrawResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.Response;
+import cn.bugstack.trigger.api.dto.resp.SkuProductResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.UserActivityAccountResponseDTO;
 import jakarta.annotation.Resource;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public interface IRaffleActivityService {
 
@@ -50,4 +55,25 @@ public interface IRaffleActivityService {
      */
     Response<UserActivityAccountResponseDTO> queryUserActivityAccount(UserActivityAccountRequestDTO request);
 
+
+    /**
+     * 查询用户账户额度
+     *
+     * @param userId
+     * @return
+     */
+    Response<BigDecimal> queryUserCreditAccount(String userId);
+
+    /**
+     * 查询sku商品集合
+     *
+     * @param activityId 活动ID
+     * @return 商品集合
+     */
+    Response<List<SkuProductResponseDTO>> querySkuProductListByActivityId(Long activityId);
+
+    /**
+     * 积分支付兑换商品
+     */
+    Response<Boolean> creditPayExchangeSku(SkuProductShopCartRequestDTO skuProductShopCartRequestDTO);
 }
