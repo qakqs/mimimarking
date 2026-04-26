@@ -34,6 +34,7 @@ spring:
     port: 5672
     username: admin
     password: admin
+    publisher-confirm-type: correlated
     listener:
       simple:
         prefetch: 1 # 每次投递n个消息，消费完在投递n个
@@ -46,6 +47,19 @@ spring:
       send_rebate: send_rebate
       credit_adjust_success: credit_adjust_success
 
+dubbo:
+  application:
+    name: marking
+    version: 1.0
+  registry:
+    id: marking
+    address: nacos://127.0.0.1:8848
+    group: marking
+    parameters:
+      namespace: 31d0c17d-9bc6-417e-adce-394cf99e2da8
+  protocol:
+    name: dubbo
+    port: -1
 
 
 mybatis:

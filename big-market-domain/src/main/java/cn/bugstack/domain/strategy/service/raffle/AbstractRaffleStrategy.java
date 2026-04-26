@@ -19,7 +19,7 @@ import java.util.Date;
 import static cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum.DEFAULT;
 
 @Slf4j
-public abstract class AbstractRaffleStrategy implements IRaffleStrategy {
+public  abstract class AbstractRaffleStrategy implements IRaffleStrategy {
 
     protected IStrategyRepository strategyRepository;
 

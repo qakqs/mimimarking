@@ -539,7 +539,7 @@ public class ActivityRepository implements IActivityRepository {
             req.setOutBusinessNo(deliveryOrderEntity.getOutBusinessNo());
             RaffleActivityOrder raffleActivityOrderRes = raffleActivityOrderDao.queryRaffleActivityOrder(req);
             if (raffleActivityOrderRes == null) {
-                throw new AppException("没有该订单outBusinessNo:" + deliveryOrderEntity.getOutBusinessNo());
+                return;
             }
             // 账户对象 - 总
             RaffleActivityAccount raffleActivityAccount = new RaffleActivityAccount();

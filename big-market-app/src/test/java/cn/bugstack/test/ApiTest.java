@@ -1,6 +1,7 @@
 package cn.bugstack.test;
 
 import cn.bugstack.domain.activity.service.quota.policy.ITradePolicy;
+import cn.bugstack.domain.task.service.impl.OrderAuditEngine;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.catalina.core.ApplicationContext;
@@ -11,6 +12,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.beans.beancontext.BeanContext;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import static cn.bugstack.domain.activity.model.valobj.OrderTradeTypeVO.credit_pay_trade;
@@ -25,12 +29,25 @@ import static cn.bugstack.domain.activity.model.valobj.OrderTradeTypeVO.credit_p
 @SpringBootTest
 public class ApiTest {
 
+
     @Resource
-    ConfigurableApplicationContext applicationContext;
+    private OrderAuditEngine orderAuditEngine;
+
     @Test
     public void test() {
 
-        log.info("");
+        for (int j = 0; j < 3; j++) {
+            List<List<String>> batches = new ArrayList<>();
+            batches.add(Arrays.asList("1"));
+            batches.add(Arrays.asList("ASasAS"));
+            for (int i = 0; i < 1000; i++) {
+                batches.add(Arrays.asList("" + i));
+            }
+            List<String> strings = orderAuditEngine.auditOrders(batches);
+            log.info(String.valueOf(strings.size()));
+        }
+
+        log.info("结束");
     }
 
 }

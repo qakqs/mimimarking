@@ -17,7 +17,6 @@ public enum LogicModel {
     RULE_WIGHT("rule_weight", "【抽奖前规则】根据抽奖权重返回可抽奖范围KEY", "before"),
     RULE_BLACKLIST("rule_blacklist", "【抽奖前规则】黑名单规则过滤，命中黑名单则直接返回", "before"),
     RULE_LOCK("rule_lock", "【抽奖前规则】抽奖n次后可解锁抽奖", "center"),
-    RULE_LOCK_AWARD("rule_luck_award", "【抽奖前规则】幸运兜底", "after"),
     DEFAULT("default", "默认责任链", ""),
 
     ;

@@ -1,6 +1,7 @@
 package cn.bugstack.infrastructure.persistent.redis;
 
 import org.redisson.api.*;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.Resource;

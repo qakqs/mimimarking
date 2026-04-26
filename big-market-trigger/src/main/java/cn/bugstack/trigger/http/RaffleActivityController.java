@@ -36,7 +36,6 @@ import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.checkerframework.checker.nullness.qual.NonNull;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,7 +48,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static cn.bugstack.types.common.ResponseCode.*;
+import static cn.bugstack.types.common.ResponseCode.ILLEGAL_PARAMETER;
 
 @Slf4j
 @RestController
@@ -87,224 +86,131 @@ public class RaffleActivityController implements IRaffleActivityService {
     @RequestMapping(value = "armory", method = RequestMethod.GET)
     @Override
     public Response<Boolean> armory(Long activityId) {
-        try {
-            log.info("活动装配，数据预热，开始 activityId:{}", activityId);
-            if (activityId == null) {
-                throw new AppException(ILLEGAL_PARAMETER);
-            }
-            activityArmory.assembleActivitySkuByActivityId(activityId);
-            strategyArmory.assembleLotteryStrategyByActivityId(activityId);
-
-            return Response.<Boolean>builder()
-                    .code(SUCCESS.getCode())
-                    .info(SUCCESS.getInfo())
-                    .data(true)
-                    .build();
-        } catch (AppException appException) {
-            log.error("活动装配，数据预热，失败 activityId:{}", activityId, appException);
-            return Response.<Boolean>builder()
-                    .code(appException.getCode())
-                    .info(appException.getInfo())
-                    .data(false)
-                    .build();
-
-        } catch (Exception e) {
-            log.error("活动装配，数据预热，失败 activityId:{}", activityId, e);
-            return Response.<Boolean>builder()
-                    .code(UN_ERROR.getCode())
-                    .info(UN_ERROR.getInfo())
-                    .data(false)
-                    .build();
-
+        log.info("活动装配，数据预热，开始 activityId:{}", activityId);
+        if (activityId == null) {
+            throw new AppException(ILLEGAL_PARAMETER);
         }
+        activityArmory.assembleActivitySkuByActivityId(activityId);
+        strategyArmory.assembleLotteryStrategyByActivityId(activityId);
+        log.info("活动装配，数据预热，完成 activityId:{}", activityId);
+        return Response.<Boolean>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(true)
+                .build();
     }
 
     @RequestMapping(value = "draw", method = RequestMethod.POST)
     @Override
     public Response<ActivityDrawResponseDTO> draw(@RequestBody ActivityDrawRequestDTO request) {
-        try {
-            log.info("活动抽奖，开始 request:{}", JSON.toJSONString(request));
-            // 1 参数校验
+        log.info("活动抽奖，开始 request:{}", JSON.toJSONString(request));
 
-            // 2 参与活动：创建参与活动订单&记录
-            UserRaffleOrderEntity order = raffleActivityPartakeService.createOrder(PartakeRaffleActivityEntity
-                    .builder()
-                    .activityId(request.getActivityId())
-                    .userId(request.getUserId())
-                    .build()
-            );
-            // 3抽奖
-            RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity
-                    .builder()
-                    .userId(order.getUserId())
-                    .strategyId(order.getStrategyId())
-                    .endDateTime(order.getEndDateTime())
-                    .build()
-            );
-            // 4 存放结果
-            UserAwardRecordEntity userAwardRecord = UserAwardRecordEntity.builder()
-                    .userId(order.getUserId())
-                    .activityId(order.getActivityId())
-                    .strategyId(order.getStrategyId())
-                    .orderId(order.getOrderId())
-                    .awardId(raffleAwardEntity.getAwardId())
-                    .awardTitle(raffleAwardEntity.getAwardTitle())
-                    .awardTime(new Date())
-                    .awardState(AwardStateVO.create)
-                    .awardConfig(raffleAwardEntity.getAwardConfig())
-                    .build();
-            awardService.saveUserAwardRecord(userAwardRecord);
+        // 参与活动：创建参与活动订单&记录
+        UserRaffleOrderEntity order = raffleActivityPartakeService.createOrder(PartakeRaffleActivityEntity
+                .builder()
+                .activityId(request.getActivityId())
+                .userId(request.getUserId())
+                .build());
 
-            // 返回中将结果
-            return Response.<ActivityDrawResponseDTO>builder()
-                    .code(SUCCESS.getCode())
-                    .info(SUCCESS.getInfo())
-                    .data(ActivityDrawResponseDTO.builder()
-                            .awardId(raffleAwardEntity.getAwardId())
-                            .awardTitle(raffleAwardEntity.getAwardTitle())
-                            .sort(raffleAwardEntity.getSort())
-                            .build())
-                    .build();
-        } catch (AppException appException) {
-            log.error("活动抽奖，抽奖失败 request:{}", JSON.toJSONString(request), appException);
+        // 抽奖
+        RaffleAwardEntity raffleAwardEntity = raffleStrategy.performRaffle(RaffleFactorEntity
+                .builder()
+                .userId(order.getUserId())
+                .strategyId(order.getStrategyId())
+                .endDateTime(order.getEndDateTime())
+                .build());
 
-            return Response.<ActivityDrawResponseDTO>builder()
-                    .code(appException.getCode())
-                    .info(appException.getInfo())
-                    .build();
+        // 存放结果
+        UserAwardRecordEntity userAwardRecord = UserAwardRecordEntity.builder()
+                .userId(order.getUserId())
+                .activityId(order.getActivityId())
+                .strategyId(order.getStrategyId())
+                .orderId(order.getOrderId())
+                .awardId(raffleAwardEntity.getAwardId())
+                .awardTitle(raffleAwardEntity.getAwardTitle())
+                .awardTime(new Date())
+                .awardState(AwardStateVO.create)
+                .awardConfig(raffleAwardEntity.getAwardConfig())
+                .build();
+        awardService.saveUserAwardRecord(userAwardRecord);
 
-        } catch (Exception e) {
-            log.error("活动抽奖，抽奖失败 request:{}", JSON.toJSONString(request), e);
-            return Response.<ActivityDrawResponseDTO>builder()
-                    .code(UN_ERROR.getCode())
-                    .info(UN_ERROR.getInfo())
-                    .build();
+        log.info("活动抽奖，完成 request:{} awardId:{}", JSON.toJSONString(request), raffleAwardEntity.getAwardId());
 
-        }
+        return Response.<ActivityDrawResponseDTO>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(ActivityDrawResponseDTO.builder()
+                        .awardId(raffleAwardEntity.getAwardId())
+                        .awardTitle(raffleAwardEntity.getAwardTitle())
+                        .sort(raffleAwardEntity.getSort())
+                        .build())
+                .build();
     }
 
     @RequestMapping(value = "calender_sign_rebate", method = RequestMethod.POST)
     @Override
     public Response<Boolean> calenderSignRebate(String userId) {
-        try {
-            log.info("日历签到返利 开始 userId:{}", userId);
-            if (userId == null) {
-                throw new AppException(ILLEGAL_PARAMETER);
-            }
-            BehaviorEntity behaviorEntity = new BehaviorEntity();
-            behaviorEntity.setUserId(userId);
-            behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
-            behaviorEntity.setOutBusinessNo(dateFormatDay.format(new Date()));
-
-            List<String> orderList = behaviorRebateService.createOrder(behaviorEntity);
-            log.info("日历签到返利 结束 orderList:{}", orderList);
-
-            return Response.<Boolean>builder()
-                    .code(SUCCESS.getCode())
-                    .info(SUCCESS.getInfo())
-                    .data(true)
-                    .build();
-        } catch (AppException appException) {
-            log.error("日历签到返利 业务异常 ", appException);
-            return Response.<Boolean>builder()
-                    .code(appException.getCode())
-                    .info(appException.getInfo())
-                    .build();
-
-        } catch (Exception e) {
-            log.error("日历签到返利 系统异常 ", e);
-            return Response.<Boolean>builder()
-                    .code(UN_ERROR.getCode())
-                    .info(UN_ERROR.getInfo())
-                    .build();
+        log.info("日历签到返利 开始 userId:{}", userId);
+        if (userId == null) {
+            throw new AppException(ILLEGAL_PARAMETER);
         }
+        BehaviorEntity behaviorEntity = new BehaviorEntity();
+        behaviorEntity.setUserId(userId);
+        behaviorEntity.setBehaviorTypeVO(BehaviorTypeVO.SIGN);
+        behaviorEntity.setOutBusinessNo(dateFormatDay.format(new Date()));
+
+        List<String> orderList = behaviorRebateService.createOrder(behaviorEntity);
+        log.info("日历签到返利 结束 userId:{} orderList:{}", userId, orderList);
+
+        return Response.<Boolean>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(true)
+                .build();
     }
 
     @RequestMapping(value = "is_calender_sign_rebate", method = RequestMethod.POST)
     @Override
     public Response<Boolean> isCalenderSignRebate(String userId) {
-        try {
-            log.info("日历签到是否返利 开始 userId:{}", userId);
-            String outBusinessNo = dateFormatDay.format(new Date());
-            List<BehaviorRebateOrderEntity> orderByOutBusinessNo = behaviorRebateService.getOrderByOutBusinessNo(userId, outBusinessNo);
-            log.info("日历签到是否返利 完成 userId:{}， orderSize:{}", userId, orderByOutBusinessNo.size());
+        log.info("日历签到是否返利 开始 userId:{}", userId);
+        String outBusinessNo = dateFormatDay.format(new Date());
+        List<BehaviorRebateOrderEntity> orderByOutBusinessNo = behaviorRebateService.getOrderByOutBusinessNo(userId, outBusinessNo);
+        log.info("日历签到是否返利 完成 userId:{}， orderSize:{}", userId, orderByOutBusinessNo.size());
 
-            return Response.<Boolean>builder()
-                    .code(SUCCESS.getCode())
-                    .info(SUCCESS.getInfo())
-                    .data(!orderByOutBusinessNo.isEmpty())
-                    .build();
-
-        } catch (AppException appException) {
-            log.error("日历签到是否返利 业务异常 ", appException);
-            return Response.<Boolean>builder()
-                    .code(appException.getCode())
-                    .info(appException.getInfo())
-                    .build();
-
-        } catch (Exception e) {
-            log.error("日历签到是否返利 系统异常 ", e);
-            return Response.<Boolean>builder()
-                    .code(UN_ERROR.getCode())
-                    .info(UN_ERROR.getInfo())
-                    .build();
-
-        }
+        return Response.<Boolean>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(!orderByOutBusinessNo.isEmpty())
+                .build();
     }
 
     @RequestMapping(value = "query_user_activity_account", method = RequestMethod.POST)
     @Override
     public Response<UserActivityAccountResponseDTO> queryUserActivityAccount(@RequestBody UserActivityAccountRequestDTO request) {
-        try {
+        log.info("查询用户活动账户 开始 request:{}", request);
 
-            log.info("查询用户活动账户 开始 request:{}", request);
-            ActivityAccountEntity activityAccountEntity = raffleActivityAccountQuotaService.queryActivityAccount(request.getUserId(), request.getActivityId());
-            UserActivityAccountResponseDTO userActivityAccountResponseDTO = getUserActivityAccountResponseDTO(activityAccountEntity);
+        ActivityAccountEntity activityAccountEntity = raffleActivityAccountQuotaService.queryActivityAccount(request.getUserId(), request.getActivityId());
+        UserActivityAccountResponseDTO userActivityAccountResponseDTO = getUserActivityAccountResponseDTO(activityAccountEntity);
 
-            return Response.<UserActivityAccountResponseDTO>builder()
-                    .code(SUCCESS.getCode())
-                    .info(SUCCESS.getInfo())
-                    .data(userActivityAccountResponseDTO)
-                    .build();
-
-        } catch (AppException appException) {
-            log.error("日历签到是否返利 业务异常 ", appException);
-            return Response.<UserActivityAccountResponseDTO>builder()
-                    .code(appException.getCode())
-                    .info(appException.getInfo())
-                    .build();
-
-        } catch (Exception e) {
-            log.error("日历签到是否返利 系统异常 ", e);
-            return Response.<UserActivityAccountResponseDTO>builder()
-                    .code(UN_ERROR.getCode())
-                    .info(UN_ERROR.getInfo())
-                    .build();
-
-        }
+        log.info("查询用户活动账户 完成 request:{}", request);
+        return Response.<UserActivityAccountResponseDTO>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(userActivityAccountResponseDTO)
+                .build();
     }
 
     @RequestMapping(value = "query_user_credit_account", method = RequestMethod.POST)
-
     @Override
     public Response<BigDecimal> queryUserCreditAccount(String userId) {
-        try {
-
-            log.info("查询用户积分值开始 userId:{}", userId);
-            CreditAccountEntity creditAccountEntity = creditAdjustService.queryUserCreditAccount(userId);
-            log.info("查询用户积分值完成 userId:{} adjustAmount:{}", userId, creditAccountEntity.getAdjustAmount());
-            return Response.<BigDecimal>builder()
-                    .code(ResponseCode.SUCCESS.getCode())
-                    .info(ResponseCode.SUCCESS.getInfo())
-                    .data(creditAccountEntity.getAdjustAmount())
-                    .build();
-        } catch (Exception e) {
-            log.error("查询用户积分值失败 userId:{}", userId, e);
-            return Response.<BigDecimal>builder()
-                    .code(ResponseCode.UN_ERROR.getCode())
-                    .info(ResponseCode.UN_ERROR.getInfo())
-                    .build();
-        }
+        log.info("查询用户积分值开始 userId:{}", userId);
+        CreditAccountEntity creditAccountEntity = creditAdjustService.queryUserCreditAccount(userId);
+        log.info("查询用户积分值完成 userId:{} adjustAmount:{}", userId, creditAccountEntity.getAdjustAmount());
+        return Response.<BigDecimal>builder()
+                .code(ResponseCode.SUCCESS.getCode())
+                .info(ResponseCode.SUCCESS.getInfo())
+                .data(creditAccountEntity.getAdjustAmount())
+                .build();
     }
 
     @Override
@@ -339,38 +245,27 @@ public class RaffleActivityController implements IRaffleActivityService {
     @RequestMapping(value = "credit_pay_exchange_sku", method = RequestMethod.POST)
     @Override
     public Response<Boolean> creditPayExchangeSku(@RequestBody SkuProductShopCartRequestDTO request) {
-        try {
-            log.info("积分支付兑换商品 request:{}", request);
-            SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
-            skuRechargeEntity.setSku(request.getSku());
-            skuRechargeEntity.setUserId(request.getUserId());
-            skuRechargeEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(12));
-            skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
-            ActivityOrderEntity rechargeOrder = raffleActivityAccountQuotaService.createSkuRechargeOrder(skuRechargeEntity);
-            TradeEntity tradeEntity = new TradeEntity();
-            tradeEntity.setUserId(request.getUserId());
-            tradeEntity.setTradeName(TradeNameVO.CONVERT_SKU);
-            tradeEntity.setTradeType(TradeTypeVO.REVERSE);
-            tradeEntity.setAmount(rechargeOrder.getPayAmount());
-            tradeEntity.setOutBusinessNo(rechargeOrder.getOutBusinessNo());
-            tradeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
+        log.info("积分支付兑换商品 request:{}", request);
+        SkuRechargeEntity skuRechargeEntity = new SkuRechargeEntity();
+        skuRechargeEntity.setSku(request.getSku());
+        skuRechargeEntity.setUserId(request.getUserId());
+        skuRechargeEntity.setOutBusinessNo(RandomStringUtils.randomNumeric(12));
+        skuRechargeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
+        ActivityOrderEntity rechargeOrder = raffleActivityAccountQuotaService.createSkuRechargeOrder(skuRechargeEntity);
 
+        TradeEntity tradeEntity = new TradeEntity();
+        tradeEntity.setUserId(request.getUserId());
+        tradeEntity.setTradeName(TradeNameVO.CONVERT_SKU);
+        tradeEntity.setTradeType(TradeTypeVO.REVERSE);
+        tradeEntity.setAmount(rechargeOrder.getPayAmount());
+        tradeEntity.setOutBusinessNo(rechargeOrder.getOutBusinessNo());
+        tradeEntity.setOrderTradeType(OrderTradeTypeVO.credit_pay_trade);
 
-            String orderId = creditAdjustService.createOrder(tradeEntity);
-            log.info("积分支付兑换商品 orderId:{}", orderId);
+        String orderId = creditAdjustService.createOrder(tradeEntity);
+        log.info("积分支付兑换商品 orderId:{}", orderId);
 
-        } catch (Exception e) {
-            log.error("积分支付兑换商品 失败 ", e);
-
-            return Response.<Boolean>builder()
-                    .code(ResponseCode.UN_ERROR.getCode())
-                    .info(ResponseCode.UN_ERROR.getInfo())
-                    .data(false)
-                    .build();
-
-        }
         return Response.<Boolean>builder()
-                .code(SUCCESS.getCode())
+                .code(ResponseCode.SUCCESS.getCode())
                 .info(ResponseCode.SUCCESS.getInfo())
                 .data(true)
                 .build();
