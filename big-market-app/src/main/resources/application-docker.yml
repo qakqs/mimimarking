@@ -1,0 +1,72 @@
+server:
+  port: 8091
+
+# 线程池配置
+thread:
+  pool:
+    executor:
+      config:
+        core-pool-size: 20
+        max-pool-size: 50
+        keep-alive-time: 5000
+        block-queue-size: 5000
+        policy: CallerRunsPolicy
+
+# 数据库配置 - Docker环境使用host.docker.internal访问宿主机
+spring:
+  datasource:
+    username: root
+    password: 1998
+    url: JDBC:mysql://host.docker.internal:3306/marketing?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&serverTimezone=UTC&useSSL=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  hikari:
+    pool-name: Retail_HikariCP
+    minimum-idle: 15
+    idle-timeout: 180000
+    maximum-pool-size: 25
+    auto-commit: true
+    max-lifetime: 1800000
+    connection-timeout: 30000
+    connection-test-query: SELECT 1
+  type: com.zaxxer.hikari.HikariDataSource
+  rabbitmq:
+    addresses: host.docker.internal
+    port: 5672
+    username: admin
+    password: admin
+    publisher-confirm-type: correlated
+    listener:
+      simple:
+        prefetch: 1
+        retry:
+          max-attempts: 3
+          enabled: true
+    topic:
+      activity_sku_stock_zero: activity_sku_stock_zero
+      send_award: send_award
+      send_rebate: send_rebate
+      credit_adjust_success: credit_adjust_success
+
+mybatis:
+  mapper-locations: classpath:/mybatis/mapper/*.xml
+  config-location: classpath:/mybatis/config/mybatis-config.xml
+
+# Redis - Docker环境
+redis:
+  sdk:
+    config:
+      host: host.docker.internal
+      port: 16379
+      pool-size: 10
+      min-idle-size: 5
+      idle-timeout: 30000
+      connect-timeout: 5000
+      retry-attempts: 3
+      retry-interval: 1000
+      ping-interval: 60000
+      keep-alive: true
+
+# 日志
+logging:
+  level:
+    root: info

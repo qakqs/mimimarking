@@ -100,7 +100,9 @@ public class CreditRepository implements ICreditRepository {
             log.error("调整账户积分额度失败 userId:{} orderId:{}", userId, creditOrderEntity.getOrderId(), e);
             throw e;
         } finally {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         }
 
         try {

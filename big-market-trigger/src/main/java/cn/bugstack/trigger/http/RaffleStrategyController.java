@@ -155,6 +155,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     public Response<List<RaffleStrategyRuleWeightResponseDTO>> queryRaffleStrategyRuleWeight(@RequestBody RaffleStrategyRuleWeightRequestDTO request) {
         log.info("查询抽奖策略权重规则 request: {}", request);
 
+
         // 查询用户抽奖次数
         Integer accountUserCount = raffleActivityAccountQuotaService.queryRaffleActivityAccountPartakeCount(request.getActivityId(), request.getUserId());
 
