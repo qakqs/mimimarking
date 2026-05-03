@@ -122,8 +122,9 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     }
 
     /**
-     * 随机抽奖接口
+     * 随机抽奖接口(已弃用)
      */
+    @Deprecated
     @RequestMapping(value = "random_raffle", method = RequestMethod.POST)
     @Override
     public Response<RaffleStrategyResponseDTO> randomRaffle(@RequestBody RaffleStrategyRequestDTO requestDTO) {

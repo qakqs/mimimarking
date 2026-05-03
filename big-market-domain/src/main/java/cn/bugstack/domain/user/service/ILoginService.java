@@ -30,4 +30,9 @@ public interface ILoginService {
      */
     UserEntity queryUserByToken(String token);
 
+    /**
+     * 登出，使 Token 失效
+     */
+    void logout(String token);
+
 }

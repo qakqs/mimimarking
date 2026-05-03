@@ -232,7 +232,7 @@ public class StrategyRepository implements IStrategyRepository {
     public Boolean submitStrategyAwardStock(String cacheKey, Date endDateTime) {
         long surplus = redisService.decr(cacheKey);
         if (surplus < 0) {
-            redisService.setValue(cacheKey, null);
+            redisService.setAtomicLong(cacheKey, 0);
             return false;
         }
         String lockKey = cacheKey + Constants.UNDERLINE + surplus;

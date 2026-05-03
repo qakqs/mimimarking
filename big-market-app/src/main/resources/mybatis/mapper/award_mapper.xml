@@ -22,4 +22,10 @@
         from award
         where award_id = #{awardId}
     </select>
+
+    <select id="queryAwardKey" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select award_key
+        from award
+        where award_id = #{awardId}
+    </select>
 </mapper>

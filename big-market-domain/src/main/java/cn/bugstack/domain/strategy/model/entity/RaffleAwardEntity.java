@@ -24,6 +24,9 @@ public class RaffleAwardEntity {
      */
     private Integer awardId;
 
+    /**
+     * 奖品配置信息
+     */
     private String awardConfig;
     /**
      * 奖品库存总量

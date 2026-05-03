@@ -5,6 +5,7 @@ import cn.bugstack.domain.user.service.ILoginService;
 import cn.bugstack.domain.user.service.IRegisterService;
 import cn.bugstack.trigger.api.IUserService;
 import cn.bugstack.trigger.api.dto.req.LoginRequestDTO;
+import cn.bugstack.trigger.api.dto.req.LogoutRequestDTO;
 import cn.bugstack.trigger.api.dto.req.RegisterRequestDTO;
 import cn.bugstack.trigger.api.dto.resp.LoginResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.RegisterResponseDTO;
@@ -90,6 +91,31 @@ public class UserController implements IUserService {
         } catch (Exception e) {
             log.error("用户登录异常 username:{}", request.getUsername(), e);
             return Response.<LoginResponseDTO>builder()
+                    .code(ResponseCode.UN_ERROR.getCode())
+                    .info(ResponseCode.UN_ERROR.getInfo())
+                    .build();
+        }
+    }
+
+    @RequestMapping(value = "logout", method = RequestMethod.POST)
+    public Response<Void> logout(@RequestBody LogoutRequestDTO request) {
+        try {
+            log.info("用户登出开始");
+            loginService.logout(request.getToken());
+            log.info("用户登出完成");
+            return Response.<Void>builder()
+                    .code(ResponseCode.SUCCESS.getCode())
+                    .info(ResponseCode.SUCCESS.getInfo())
+                    .build();
+        } catch (AppException e) {
+            log.error("用户登出失败 {}", e.getInfo());
+            return Response.<Void>builder()
+                    .code(e.getCode())
+                    .info(e.getInfo())
+                    .build();
+        } catch (Exception e) {
+            log.error("用户登出异常", e);
+            return Response.<Void>builder()
                     .code(ResponseCode.UN_ERROR.getCode())
                     .info(ResponseCode.UN_ERROR.getInfo())
                     .build();

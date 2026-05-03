@@ -81,6 +81,16 @@ redis:
       ping-interval: 60000
       keep-alive: true
 
+# JWT
+jwt:
+  secret: big-market-jwt-secret-key-2024
+  ttl: 86400000
+
+# 登录安全
+login:
+  max-attempts: 5
+  lock-minutes: 15
+
 
 # 日志
 logging:

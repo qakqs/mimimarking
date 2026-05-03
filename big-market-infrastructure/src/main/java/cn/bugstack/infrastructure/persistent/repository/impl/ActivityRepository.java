@@ -526,7 +526,8 @@ public class ActivityRepository implements IActivityRepository {
         account.setUserId(userId);
         account.setActivityId(activityId);
         RaffleActivityAccount raffleActivityAccount = raffleActivityAccountDao.queryActivityAccountByUserId(account);
-        return null == raffleActivityAccount.getTotalCount() ? 0 : raffleActivityAccount.getTotalCountSurplus();
+        if (null == raffleActivityAccount) return 0;
+        return raffleActivityAccount.getTotalCount() - raffleActivityAccount.getTotalCountSurplus();
     }
 
     @Override

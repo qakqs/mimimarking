@@ -1,17 +1,17 @@
 package cn.bugstack.domain.user.service.auth;
 
 import cn.bugstack.domain.user.model.entity.UserEntity;
+import cn.bugstack.domain.user.repository.ILoginAttemptRepository;
+import cn.bugstack.domain.user.repository.ITokenRepository;
 import cn.bugstack.domain.user.repository.IUserRepository;
 import cn.bugstack.domain.user.service.ILoginService;
+import cn.bugstack.domain.user.util.JwtUtil;
+import cn.bugstack.domain.user.util.PasswordUtil;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 登录服务实现
@@ -19,11 +19,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class LoginServiceImpl implements ILoginService {
 
+    private static final int MAX_ATTEMPTS = 5;
+    private static final long LOCK_MINUTES = 15;
+
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    @Value("${jwt.ttl}")
+    private long jwtTtl;
+
     @Resource
     private IUserRepository userRepository;
 
-    /** 简易 Token 存储；生产环境应替换为 Redis + JWT */
-    private final Map<String, String> tokenStore = new ConcurrentHashMap<>();
+    @Resource
+    private ITokenRepository tokenRepository;
+
+    @Resource
+    private ILoginAttemptRepository loginAttemptRepository;
 
     @Override
     public String login(String username, String password) {
@@ -32,21 +44,30 @@ public class LoginServiceImpl implements ILoginService {
             throw new AppException("USER_LOGIN_PARAM_BLANK", "用户名或密码为空");
         }
 
-        // 2. 查询用户
+        // 2. 检查是否已锁定
+        if (loginAttemptRepository.isLocked(username)) {
+            throw new AppException("USER_LOGIN_LOCKED", "账户已锁定，请" + LOCK_MINUTES + "分钟后重试");
+        }
+
+        // 3. 查询用户
         UserEntity user = userRepository.queryByUsername(username);
         if (user == null) {
+            recordFailedAttempt(username);
             throw new AppException("USER_LOGIN_NOT_FOUND", "用户不存在");
         }
 
-        // 3. 密码校验
-        String encoded = DigestUtils.sha256Hex(password);
-        if (!encoded.equals(user.getPassword())) {
+        // 4. 密码校验
+        if (!PasswordUtil.matches(password, user.getPassword())) {
+            recordFailedAttempt(username);
             throw new AppException("USER_LOGIN_PASSWORD_ERROR", "密码错误");
         }
 
-        // 4. 生成 Token
-        String token = UUID.randomUUID().toString().replace("-", "");
-        tokenStore.put(token, user.getUserId());
+        // 5. 清除失败记录
+        loginAttemptRepository.clearAttempt(username);
+
+        // 6. 生成 JWT 并存入 Redis
+        String token = JwtUtil.create(user.getUserId(), user.getUsername(), jwtSecret, jwtTtl);
+        tokenRepository.saveToken(token, user.getUserId(), jwtTtl);
 
         return token;
     }
@@ -54,19 +75,38 @@ public class LoginServiceImpl implements ILoginService {
     @Override
     public boolean checkToken(String token) {
         if (StringUtils.isBlank(token)) return false;
-        return tokenStore.containsKey(token);
+        try {
+            JwtUtil.verify(token, jwtSecret);
+            return tokenRepository.isTokenValid(token);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override
     public String openid(String token) {
-        return tokenStore.get(token);
+        return tokenRepository.getUserId(token);
     }
 
     @Override
     public UserEntity queryUserByToken(String token) {
-        String userId = tokenStore.get(token);
-        if (userId == null) return null;
+        String userId = tokenRepository.getUserId(token);
+        if (userId == null) {
+            return null;
+        }
         return userRepository.queryByUserId(userId);
+    }
+
+    @Override
+    public void logout(String token) {
+        tokenRepository.removeToken(token);
+    }
+
+    private void recordFailedAttempt(String username) {
+        long attempts = loginAttemptRepository.incrAttempt(username);
+        if (attempts >= MAX_ATTEMPTS) {
+            loginAttemptRepository.setLock(username, LOCK_MINUTES * 60 * 1000L);
+        }
     }
 
 }

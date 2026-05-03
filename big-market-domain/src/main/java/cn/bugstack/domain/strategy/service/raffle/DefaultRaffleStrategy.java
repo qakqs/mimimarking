@@ -58,7 +58,6 @@ public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRa
         IDecisionTreeEngine decisionTreeEngine = defaultTreeFactory.openDecisionTreeEngine(ruleTreeVO);
         StrategyAwardData res = decisionTreeEngine.process(userId, strategyId, awardId, endDateTime);
         return StrategyAwardVO.builder()
-                .logicModel(res.getAwardRuleValue())
                 .awardId(res.getAwardId())
                 .awardRuleValue(res.getAwardRuleValue())
                 .build();

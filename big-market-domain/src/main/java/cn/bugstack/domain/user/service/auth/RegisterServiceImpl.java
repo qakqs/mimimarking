@@ -6,7 +6,7 @@ import cn.bugstack.domain.user.repository.IUserRepository;
 import cn.bugstack.domain.user.service.IRegisterService;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import org.apache.commons.codec.digest.DigestUtils;
+import cn.bugstack.domain.user.util.PasswordUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -36,7 +36,7 @@ public class RegisterServiceImpl implements IRegisterService {
         }
 
         // 3. 创建用户聚合
-        String encodedPassword = DigestUtils.sha256Hex(password);
+        String encodedPassword = PasswordUtil.encode(password);
         UserAggregate aggregate = UserAggregate.createForRegister(username, encodedPassword);
 
         // 4. 持久化

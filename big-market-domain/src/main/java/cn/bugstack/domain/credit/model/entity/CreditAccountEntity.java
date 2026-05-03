@@ -22,5 +22,5 @@ public class CreditAccountEntity {
     /**
      * 可用积分，每次扣减的值
      */
-    private BigDecimal adjustAmount;
+    private BigDecimal adjustAmount = BigDecimal.ZERO;
 }

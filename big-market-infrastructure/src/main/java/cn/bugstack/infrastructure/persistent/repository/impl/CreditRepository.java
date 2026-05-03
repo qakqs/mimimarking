@@ -24,6 +24,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 
 import java.util.concurrent.TimeUnit;
 
+import static cn.bugstack.domain.activity.model.valobj.ActivityStateVO.open;
 import static cn.bugstack.types.common.Constants.USER_CREDIT_ACCOUNT_LOCK;
 
 @Component
@@ -67,7 +68,7 @@ public class CreditRepository implements ICreditRepository {
         userCreditAccountReq.setTotalAmount(creditAccountEntity.getAdjustAmount());
         // 知识；仓储往上有业务语义，仓储往下到 dao 操作是没有业务语义的。所以不用在乎这块使用的字段名称，直接用持久化对象即可。
         userCreditAccountReq.setAvailableAmount(creditAccountEntity.getAdjustAmount());
-
+        userCreditAccountReq.setAccountStatus(open.getCode());
         Task task = convert.taskConvert(taskEntity);
         RLock lock = redisService.getLock(USER_CREDIT_ACCOUNT_LOCK(userId, creditOrderEntity.getOutBusinessNo()));
 

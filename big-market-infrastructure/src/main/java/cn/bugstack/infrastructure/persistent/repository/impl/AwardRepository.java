@@ -160,6 +160,6 @@ public class AwardRepository implements IAwardRepository {
 
     @Override
     public String queryAwardKey(Integer awardId) {
-        return awardDao.queryAwardConfigAwardId(awardId);
+        return awardDao.queryAwardKey(awardId);
     }
 }
