@@ -19,4 +19,38 @@
         where state = 'open'
         and behavior_type = #{behaviorType}
     </select>
+
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.DailyBehaviorRebate">
+        INSERT INTO daily_behavior_rebate(behavior_type, rebate_desc, rebate_type, rebate_config, state, create_time, update_time)
+        VALUES(#{behaviorType}, #{rebateDesc}, #{rebateType}, #{rebateConfig}, #{state}, #{createTime}, #{updateTime})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM daily_behavior_rebate WHERE id=#{id}
+    </delete>
+
+    <update id="updateState">
+        UPDATE daily_behavior_rebate SET state=#{state}, update_time=NOW() WHERE id=#{id}
+    </update>
+
+    <select id="queryPage" resultMap="dataMap">
+        SELECT * FROM daily_behavior_rebate WHERE 1=1
+        <if test='behaviorType != null and behaviorType != ""'>
+            AND behavior_type=#{behaviorType}
+        </if>
+        <if test='state != null and state != ""'>
+            AND state=#{state}
+        </if>
+        ORDER BY create_time DESC LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM daily_behavior_rebate WHERE 1=1
+        <if test='behaviorType != null and behaviorType != ""'>
+            AND behavior_type=#{behaviorType}
+        </if>
+        <if test='state != null and state != ""'>
+            AND state=#{state}
+        </if>
+    </select>
 </mapper>

@@ -38,4 +38,22 @@
         WHERE user_id = #{userId}
     </update>
 
+    <select id="queryPage" resultMap="userMap">
+        SELECT * FROM user WHERE 1=1
+        <if test='keyword != null and keyword != ""'>
+            AND (username LIKE CONCAT('%',#{keyword},'%') OR phone LIKE CONCAT('%',#{keyword},'%'))
+        </if>
+        ORDER BY create_time DESC LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM user WHERE 1=1
+        <if test='keyword != null and keyword != ""'>
+            AND (username LIKE CONCAT('%',#{keyword},'%') OR phone LIKE CONCAT('%',#{keyword},'%'))
+        </if>
+    </select>
+
+    <update id="updateStatus">
+        UPDATE user SET status=#{status}, update_time=NOW() WHERE user_id=#{userId}
+    </update>
 </mapper>

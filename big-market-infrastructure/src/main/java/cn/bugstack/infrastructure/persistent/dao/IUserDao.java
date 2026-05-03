@@ -2,6 +2,9 @@ package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * 用户 DAO
@@ -16,5 +19,12 @@ public interface IUserDao {
     User queryByUserId(String userId);
 
     int update(User userPO);
+
+    List<User> queryPage(@Param("offset") int offset, @Param("limit") int limit,
+                         @Param("keyword") String keyword);
+
+    int count(@Param("keyword") String keyword);
+
+    int updateStatus(@Param("userId") String userId, @Param("status") Integer status);
 
 }

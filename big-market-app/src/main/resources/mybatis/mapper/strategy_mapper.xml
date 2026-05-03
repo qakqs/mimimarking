@@ -23,4 +23,31 @@
         where strategy_id = #{strategyId}
     </select>
 
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.Strategy">
+        INSERT INTO strategy(strategy_id, strategy_desc, rule_models, create_time, update_time)
+        VALUES(#{strategyId}, #{strategyDesc}, #{ruleModels}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update" parameterType="cn.bugstack.infrastructure.persistent.po.Strategy">
+        UPDATE strategy SET strategy_desc=#{strategyDesc}, rule_models=#{ruleModels}, update_time=#{updateTime} WHERE strategy_id=#{strategyId}
+    </update>
+
+    <delete id="deleteByStrategyId">
+        DELETE FROM strategy WHERE strategy_id=#{strategyId}
+    </delete>
+
+    <select id="queryStrategyPage" resultMap="dataMap">
+        SELECT * FROM strategy WHERE 1=1
+        <if test='strategyDesc != null and strategyDesc != ""'>
+            AND strategy_desc LIKE CONCAT('%',#{strategyDesc},'%')
+        </if>
+        ORDER BY create_time DESC LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="countStrategy" resultType="int">
+        SELECT COUNT(*) FROM strategy WHERE 1=1
+        <if test='strategyDesc != null and strategyDesc != ""'>
+            AND strategy_desc LIKE CONCAT('%',#{strategyDesc},'%')
+        </if>
+    </select>
 </mapper>

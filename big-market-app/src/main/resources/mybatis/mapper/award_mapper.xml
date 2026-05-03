@@ -28,4 +28,36 @@
         from award
         where award_id = #{awardId}
     </select>
+
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.Award">
+        INSERT INTO award(award_id, award_key, award_config, award_desc, create_time, update_time)
+        VALUES(#{awardId}, #{awardKey}, #{awardConfig}, #{awardDesc}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update" parameterType="cn.bugstack.infrastructure.persistent.po.Award">
+        UPDATE award SET award_key=#{awardKey}, award_config=#{awardConfig}, award_desc=#{awardDesc}, update_time=#{updateTime} WHERE award_id=#{awardId}
+    </update>
+
+    <delete id="deleteByAwardId">
+        DELETE FROM award WHERE award_id=#{awardId}
+    </delete>
+
+    <select id="queryAwardById" resultMap="dataMap">
+        SELECT * FROM award WHERE award_id=#{awardId}
+    </select>
+
+    <select id="queryAwardPage" resultMap="dataMap">
+        SELECT * FROM award WHERE 1=1
+        <if test='awardDesc != null and awardDesc != ""'>
+            AND award_desc LIKE CONCAT('%',#{awardDesc},'%')
+        </if>
+        ORDER BY create_time DESC LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="countAward" resultType="int">
+        SELECT COUNT(*) FROM award WHERE 1=1
+        <if test='awardDesc != null and awardDesc != ""'>
+            AND award_desc LIKE CONCAT('%',#{awardDesc},'%')
+        </if>
+    </select>
 </mapper>

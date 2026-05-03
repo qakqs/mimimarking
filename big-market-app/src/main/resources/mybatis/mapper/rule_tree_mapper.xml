@@ -18,4 +18,32 @@
         where tree_id = #{treeId}
     </select>
 
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.RuleTree">
+        INSERT INTO rule_tree(tree_id, tree_name, tree_desc, tree_root_rule_key, create_time, update_time)
+        VALUES(#{treeId}, #{treeName}, #{treeDesc}, #{treeRootRuleKey}, #{createTime}, #{updateTime})
+    </insert>
+
+    <update id="update" parameterType="cn.bugstack.infrastructure.persistent.po.RuleTree">
+        UPDATE rule_tree SET tree_name=#{treeName}, tree_desc=#{treeDesc}, tree_root_rule_key=#{treeRootRuleKey}, update_time=#{updateTime} WHERE tree_id=#{treeId}
+    </update>
+
+    <delete id="deleteByTreeId">
+        DELETE FROM rule_tree WHERE tree_id=#{treeId}
+    </delete>
+
+    <select id="queryRuleTreePage" resultMap="dataMap">
+        SELECT * FROM rule_tree WHERE 1=1
+        <if test='treeName != null and treeName != ""'>
+            AND tree_name LIKE CONCAT('%',#{treeName},'%')
+        </if>
+        ORDER BY create_time DESC LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="countRuleTree" resultType="int">
+        SELECT COUNT(*) FROM rule_tree WHERE 1=1
+        <if test='treeName != null and treeName != ""'>
+            AND tree_name LIKE CONCAT('%',#{treeName},'%')
+        </if>
+    </select>
+
 </mapper>

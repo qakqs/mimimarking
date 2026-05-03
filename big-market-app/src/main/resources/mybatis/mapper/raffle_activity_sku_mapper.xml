@@ -40,4 +40,17 @@
         from raffle_activity_sku
         where activity_id = #{activityId}
     </select>
+
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivitySku">
+        INSERT INTO raffle_activity_sku(sku, activity_id, activity_count_id, stock_count, stock_count_surplus, product_amount, create_time, update_time)
+        VALUES(#{sku}, #{activityId}, #{activityCountId}, #{stockCount}, #{stockCountSurplus}, #{productAmount}, #{createTime}, #{updateTime})
+    </insert>
+
+    <delete id="deleteBySku">
+        DELETE FROM raffle_activity_sku WHERE sku=#{sku}
+    </delete>
+
+    <update id="adjustSkuStock">
+        UPDATE raffle_activity_sku SET stock_count = stock_count + #{delta}, stock_count_surplus = stock_count_surplus + #{delta}, update_time=NOW() WHERE sku=#{sku}
+    </update>
 </mapper>

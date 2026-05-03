@@ -2,14 +2,10 @@ package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.Award;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-/**
- * @author Fuzhengwei bugstack.cn @小傅哥
- * @description 奖品表DAO
- * @create 2023-12-16 13:23
- */
 @Mapper
 public interface IAwardDao {
 
@@ -17,7 +13,19 @@ public interface IAwardDao {
 
     String queryAwardConfigAwardId(Integer awardId);
 
-
     String queryAwardKey(Integer awardId);
+
+    int insert(Award po);
+
+    int update(Award po);
+
+    int deleteByAwardId(@Param("awardId") Integer awardId);
+
+    Award queryAwardById(@Param("awardId") Integer awardId);
+
+    List<Award> queryAwardPage(@Param("offset") int offset, @Param("limit") int limit,
+                               @Param("awardDesc") String awardDesc);
+
+    int countAward(@Param("awardDesc") String awardDesc);
 
 }

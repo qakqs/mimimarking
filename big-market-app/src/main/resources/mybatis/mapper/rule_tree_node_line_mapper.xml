@@ -19,4 +19,17 @@
         where tree_id = #{treeId}
     </select>
 
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.RuleTreeNodeLine">
+        INSERT INTO rule_tree_node_line(tree_id, rule_node_from, rule_node_to, rule_limit_type, rule_limit_value, create_time, update_time)
+        VALUES(#{treeId}, #{ruleNodeFrom}, #{ruleNodeTo}, #{ruleLimitType}, #{ruleLimitValue}, #{createTime}, #{updateTime})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM rule_tree_node_line WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByTreeId">
+        DELETE FROM rule_tree_node_line WHERE tree_id=#{treeId}
+    </delete>
+
 </mapper>

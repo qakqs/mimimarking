@@ -26,4 +26,29 @@
         update user_award_record set award_state = 'completed'
         where user_id = #{userId} and order_id = #{orderId} and award_state = 'create'
     </update>
+
+    <select id="queryPage" resultMap="dataMap">
+        SELECT * FROM user_award_record WHERE 1=1
+        <if test='activityId != null'>
+            AND activity_id=#{activityId}
+        </if>
+        <if test='awardState != null and awardState != ""'>
+            AND award_state=#{awardState}
+        </if>
+        ORDER BY create_time DESC LIMIT #{offset},#{limit}
+    </select>
+
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM user_award_record WHERE 1=1
+        <if test='activityId != null'>
+            AND activity_id=#{activityId}
+        </if>
+        <if test='awardState != null and awardState != ""'>
+            AND award_state=#{awardState}
+        </if>
+    </select>
+
+    <select id="queryAwardStat" resultType="map">
+        SELECT award_id AS awardId, award_title AS awardTitle, COUNT(*) AS awardCount FROM user_award_record WHERE activity_id=#{activityId} GROUP BY award_id, award_title
+    </select>
 </mapper>

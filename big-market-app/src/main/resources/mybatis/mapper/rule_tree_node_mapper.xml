@@ -26,4 +26,17 @@
                 #{treeId}
             </foreach>
     </select>
+    <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.RuleTreeNode">
+        INSERT INTO rule_tree_node(tree_id, rule_key, rule_desc, rule_value, create_time, update_time)
+        VALUES(#{treeId}, #{ruleKey}, #{ruleDesc}, #{ruleValue}, #{createTime}, #{updateTime})
+    </insert>
+
+    <delete id="deleteById">
+        DELETE FROM rule_tree_node WHERE id=#{id}
+    </delete>
+
+    <delete id="deleteByTreeId">
+        DELETE FROM rule_tree_node WHERE tree_id=#{treeId}
+    </delete>
+
 </mapper>

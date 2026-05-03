@@ -1,13 +1,25 @@
 package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.RuleTree;
-import cn.bugstack.infrastructure.persistent.po.RuleTreeNode;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface IRuleTreeDao {
-    public RuleTree queryRuleTreeByTreeId(String treeId);
+
+    RuleTree queryRuleTreeByTreeId(String treeId);
+
+    int insert(RuleTree po);
+
+    int update(RuleTree po);
+
+    int deleteByTreeId(@Param("treeId") String treeId);
+
+    List<RuleTree> queryRuleTreePage(@Param("offset") int offset, @Param("limit") int limit,
+                                     @Param("treeName") String treeName);
+
+    int countRuleTree(@Param("treeName") String treeName);
+
 }
