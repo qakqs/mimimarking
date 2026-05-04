@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IAdminUserService {
 
-    List<AdminUserEntity> list(int page, int pageSize, String keyword);
+    List<AdminUserEntity> list(int page, int pageSize, String keyword, String status);
 
-    int count(String keyword);
+    int count(String keyword, String status);
 
     AdminUserEntity detail(String userId);
 

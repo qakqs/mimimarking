@@ -29,23 +29,32 @@
     <select id="queryStrategyIdByActivityId" resultType="java.lang.Long">
         select strategy_id
         from raffle_activity
-                where activity_id = #{activityId}
-
+        where activity_id = #{activityId}
     </select>
 
     <insert id="insert" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivity">
-        INSERT INTO raffle_activity(activity_id, activity_name, activity_desc, begin_date_time, end_date_time, strategy_id, state, create_time, update_time)
-        VALUES(#{activityId}, #{activityName}, #{activityDesc}, #{beginDateTime}, #{endDateTime}, #{strategyId}, #{state}, #{createTime}, #{updateTime})
+        INSERT INTO raffle_activity(activity_id, activity_name, activity_desc, begin_date_time, end_date_time,
+                                    strategy_id, state, create_time, update_time)
+        VALUES (#{activityId}, #{activityName}, #{activityDesc}, #{beginDateTime}, #{endDateTime}, #{strategyId},
+                #{state}, #{createTime}, #{updateTime})
     </insert>
 
     <update id="update" parameterType="cn.bugstack.infrastructure.persistent.po.RaffleActivity">
-        UPDATE raffle_activity SET activity_name=#{activityName}, activity_desc=#{activityDesc},
-        begin_date_time=#{beginDateTime}, end_date_time=#{endDateTime}, strategy_id=#{strategyId},
-        state=#{state}, update_time=#{updateTime} WHERE activity_id=#{activityId}
+        UPDATE raffle_activity
+        SET activity_name=#{activityName},
+            activity_desc=#{activityDesc},
+            begin_date_time=#{beginDateTime},
+            end_date_time=#{endDateTime},
+            strategy_id=#{strategyId},
+            state=#{state},
+            update_time=#{updateTime}
+        WHERE activity_id = #{activityId}
     </update>
 
     <delete id="deleteByActivityId">
-        DELETE FROM raffle_activity WHERE activity_id=#{activityId}
+        DELETE
+        FROM raffle_activity
+        WHERE activity_id = #{activityId}
     </delete>
 
     <select id="queryActivityPage" resultMap="dataMap">
@@ -70,6 +79,9 @@
     </select>
 
     <update id="updateActivityStatus">
-        UPDATE raffle_activity SET state=#{state}, update_time=NOW() WHERE activity_id=#{activityId}
+        UPDATE raffle_activity
+        SET state=#{state},
+            update_time=NOW()
+        WHERE activity_id = #{activityId}
     </update>
 </mapper>

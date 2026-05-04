@@ -39,8 +39,8 @@ public class AdminUserController implements cn.bugstack.trigger.api.IAdminUserSe
         log.info("查询用户分页列表 pageNum:{}", request.getPageNum());
         String keyword = request.getUsername() != null ? request.getUsername() : request.getPhone();
         List<AdminUserEntity> entities = adminUserService.list(
-                request.getPageNum(), request.getPageSize(), keyword);
-        int total = adminUserService.count(keyword);
+                request.getPageNum(), request.getPageSize(), keyword, request.getStatus());
+        int total = adminUserService.count(keyword, request.getStatus());
         List<UserPageResponseDTO> list = entities.stream()
                 .map(e -> UserPageResponseDTO.builder()
                         .userId(e.getUserId())

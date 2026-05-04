@@ -3,6 +3,7 @@ package cn.bugstack.domain.strategy.service.rule.tree.impl;
 import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
 import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
+import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeEnum;
 import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.common.ResponseCode;
@@ -15,15 +16,15 @@ import org.springframework.stereotype.Component;
  * 次数锁节点
  */
 @Slf4j
-@Component("rule_lock")
+@Component
 public class RuleLockLogicTreeNode implements ILogicTreeNode {
-
 
     @Resource
     private IStrategyRepository strategyRepository;
 
     @Override
     public TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
+
         log.info("规则过滤 次数锁 logicTreeNodeVO:{}", logicTreeNodeVO);
 
         long raffleCount = 0L;

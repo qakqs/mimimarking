@@ -107,8 +107,8 @@ public class AdminCreditController implements cn.bugstack.trigger.api.IAdminCred
     public Response<PageResponseDTO<CreditOrderResponseDTO>> orderList(@RequestBody CreditOrderPageRequestDTO request) {
         log.info("查询积分交易流水 pageNum:{} userId:{}", request.getPageNum(), request.getUserId());
         List<AdminCreditOrderEntity> entities = adminCreditService.orderList(
-                request.getPageNum(), request.getPageSize(), request.getUserId());
-        int total = adminCreditService.orderCount(request.getUserId());
+                request.getPageNum(), request.getPageSize(), request.getUserId(), request.getTradeType());
+        int total = adminCreditService.orderCount(request.getUserId(), request.getTradeType());
         List<CreditOrderResponseDTO> list = entities.stream()
                 .map(e -> CreditOrderResponseDTO.builder()
                         .orderId(e.getOrderId())

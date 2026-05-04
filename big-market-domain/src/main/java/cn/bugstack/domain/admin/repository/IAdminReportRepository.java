@@ -19,15 +19,15 @@ public interface IAdminReportRepository {
 
     AdminRaffleActivityOrderEntity queryOrderByOrderId(String orderId);
 
-    List<AdminUserAwardRecordEntity> queryAwardRecordPage(int offset, int limit, Long activityId, String awardState);
+    List<AdminUserAwardRecordEntity> queryAwardRecordPage(int offset, int limit, String userId, Long activityId, String awardState);
 
-    int countAwardRecord(Long activityId, String awardState);
+    int countAwardRecord(String userId, Long activityId, String awardState);
 
     List<AwardStatProjection> queryAwardStatByActivityId(Long activityId);
 
-    List<AdminRebateOrderEntity> queryRebateOrderPage(int offset, int limit, String rebateType);
+    List<AdminRebateOrderEntity> queryRebateOrderPage(int offset, int limit, String userId, String rebateType);
 
-    int countRebateOrder(String rebateType);
+    int countRebateOrder(String userId, String rebateType);
 
     List<AdminTaskEntity> queryTaskPage(int offset, int limit, String userId, String state, String topic);
 

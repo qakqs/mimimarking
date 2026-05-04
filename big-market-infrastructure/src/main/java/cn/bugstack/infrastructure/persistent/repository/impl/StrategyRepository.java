@@ -6,6 +6,7 @@ import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.bugstack.domain.strategy.model.valobj.*;
 import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
+import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
@@ -14,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RMap;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import jakarta.annotation.Resource;
@@ -351,11 +351,11 @@ public class StrategyRepository implements IStrategyRepository {
     public List<RuleWeightVO> queryAwardRuleWeight(Long strategyId) {
         StrategyRule strategyRule = new StrategyRule();
         strategyRule.setStrategyId(strategyId);
-        strategyRule.setRuleModel(LogicModel.RULE_WIGHT.getCode());
+        strategyRule.setRuleModel(LogicChainEnum.RULE_WEIGHT.getChainName());
         String ruleValue = strategyRuleDao.queryStrategyRuleValue(strategyRule);
         StrategyRuleEntity strategyRuleEntity = new StrategyRuleEntity();
         strategyRuleEntity.setRuleValue(ruleValue);
-        strategyRuleEntity.setRuleModel(LogicModel.RULE_WIGHT.getCode());
+        strategyRuleEntity.setRuleModel(LogicChainEnum.RULE_WEIGHT.getChainName());
         // 权重拆解的值
         Map<String, List<Integer>> ruleWeightValueMap = strategyRuleEntity.getRuleWeightValues();
         Set<String> keySet = ruleWeightValueMap.keySet();

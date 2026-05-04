@@ -1,14 +1,10 @@
 package cn.bugstack.domain.strategy.service.rule.tree.factory.engine.impl;
 
-import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
+import cn.bugstack.domain.strategy.model.valobj.*;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
-import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeLineVO;
-import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeVO;
-import cn.bugstack.domain.strategy.model.valobj.RuleTreeVO;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
@@ -39,7 +35,8 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
         RuleTreeNodeVO ruleTreeNode = treeNodeMap.get(nextNode);
         while (null != nextNode) {
             // 获取决策节点
-            ILogicTreeNode logicTreeNode = logicTreeNodeHashMap.get(ruleTreeNode.getRuleKey());
+            ILogicTreeNode logicTreeNode = logicTreeNodeHashMap.get(RuleTreeNodeEnum.getLogicChainNameLowerByNodeName(ruleTreeNode.getRuleKey())
+            );
 
             // 决策节点计算
             TreeActionEntity logicEntity = logicTreeNode.logic(LogicTreeNodeVO
@@ -53,7 +50,7 @@ public class DecisionTreeEngine implements IDecisionTreeEngine {
             );
             RuleLogicCheckTypeVO ruleLogicCheckTypeVO = logicEntity.getRuleLogicCheckType();
             strategyAwardData = logicEntity.getStrategyAwardData();
-            log.info("决策树引擎【{}】treeId:{} node:{} code:{}", ruleTreeVO.getTreeName(), ruleTreeVO.getTreeId(), nextNode, ruleLogicCheckTypeVO.getCode());
+            log.info("决策树引擎【{}】treeId:{} node:{} code:{}", ruleTreeVO.getTreeName( ), ruleTreeVO.getTreeId(), nextNode, ruleLogicCheckTypeVO.getCode());
 
             // 获取下个节点
             nextNode = nextNode(ruleLogicCheckTypeVO.getCode(), ruleTreeNode.getTreeNodeLineVOList());

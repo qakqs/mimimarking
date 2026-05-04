@@ -21,9 +21,9 @@ public interface IUserDao {
     int update(User userPO);
 
     List<User> queryPage(@Param("offset") int offset, @Param("limit") int limit,
-                         @Param("keyword") String keyword);
+                         @Param("keyword") String keyword, @Param("status") String status);
 
-    int count(@Param("keyword") String keyword);
+    int count(@Param("keyword") String keyword, @Param("status") String status);
 
     int updateStatus(@Param("userId") String userId, @Param("status") Integer status);
 

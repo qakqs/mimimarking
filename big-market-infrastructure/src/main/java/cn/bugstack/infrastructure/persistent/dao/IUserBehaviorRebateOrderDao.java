@@ -14,8 +14,9 @@ public interface IUserBehaviorRebateOrderDao {
     List<UserBehaviorRebateOrder> queryOrderByOutBusinessNo(UserBehaviorRebateOrder userBehaviorRebateOrder);
 
     List<UserBehaviorRebateOrder> queryPage(@Param("offset") int offset, @Param("limit") int limit,
+                                            @Param("userId") String userId,
                                             @Param("rebateType") String rebateType);
 
-    int count(@Param("rebateType") String rebateType);
+    int count(@Param("userId") String userId, @Param("rebateType") String rebateType);
 
 }

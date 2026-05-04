@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  * 库存节点
  */
 @Slf4j
-@Component("rule_stock")
+@Component
 public class RuleStockLogicTreeNode implements ILogicTreeNode {
 
     @Resource

@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IAdminUserRepository {
 
-    List<AdminUserEntity> queryUserPage(int offset, int limit, String keyword);
+    List<AdminUserEntity> queryUserPage(int offset, int limit, String keyword, String status);
 
-    int countUser(String keyword);
+    int countUser(String keyword, String status);
 
     AdminUserEntity queryUserById(String userId);
 

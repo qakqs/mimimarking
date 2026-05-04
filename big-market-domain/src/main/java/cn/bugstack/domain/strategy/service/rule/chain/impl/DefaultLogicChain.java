@@ -2,7 +2,7 @@ package cn.bugstack.domain.strategy.service.rule.chain.impl;
 
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardVO;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
-import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
+import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;

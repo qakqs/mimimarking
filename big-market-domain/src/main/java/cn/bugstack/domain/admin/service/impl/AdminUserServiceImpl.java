@@ -17,14 +17,14 @@ public class AdminUserServiceImpl implements IAdminUserService {
     }
 
     @Override
-    public List<AdminUserEntity> list(int page, int pageSize, String keyword) {
+    public List<AdminUserEntity> list(int page, int pageSize, String keyword, String status) {
         int offset = (page - 1) * pageSize;
-        return adminUserRepository.queryUserPage(offset, pageSize, keyword);
+        return adminUserRepository.queryUserPage(offset, pageSize, keyword, status);
     }
 
     @Override
-    public int count(String keyword) {
-        return adminUserRepository.countUser(keyword);
+    public int count(String keyword, String status) {
+        return adminUserRepository.countUser(keyword, status);
     }
 
     @Override

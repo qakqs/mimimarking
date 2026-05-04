@@ -2,6 +2,7 @@ package cn.bugstack.infrastructure.persistent.dao;
 
 import cn.bugstack.infrastructure.persistent.po.UserCreditOrder;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -10,8 +11,9 @@ public interface IUserCreditOrderDao {
 
     void insert(UserCreditOrder userCreditOrder);
 
-    List<UserCreditOrder> queryPage(int offset, int limit, String userId);
+    List<UserCreditOrder> queryPage(@Param("offset") int offset, @Param("limit") int limit,
+                                    @Param("userId") String userId, @Param("tradeType") String tradeType);
 
-    int count(String userId);
+    int count(@Param("userId") String userId, @Param("tradeType") String tradeType);
 
 }

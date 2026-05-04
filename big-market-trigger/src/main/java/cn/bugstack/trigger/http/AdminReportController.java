@@ -60,6 +60,7 @@ public class AdminReportController implements cn.bugstack.trigger.api.IAdminRepo
                         .strategyId(e.getStrategyId())
                         .orderState(e.getState())
                         .orderTime(formatDate(e.getOrderTime()))
+                        .endDateTime(formatDate(e.getEndDateTime()))
                         .build())
                 .collect(Collectors.toList());
         return Response.<PageResponseDTO<OrderDetailResponseDTO>>builder()
@@ -99,9 +100,9 @@ public class AdminReportController implements cn.bugstack.trigger.api.IAdminRepo
         log.info("查询中奖记录列表 pageNum:{}", request.getPageNum());
         List<AdminUserAwardRecordEntity> entities = adminReportService.awardRecordList(
                 request.getPageNum(), request.getPageSize(),
-                request.getActivityId(), request.getAwardState());
+                request.getUserId(), request.getActivityId(), request.getAwardState());
         int total = adminReportService.awardRecordCount(
-                request.getActivityId(), request.getAwardState());
+                request.getUserId(), request.getActivityId(), request.getAwardState());
         List<AwardRecordResponseDTO> list = entities.stream()
                 .map(e -> AwardRecordResponseDTO.builder()
                         .orderId(e.getOrderId())
@@ -145,8 +146,8 @@ public class AdminReportController implements cn.bugstack.trigger.api.IAdminRepo
     public Response<PageResponseDTO<RebateOrderResponseDTO>> rebateOrderList(@RequestBody RebateOrderPageRequestDTO request) {
         log.info("查询返利订单列表 pageNum:{}", request.getPageNum());
         List<AdminRebateOrderEntity> entities = adminReportService.rebateOrderList(
-                request.getPageNum(), request.getPageSize(), request.getRebateType());
-        int total = adminReportService.rebateOrderCount(request.getRebateType());
+                request.getPageNum(), request.getPageSize(), request.getUserId(), request.getRebateType());
+        int total = adminReportService.rebateOrderCount(request.getUserId(), request.getRebateType());
         List<RebateOrderResponseDTO> list = entities.stream()
                 .map(e -> RebateOrderResponseDTO.builder()
                         .orderId(e.getOrderId())

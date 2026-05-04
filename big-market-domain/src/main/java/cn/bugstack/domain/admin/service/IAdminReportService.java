@@ -19,15 +19,15 @@ public interface IAdminReportService {
 
     AdminRaffleActivityOrderEntity orderDetail(String orderId);
 
-    List<AdminUserAwardRecordEntity> awardRecordList(int page, int pageSize, Long activityId, String awardState);
+    List<AdminUserAwardRecordEntity> awardRecordList(int page, int pageSize, String userId, Long activityId, String awardState);
 
-    int awardRecordCount(Long activityId, String awardState);
+    int awardRecordCount(String userId, Long activityId, String awardState);
 
     List<AwardStatProjection> awardStat(Long activityId);
 
-    List<AdminRebateOrderEntity> rebateOrderList(int page, int pageSize, String rebateType);
+    List<AdminRebateOrderEntity> rebateOrderList(int page, int pageSize, String userId, String rebateType);
 
-    int rebateOrderCount(String rebateType);
+    int rebateOrderCount(String userId, String rebateType);
 
     List<AdminTaskEntity> taskList(int page, int pageSize, String userId, String state, String topic);
 

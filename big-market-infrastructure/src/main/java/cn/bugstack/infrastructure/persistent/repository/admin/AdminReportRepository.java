@@ -59,14 +59,14 @@ public class AdminReportRepository implements IAdminReportRepository {
     }
 
     @Override
-    public List<AdminUserAwardRecordEntity> queryAwardRecordPage(int offset, int limit, Long activityId, String awardState) {
-        List<UserAwardRecord> list = userAwardRecordDao.queryPage(offset, limit, activityId, awardState);
+    public List<AdminUserAwardRecordEntity> queryAwardRecordPage(int offset, int limit, String userId, Long activityId, String awardState) {
+        List<UserAwardRecord> list = userAwardRecordDao.queryPage(offset, limit, userId, activityId, awardState);
         return list.stream().map(this::toAwardRecordEntity).collect(Collectors.toList());
     }
 
     @Override
-    public int countAwardRecord(Long activityId, String awardState) {
-        return userAwardRecordDao.count(activityId, awardState);
+    public int countAwardRecord(String userId, Long activityId, String awardState) {
+        return userAwardRecordDao.count(userId, activityId, awardState);
     }
 
     @Override
@@ -81,14 +81,14 @@ public class AdminReportRepository implements IAdminReportRepository {
     }
 
     @Override
-    public List<AdminRebateOrderEntity> queryRebateOrderPage(int offset, int limit, String rebateType) {
-        List<UserBehaviorRebateOrder> list = userBehaviorRebateOrderDao.queryPage(offset, limit, rebateType);
+    public List<AdminRebateOrderEntity> queryRebateOrderPage(int offset, int limit, String userId, String rebateType) {
+        List<UserBehaviorRebateOrder> list = userBehaviorRebateOrderDao.queryPage(offset, limit, userId, rebateType);
         return list.stream().map(this::toRebateOrderEntity).collect(Collectors.toList());
     }
 
     @Override
-    public int countRebateOrder(String rebateType) {
-        return userBehaviorRebateOrderDao.count(rebateType);
+    public int countRebateOrder(String userId, String rebateType) {
+        return userBehaviorRebateOrderDao.count(userId, rebateType);
     }
 
     @Override
@@ -112,6 +112,7 @@ public class AdminReportRepository implements IAdminReportRepository {
                 .orderId(po.getOrderId()).orderTime(po.getOrderTime())
                 .totalCount(po.getTotalCount()).dayCount(po.getDayCount()).monthCount(po.getMonthCount())
                 .state(po.getState()).outBusinessNo(po.getOutBusinessNo()).payAmount(po.getPayAmount())
+                .endDateTime(po.getEndDateTime())
                 .createTime(po.getCreateTime()).updateTime(po.getUpdateTime()).build();
     }
 

@@ -41,14 +41,14 @@ public class AdminCreditServiceImpl implements IAdminCreditService {
     }
 
     @Override
-    public List<AdminCreditOrderEntity> orderList(int page, int pageSize, String userId) {
+    public List<AdminCreditOrderEntity> orderList(int page, int pageSize, String userId, String tradeType) {
         int offset = (page - 1) * pageSize;
-        return adminCreditRepository.queryCreditOrderPage(offset, pageSize, userId);
+        return adminCreditRepository.queryCreditOrderPage(offset, pageSize, userId, tradeType);
     }
 
     @Override
-    public int orderCount(String userId) {
-        return adminCreditRepository.countCreditOrder(userId);
+    public int orderCount(String userId, String tradeType) {
+        return adminCreditRepository.countCreditOrder(userId, tradeType);
     }
 
 }

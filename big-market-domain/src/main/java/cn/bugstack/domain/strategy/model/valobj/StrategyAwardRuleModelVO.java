@@ -21,14 +21,4 @@ public class StrategyAwardRuleModelVO {
 
     private String ruleModels;
 
-    public String[] raffleCenterRuleModelList(){
-        List<String> ruleModelList = new ArrayList<>();
-        String[] ruleModelArray = ruleModels.split(Constants.SPLIT);
-        for (String ruleModel : ruleModelArray) {
-            if (LogicModel.isCenter(ruleModel)) {
-                ruleModelList.add(ruleModel);
-            }
-        }
-        return ruleModelList.toArray(new String[0]);
-    }
 }

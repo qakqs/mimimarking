@@ -29,6 +29,9 @@
 
     <select id="queryPage" resultMap="dataMap">
         SELECT * FROM user_award_record WHERE 1=1
+        <if test='userId != null and userId != ""'>
+            AND user_id=#{userId}
+        </if>
         <if test='activityId != null'>
             AND activity_id=#{activityId}
         </if>
@@ -40,6 +43,9 @@
 
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM user_award_record WHERE 1=1
+        <if test='userId != null and userId != ""'>
+            AND user_id=#{userId}
+        </if>
         <if test='activityId != null'>
             AND activity_id=#{activityId}
         </if>

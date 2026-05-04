@@ -3,7 +3,7 @@ package cn.bugstack.domain.strategy.service.rule.chain.impl;
 import cn.bugstack.domain.strategy.model.entity.StrategyRuleEntity;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardVO;
 import cn.bugstack.domain.strategy.respository.IStrategyRepository;
-import cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum;
+import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import cn.bugstack.types.common.Constants;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

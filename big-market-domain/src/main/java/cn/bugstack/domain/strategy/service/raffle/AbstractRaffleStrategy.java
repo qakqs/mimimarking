@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
-import static cn.bugstack.domain.strategy.service.rule.chain.LogicChainEnum.DEFAULT;
+import static cn.bugstack.domain.strategy.model.valobj.LogicChainEnum.DEFAULT;
 
 @Slf4j
 public  abstract class AbstractRaffleStrategy implements IRaffleStrategy {

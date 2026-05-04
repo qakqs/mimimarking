@@ -37,14 +37,14 @@ public class AdminReportServiceImpl implements IAdminReportService {
     }
 
     @Override
-    public List<AdminUserAwardRecordEntity> awardRecordList(int page, int pageSize, Long activityId, String awardState) {
+    public List<AdminUserAwardRecordEntity> awardRecordList(int page, int pageSize, String userId, Long activityId, String awardState) {
         int offset = (page - 1) * pageSize;
-        return adminReportRepository.queryAwardRecordPage(offset, pageSize, activityId, awardState);
+        return adminReportRepository.queryAwardRecordPage(offset, pageSize, userId, activityId, awardState);
     }
 
     @Override
-    public int awardRecordCount(Long activityId, String awardState) {
-        return adminReportRepository.countAwardRecord(activityId, awardState);
+    public int awardRecordCount(String userId, Long activityId, String awardState) {
+        return adminReportRepository.countAwardRecord(userId, activityId, awardState);
     }
 
     @Override
@@ -53,14 +53,14 @@ public class AdminReportServiceImpl implements IAdminReportService {
     }
 
     @Override
-    public List<AdminRebateOrderEntity> rebateOrderList(int page, int pageSize, String rebateType) {
+    public List<AdminRebateOrderEntity> rebateOrderList(int page, int pageSize, String userId, String rebateType) {
         int offset = (page - 1) * pageSize;
-        return adminReportRepository.queryRebateOrderPage(offset, pageSize, rebateType);
+        return adminReportRepository.queryRebateOrderPage(offset, pageSize, userId, rebateType);
     }
 
     @Override
-    public int rebateOrderCount(String rebateType) {
-        return adminReportRepository.countRebateOrder(rebateType);
+    public int rebateOrderCount(String userId, String rebateType) {
+        return adminReportRepository.countRebateOrder(userId, rebateType);
     }
 
     @Override

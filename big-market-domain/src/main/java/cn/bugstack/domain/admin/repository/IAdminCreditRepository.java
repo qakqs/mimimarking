@@ -16,9 +16,9 @@ public interface IAdminCreditRepository {
 
     AdminCreditAccountEntity queryCreditAccountByUserId(String userId);
 
-    List<AdminCreditOrderEntity> queryCreditOrderPage(int offset, int limit, String userId);
+    List<AdminCreditOrderEntity> queryCreditOrderPage(int offset, int limit, String userId, String tradeType);
 
-    int countCreditOrder(String userId);
+    int countCreditOrder(String userId, String tradeType);
 
     void insertCreditOrder(AdminCreditOrderEntity entity);
 

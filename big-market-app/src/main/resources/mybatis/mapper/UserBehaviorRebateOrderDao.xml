@@ -32,6 +32,9 @@
 
     <select id="queryPage" resultMap="dataMap">
         SELECT * FROM user_behavior_rebate_order WHERE 1=1
+        <if test='userId != null and userId != ""'>
+            AND user_id=#{userId}
+        </if>
         <if test='rebateType != null and rebateType != ""'>
             AND rebate_type=#{rebateType}
         </if>
@@ -40,6 +43,9 @@
 
     <select id="count" resultType="int">
         SELECT COUNT(*) FROM user_behavior_rebate_order WHERE 1=1
+        <if test='userId != null and userId != ""'>
+            AND user_id=#{userId}
+        </if>
         <if test='rebateType != null and rebateType != ""'>
             AND rebate_type=#{rebateType}
         </if>

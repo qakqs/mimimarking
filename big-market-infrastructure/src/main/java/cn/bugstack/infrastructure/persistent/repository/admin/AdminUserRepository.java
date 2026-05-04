@@ -20,14 +20,14 @@ public class AdminUserRepository implements IAdminUserRepository {
     private IUserDao userDao;
 
     @Override
-    public List<AdminUserEntity> queryUserPage(int offset, int limit, String keyword) {
-        List<User> list = userDao.queryPage(offset, limit, keyword);
+    public List<AdminUserEntity> queryUserPage(int offset, int limit, String keyword, String status) {
+        List<User> list = userDao.queryPage(offset, limit, keyword, status);
         return list.stream().map(this::toEntity).collect(Collectors.toList());
     }
 
     @Override
-    public int countUser(String keyword) {
-        return userDao.count(keyword);
+    public int countUser(String keyword, String status) {
+        return userDao.count(keyword, status);
     }
 
     @Override

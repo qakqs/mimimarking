@@ -16,6 +16,7 @@
         <result column="state" property="state"/>
         <result column="out_business_no" property="outBusinessNo"/>
         <result column="pay_amount" property="payAmount"/>
+        <result column="end_date_time" property="endDateTime"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
     </resultMap>
@@ -95,7 +96,9 @@
     </select>
 
     <select id="queryPage" resultMap="dataMap">
-        SELECT * FROM raffle_activity_order WHERE 1=1
+        SELECT o.*, a.end_date_time FROM raffle_activity_order o
+        LEFT JOIN raffle_activity a ON o.activity_id = a.activity_id
+        WHERE 1=1
         <if test='userId != null and userId != ""'>
             AND user_id=#{userId}
         </if>

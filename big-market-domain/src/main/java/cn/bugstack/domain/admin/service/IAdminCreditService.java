@@ -19,8 +19,8 @@ public interface IAdminCreditService {
 
     void adjust(AdminCreditAdjustAggregate aggregate);
 
-    List<AdminCreditOrderEntity> orderList(int page, int pageSize, String userId);
+    List<AdminCreditOrderEntity> orderList(int page, int pageSize, String userId, String tradeType);
 
-    int orderCount(String userId);
+    int orderCount(String userId, String tradeType);
 
 }

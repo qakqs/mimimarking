@@ -31,6 +31,7 @@ public class AdminRaffleActivityOrderEntity {
     private String state;
     private String outBusinessNo;
     private BigDecimal payAmount;
+    private Date endDateTime;
     private Date createTime;
     private Date updateTime;
 

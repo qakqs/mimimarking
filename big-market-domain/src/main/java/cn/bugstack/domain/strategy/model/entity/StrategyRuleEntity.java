@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.model.entity;
 
-import cn.bugstack.domain.strategy.model.valobj.LogicModel;
+import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import cn.bugstack.types.common.Constants;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,7 +41,7 @@ public class StrategyRuleEntity {
      * 数据案例；4000:102,103,104,105 5000:102,103,104,105,106,107 6000:102,103,104,105,106,107,108,109
      */
     public Map<String, List<Integer>> getRuleWeightValues() {
-        if (!LogicModel.RULE_WIGHT.getCode().equals(ruleModel)) return null;
+        if (!LogicChainEnum.RULE_WEIGHT.getChainName().equals(ruleModel)) return null;
         String[] ruleValueGroups = ruleValue.split(Constants.SPACE);
         Map<String, List<Integer>> resultMap = new HashMap<>();
         for (String ruleValueGroup : ruleValueGroups) {

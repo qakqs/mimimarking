@@ -1,4 +1,4 @@
-package cn.bugstack.domain.strategy.service.rule.chain;
+package cn.bugstack.domain.strategy.model.valobj;
 
 
 import cn.bugstack.domain.strategy.service.rule.chain.impl.AbstractLogicChain;
@@ -20,7 +20,7 @@ public enum LogicChainEnum {
     ;
     public final String chainName;
     public final String description;
-    public final Class logicChain;
+    public final Class<? extends AbstractLogicChain> logicChain;
 
     public final static Map<String, LogicChainEnum> chainEnumMap = Stream.of(LogicChainEnum.values()).
             collect(Collectors.toMap(LogicChainEnum::getChainName, logicChainEnum -> logicChainEnum, (a, b) -> a));

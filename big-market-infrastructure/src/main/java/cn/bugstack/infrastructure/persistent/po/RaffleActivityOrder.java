@@ -79,6 +79,11 @@ public class RaffleActivityOrder {
     private BigDecimal payAmount;
 
     /**
+     * 活动结束时间（来自 raffle_activity 表，admin 报表查询时 JOIN 获取）
+     */
+    private Date endDateTime;
+
+    /**
      * 创建时间
      */
     private Date createTime;

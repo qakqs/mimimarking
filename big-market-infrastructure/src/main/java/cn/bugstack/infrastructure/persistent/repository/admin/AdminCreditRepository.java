@@ -45,14 +45,14 @@ public class AdminCreditRepository implements IAdminCreditRepository {
     }
 
     @Override
-    public List<AdminCreditOrderEntity> queryCreditOrderPage(int offset, int limit, String userId) {
-        List<UserCreditOrder> list = userCreditOrderDao.queryPage(offset, limit, userId);
+    public List<AdminCreditOrderEntity> queryCreditOrderPage(int offset, int limit, String userId, String tradeType) {
+        List<UserCreditOrder> list = userCreditOrderDao.queryPage(offset, limit, userId, tradeType);
         return list.stream().map(this::toOrderEntity).collect(Collectors.toList());
     }
 
     @Override
-    public int countCreditOrder(String userId) {
-        return userCreditOrderDao.count(userId);
+    public int countCreditOrder(String userId, String tradeType) {
+        return userCreditOrderDao.count(userId, tradeType);
     }
 
     @Override
