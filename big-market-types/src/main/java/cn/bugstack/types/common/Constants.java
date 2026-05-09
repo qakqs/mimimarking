@@ -49,8 +49,9 @@ public class Constants {
             return Constants.RedisKey.STRATEGY_KEY + strategyId;
         }
 
-        public static String STRATEGY_AWARD_KEY (Long strategyId){
-            return Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId;
+        public static String STRATEGY_AWARD_KEY (Long strategyId, Integer awardId){
+            return Constants.RedisKey.STRATEGY_AWARD_KEY + strategyId
+                     + Constants.UNDERLINE + awardId;
         }
 
         public static String STRATEGY_RATE_TABLE_KEY (String key){

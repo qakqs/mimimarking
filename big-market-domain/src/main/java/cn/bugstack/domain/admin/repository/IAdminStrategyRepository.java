@@ -35,4 +35,5 @@ public interface IAdminStrategyRepository {
 
     List<AdminStrategyRuleEntity> queryRuleListByStrategyId(Long strategyId);
 
+    Integer generateStrategyId();
 }

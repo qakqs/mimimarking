@@ -10,7 +10,10 @@ import cn.bugstack.infrastructure.persistent.dao.IRaffleActivitySkuDao;
 import cn.bugstack.infrastructure.persistent.po.RaffleActivity;
 import cn.bugstack.infrastructure.persistent.po.RaffleActivityCount;
 import cn.bugstack.infrastructure.persistent.po.RaffleActivitySku;
+import cn.bugstack.infrastructure.persistent.redis.IRedisService;
+import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
+import org.redisson.api.RLock;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,6 +33,9 @@ public class AdminActivityRepository implements IAdminActivityRepository {
 
     @Resource
     private IRaffleActivityCountDao raffleActivityCountDao;
+
+    @Resource
+    private IRedisService redisService;
 
     @Override
     public void saveActivity(AdminActivityEntity entity) {
@@ -98,6 +104,23 @@ public class AdminActivityRepository implements IAdminActivityRepository {
     public AdminActivityCountEntity queryActivityCountByActivityId(Long activityId) {
         RaffleActivityCount po = raffleActivityCountDao.queryByActivityId(activityId);
         return toActivityCountEntity(po);
+    }
+
+    @Override
+    public Integer generateActivityId() {
+        RLock lock = redisService.getLock("generateActivityIdKey");
+        Integer maxId = Integer.valueOf(0);
+        try {
+            lock.lock();
+            maxId = raffleActivityDao.queryMaxActivityId() + 1;
+        } catch (Exception e) {
+            throw  e;
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+        return maxId;
     }
 
     // ===== PO <-> Entity mapping =====

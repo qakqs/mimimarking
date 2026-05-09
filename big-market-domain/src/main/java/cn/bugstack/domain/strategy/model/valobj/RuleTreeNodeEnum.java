@@ -23,6 +23,8 @@ public enum RuleTreeNodeEnum {
 
     public final static Map<String, RuleTreeNodeEnum> nodeEnumMap = Stream.of(RuleTreeNodeEnum.values()).
             collect(Collectors.toMap(RuleTreeNodeEnum::getNodeName, logicChainEnum -> logicChainEnum, (a, b) -> a));
+    public final static Map<String, String> nodeNameMap = Stream.of(RuleTreeNodeEnum.values()).
+            collect(Collectors.toMap(RuleTreeNodeEnum::getNodeName, logicChainEnum -> logicChainEnum.description, (a, b) -> a));
 
     RuleTreeNodeEnum(String nodeName, String description, Class<? extends ILogicTreeNode> logicChain) {
         this.nodeName = nodeName;

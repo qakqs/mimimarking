@@ -22,6 +22,8 @@ import jakarta.annotation.Resource;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+import static cn.bugstack.types.common.Constants.STRATEGY_AWARD_KEY;
+
 /**
  * @author Fuzhengwei bugstack.cn @小傅哥
  * @description 策略服务仓储实现
@@ -300,12 +302,27 @@ public class StrategyRepository implements IStrategyRepository {
     @Override
     public StrategyAwardEntity queryStrategyAwardEntity(Long strategyId, Integer awardId) {
         // 优先从缓存获取
+        String cacheKey = STRATEGY_AWARD_KEY(strategyId, awardId);
+        StrategyAward strategyAwardRes = redisService.getValue(cacheKey);
+        if (strategyAwardRes != null) {
+        return StrategyAwardEntity.builder()
+                .strategyId(strategyAwardRes.getStrategyId())
+                .awardId(strategyAwardRes.getAwardId())
+                .awardTitle(strategyAwardRes.getAwardTitle())
+                .awardSubtitle(strategyAwardRes.getAwardSubtitle())
+                .awardCount(strategyAwardRes.getAwardCount())
+                .awardCountSurplus(strategyAwardRes.getAwardCountSurplus())
+                .awardRate(strategyAwardRes.getAwardRate())
+                .sort(strategyAwardRes.getSort())
+                .build();
+        }
         // 查询数据
         StrategyAward strategyAwardReq = new StrategyAward();
         strategyAwardReq.setStrategyId(strategyId);
         strategyAwardReq.setAwardId(awardId);
-        StrategyAward strategyAwardRes = strategyAwardDao.queryStrategyAward(strategyAwardReq);
-        // 转换数据
+        strategyAwardRes = strategyAwardDao.queryStrategyAward(strategyAwardReq);
+        // 缓存数据
+        redisService.setValue(cacheKey, strategyAwardRes);
         // 返回数据
         return StrategyAwardEntity.builder()
                 .strategyId(strategyAwardRes.getStrategyId())

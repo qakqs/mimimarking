@@ -6,6 +6,7 @@ import cn.bugstack.domain.admin.model.entity.AdminActivityEntity;
 import cn.bugstack.domain.admin.model.entity.AdminActivitySkuEntity;
 import cn.bugstack.domain.admin.repository.IAdminActivityRepository;
 import cn.bugstack.domain.admin.service.IAdminActivityService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -20,11 +21,8 @@ public class AdminActivityServiceImpl implements IAdminActivityService {
     }
 
     @Override
-    public void create(AdminActivityAggregate aggregate) {
-        adminActivityRepository.saveActivity(aggregate.getActivity());
-        if (aggregate.getCount() != null) {
-            adminActivityRepository.saveActivityCount(aggregate.getCount());
-        }
+    public void createActivity(AdminActivityEntity activity) {
+        adminActivityRepository.saveActivity(activity);
     }
 
     @Override
@@ -88,6 +86,11 @@ public class AdminActivityServiceImpl implements IAdminActivityService {
     @Override
     public void adjustSkuStock(Long sku, Integer delta) {
         adminActivityRepository.adjustSkuStock(sku, delta);
+    }
+
+    @Override
+    public Integer generateActivityId() {
+        return adminActivityRepository.generateActivityId();
     }
 
 }

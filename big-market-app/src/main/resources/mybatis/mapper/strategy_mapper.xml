@@ -50,4 +50,11 @@
             AND strategy_desc LIKE CONCAT('%',#{strategyDesc},'%')
         </if>
     </select>
+
+    <select id="queryMaxActivityId" resultType="java.lang.Integer">
+        SELECT strategy_id
+        FROM strategy
+        ORDER BY strategy_id DESC
+        LIMIT 1
+    </select>
 </mapper>

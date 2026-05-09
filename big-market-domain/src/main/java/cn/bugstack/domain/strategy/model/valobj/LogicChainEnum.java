@@ -24,6 +24,8 @@ public enum LogicChainEnum {
 
     public final static Map<String, LogicChainEnum> chainEnumMap = Stream.of(LogicChainEnum.values()).
             collect(Collectors.toMap(LogicChainEnum::getChainName, logicChainEnum -> logicChainEnum, (a, b) -> a));
+    public final static Map<String, String> chainNameMap = Stream.of(LogicChainEnum.values()).
+            collect(Collectors.toMap(LogicChainEnum::getChainName, logicChainEnum -> logicChainEnum.description, (a, b) -> a));
 
     LogicChainEnum(String chainName, String description, Class<? extends AbstractLogicChain> logicChain) {
         this.chainName = chainName;

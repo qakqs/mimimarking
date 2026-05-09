@@ -10,7 +10,9 @@ import cn.bugstack.infrastructure.persistent.dao.IStrategyRuleDao;
 import cn.bugstack.infrastructure.persistent.po.Strategy;
 import cn.bugstack.infrastructure.persistent.po.StrategyAward;
 import cn.bugstack.infrastructure.persistent.po.StrategyRule;
+import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import jakarta.annotation.Resource;
+import org.redisson.api.RLock;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -30,6 +32,9 @@ public class AdminStrategyRepository implements IAdminStrategyRepository {
 
     @Resource
     private IStrategyRuleDao strategyRuleDao;
+
+    @Resource
+    private IRedisService redisService;
 
     @Override
     public void saveStrategy(AdminStrategyEntity entity) {
@@ -93,6 +98,23 @@ public class AdminStrategyRepository implements IAdminStrategyRepository {
     public List<AdminStrategyRuleEntity> queryRuleListByStrategyId(Long strategyId) {
         List<StrategyRule> list = strategyRuleDao.queryByStrategyId(strategyId);
         return list.stream().map(this::toStrategyRuleEntity).collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer generateStrategyId() {
+        RLock lock = redisService.getLock("generateStrategyIdKey");
+        Integer maxId = Integer.valueOf(0);
+        try {
+            lock.lock();
+            maxId = strategyDao.queryMaxActivityId() + 1;
+        } catch (Exception e) {
+            throw  e;
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+        return maxId;
     }
 
     // ===== PO <-> Entity mapping =====

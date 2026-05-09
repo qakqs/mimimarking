@@ -41,20 +41,6 @@ public class AdminActivityController implements cn.bugstack.trigger.api.IAdminAc
         this.adminActivityService = adminActivityService;
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    @Override
-    public Response<Void> create(@RequestBody ActivityCreateRequestDTO request) {
-        log.info("创建活动开始 activityName:{}", request.getActivityName());
-        AdminActivityEntity activity = toActivityEntity(request);
-        AdminActivityAggregate aggregate = AdminActivityAggregate.builder().activity(activity).build();
-        adminActivityService.create(aggregate);
-        log.info("创建活动完成 activityName:{}", request.getActivityName());
-        return Response.<Void>builder()
-                .code(ResponseCode.SUCCESS.getCode())
-                .info(ResponseCode.SUCCESS.getInfo())
-                .build();
-    }
-
     @RequestMapping(value = "update", method = RequestMethod.POST)
     @Override
     public Response<Void> update(@RequestBody ActivityCreateRequestDTO request) {

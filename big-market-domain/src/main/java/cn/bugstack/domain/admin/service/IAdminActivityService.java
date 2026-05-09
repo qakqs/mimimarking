@@ -12,7 +12,7 @@ import java.util.List;
  */
 public interface IAdminActivityService {
 
-    void create(AdminActivityAggregate aggregate);
+    void createActivity(AdminActivityEntity activity);
 
     void update(AdminActivityEntity entity);
 
@@ -38,4 +38,5 @@ public interface IAdminActivityService {
 
     void adjustSkuStock(Long sku, Integer delta);
 
+    Integer generateActivityId();
 }

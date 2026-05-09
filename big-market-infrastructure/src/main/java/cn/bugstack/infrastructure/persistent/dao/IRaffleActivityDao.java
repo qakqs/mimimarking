@@ -28,4 +28,5 @@ public interface IRaffleActivityDao {
 
     int updateActivityStatus(@Param("activityId") Long activityId, @Param("state") Integer state);
 
+    Integer queryMaxActivityId();
 }

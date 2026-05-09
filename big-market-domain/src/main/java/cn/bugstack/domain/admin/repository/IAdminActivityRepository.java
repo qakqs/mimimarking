@@ -37,4 +37,5 @@ public interface IAdminActivityRepository {
 
     AdminActivityCountEntity queryActivityCountByActivityId(Long activityId);
 
+    Integer generateActivityId();
 }

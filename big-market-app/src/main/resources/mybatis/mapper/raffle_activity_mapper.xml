@@ -84,4 +84,11 @@
             update_time=NOW()
         WHERE activity_id = #{activityId}
     </update>
+
+    <select id="queryMaxActivityId" resultType="java.lang.Integer">
+        SELECT  activity_id
+        FROM raffle_activity
+        ORDER BY activity_id DESC
+        limit 1;
+    </select>
 </mapper>

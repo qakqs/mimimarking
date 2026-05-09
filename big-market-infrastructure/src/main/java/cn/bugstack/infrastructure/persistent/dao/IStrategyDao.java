@@ -24,4 +24,5 @@ public interface IStrategyDao {
 
     int countStrategy(@Param("strategyDesc") String strategyDesc);
 
+    Integer queryMaxActivityId();
 }

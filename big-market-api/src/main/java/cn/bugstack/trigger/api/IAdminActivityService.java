@@ -19,8 +19,6 @@ import java.util.List;
  */
 public interface IAdminActivityService {
 
-    /** 创建活动 */
-    Response<Void> create(ActivityCreateRequestDTO request);
 
     /** 更新活动 */
     Response<Void> update(ActivityCreateRequestDTO request);
