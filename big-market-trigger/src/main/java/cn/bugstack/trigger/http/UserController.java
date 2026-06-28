@@ -13,7 +13,7 @@ import cn.bugstack.trigger.api.dto.resp.Response;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,10 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 用户 Controller
  */
-@Slf4j
 @RestController
 @RequestMapping("/api/user")
 public class UserController implements IUserService {
+    private static final Log log = Log.get(UserController.class);
 
     @Resource
     private IRegisterService registerService;

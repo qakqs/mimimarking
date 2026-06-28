@@ -3,13 +3,13 @@ package cn.bugstack.trigger.job;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.bugstack.domain.activity.service.IRaffleActivitySkuStockService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class UpdateActivitySkuStockJob {
+    private static final Log log = Log.get(UpdateActivitySkuStockJob.class);
     @Resource
     private IRaffleActivitySkuStockService skuStock;
 

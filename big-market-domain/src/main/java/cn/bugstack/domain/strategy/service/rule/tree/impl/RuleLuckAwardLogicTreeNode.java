@@ -8,12 +8,12 @@ import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class RuleLuckAwardLogicTreeNode implements ILogicTreeNode {
+    private static final Log log = Log.get(RuleLuckAwardLogicTreeNode.class);
     @Override
     public TreeActionEntity logic(LogicTreeNodeVO logicTreeNodeVO) {
         log.info("规则过滤 奖品兜底 userid:{} strategyId:{} awardId:{}", logicTreeNodeVO.getUserId()

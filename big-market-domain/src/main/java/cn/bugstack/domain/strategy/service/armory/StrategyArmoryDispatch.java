@@ -7,7 +7,7 @@ import cn.bugstack.domain.strategy.respository.IStrategyRepository;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 import jakarta.annotation.Resource;
@@ -22,9 +22,9 @@ import java.util.*;
  * @description 策略装配库(兵工厂)，负责初始化策略计算
  * @create 2023-12-23 10:02
  */
-@Slf4j
 @Component
 public class StrategyArmoryDispatch implements IStrategyArmory, IStrategyDispatch {
+    private static final Log log = Log.get(StrategyArmoryDispatch.class);
 
     @Resource
     private IStrategyRepository repository;

@@ -7,15 +7,15 @@ import cn.bugstack.types.event.SendAwardMessage;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class SendAwardCustomer {
+    private static final Log log = Log.get(SendAwardCustomer.class);
 
     @Value("${spring.rabbitmq.topic.send_award}")
     private String topic;

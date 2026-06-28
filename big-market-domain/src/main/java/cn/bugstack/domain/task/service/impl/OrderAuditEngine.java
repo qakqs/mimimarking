@@ -4,24 +4,28 @@ import cn.bugstack.domain.task.repository.ITaskRepository;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 public class OrderAuditEngine {
+    private static final Log log = Log.get(OrderAuditEngine.class);
 
     // 生产环境建议通过 @ConfigurationProperties 注入
     private ThreadPoolExecutor auditPool;
     private final int batchSize = 500; // 可根据压测动态调整
 
     @Resource
-    ITaskRepository taskRepository;
+    public ITaskRepository taskRepository;
+
     @PostConstruct
     public void init() {
         int cpuCores = Runtime.getRuntime().availableProcessors();
@@ -37,7 +41,9 @@ public class OrderAuditEngine {
                 cpuCores * 2, cpuCores * 4, 2000);
     }
 
-    /** 主入口：提交海量订单审核 */
+    /**
+     * 主入口：提交海量订单审核
+     */
     public List<String> auditOrders(List<List<String>> batches) {
 
         // 1. 分组拆分
@@ -52,7 +58,8 @@ public class OrderAuditEngine {
         // 3. 等待全部完成（生产建议加超时：.orTimeout(5, TimeUnit.MINUTES)）
         CompletableFuture<Void> allDone = CompletableFuture.allOf(
                 futures.toArray(new CompletableFuture[0])).orTimeout(2, TimeUnit.SECONDS);
-            allDone.join();
+        allDone.orTimeout(3, TimeUnit.SECONDS);
+        allDone.join();
 
         // 4. 聚合结果
         return AuditSummary.aggregate(

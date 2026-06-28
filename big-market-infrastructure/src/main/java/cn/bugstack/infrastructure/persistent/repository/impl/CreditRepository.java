@@ -16,7 +16,7 @@ import cn.bugstack.infrastructure.util.CreditConvert;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.common.TaskEntity;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
@@ -28,8 +28,8 @@ import static cn.bugstack.domain.activity.model.valobj.ActivityStateVO.open;
 import static cn.bugstack.types.common.Constants.USER_CREDIT_ACCOUNT_LOCK;
 
 @Component
-@Slf4j
 public class CreditRepository implements ICreditRepository {
+    private static final Log log = Log.get(CreditRepository.class);
 
     @Resource
     private TransactionTemplate transactionTemplate;

@@ -19,12 +19,11 @@ import cn.bugstack.trigger.api.dto.resp.RaffleStrategyRuleWeightResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.Response;
 import cn.bugstack.trigger.api.dto.resp.StrategyAward;
 import cn.bugstack.types.common.ResponseCode;
-import cn.bugstack.types.exception.AppException;
+import cn.bugstack.types.utils.Validator;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.dubbo.config.annotation.DubboService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,14 +34,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static cn.bugstack.types.common.ResponseCode.ILLEGAL_PARAMETER;
-
-@Slf4j
 @RestController
 @RequestMapping("/api/raffle/")
-@DubboService(version = "1.0")
 
 public class RaffleStrategyController implements IRaffleStrategyService {
+    private static final Log log = Log.get(RaffleStrategyController.class);
     @Resource
     private IRaffleAward raffleAward;
     @Resource
@@ -78,9 +74,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     @Override
     public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO request) {
         log.info("查询抽奖奖品列表开始 requestDTO：{}", request);
-        if (StringUtils.isBlank(request.getUserId()) || null == request.getActivityId()) {
-            throw new AppException(ILLEGAL_PARAMETER);
-        }
+        Validator.validateOrThrow(request);
 
         // 查询奖品配置
         List<StrategyAwardEntity> strategyAwardEntities = raffleAward.queryRaffleStrategyAwardListByActivityId(request.getActivityId());

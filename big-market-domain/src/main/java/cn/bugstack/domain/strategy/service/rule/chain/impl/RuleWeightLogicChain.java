@@ -7,18 +7,18 @@ import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import cn.bugstack.types.common.Constants;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 
-@Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 
 public class RuleWeightLogicChain extends AbstractLogicChain {
+    private static final Log log = Log.get(RuleWeightLogicChain.class);
     @Resource
     private IStrategyRepository repository;
 

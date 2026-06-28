@@ -4,15 +4,15 @@ import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.domain.activity.model.entity.ActivitySkuEntity;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.List;
 
-@Slf4j
 @Component
 public class ActivityArmory implements IActivityArmory, IActivityDispatch {
+    private static final Log log = Log.get(ActivityArmory.class);
 
     @Resource
     private IActivityRepository activityRepository;

@@ -1,6 +1,6 @@
 package cn.bugstack.config;
 
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,11 +9,11 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 import java.util.concurrent.*;
 
-@Slf4j
 @EnableAsync
 @Configuration
 @EnableConfigurationProperties(ThreadPoolConfigProperties.class)
 public class ThreadPoolConfig {
+    private static final Log log = Log.get(ThreadPoolConfig.class);
 
     @Bean
     @ConditionalOnMissingBean(ThreadPoolExecutor.class)

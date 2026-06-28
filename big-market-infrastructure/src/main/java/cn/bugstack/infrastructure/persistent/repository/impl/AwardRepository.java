@@ -18,7 +18,7 @@ import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.redisson.api.RLock;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Repository;
@@ -30,8 +30,8 @@ import static cn.bugstack.types.common.Constants.ACTIVITY_ACCOUNT_LOCK;
 import static cn.bugstack.types.common.ResponseCode.AWARD_ORDER_USED;
 
 @Repository
-@Slf4j
 public class AwardRepository implements IAwardRepository {
+    private static final Log log = Log.get(AwardRepository.class);
 
     @Resource
     private ITaskDao taskDao;

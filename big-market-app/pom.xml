@@ -17,14 +17,6 @@
             <groupId>com.alibaba.nacos</groupId>
             <artifactId>nacos-client</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.dubbo</groupId>
-            <artifactId>dubbo-spring-boot-starter</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -134,6 +126,7 @@
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>
                         <include>**/MarkingStressTest.java</include>
+                        <include>**/Base.java</include>
                     </includes>
                 </configuration>
             </plugin>

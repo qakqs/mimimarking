@@ -10,7 +10,7 @@ import cn.bugstack.trigger.api.dto.resp.Response;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,10 +21,10 @@ import static cn.bugstack.types.common.ResponseCode.ILLEGAL_PARAMETER;
 /**
  * 后台缓存管理 Controller
  */
-@Slf4j
 @RestController
 @RequestMapping("/admin/cache")
 public class AdminCacheController implements IAdminCacheService {
+    private static final Log log = Log.get(AdminCacheController.class);
 
     @Resource
     private IActivityArmory activityArmory;

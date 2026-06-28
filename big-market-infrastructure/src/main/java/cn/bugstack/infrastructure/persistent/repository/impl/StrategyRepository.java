@@ -11,7 +11,7 @@ import cn.bugstack.infrastructure.persistent.dao.*;
 import cn.bugstack.infrastructure.persistent.po.*;
 import cn.bugstack.infrastructure.persistent.redis.IRedisService;
 import cn.bugstack.types.common.Constants;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RMap;
@@ -29,9 +29,9 @@ import static cn.bugstack.types.common.Constants.STRATEGY_AWARD_KEY;
  * @description 策略服务仓储实现
  * @create 2023-12-23 10:33
  */
-@Slf4j
 @Repository
 public class StrategyRepository implements IStrategyRepository {
+    private static final Log log = Log.get(StrategyRepository.class);
 
     @Resource
     private IStrategyDao strategyDao;

@@ -3,7 +3,7 @@ package cn.bugstack.trigger.job;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.bugstack.domain.strategy.service.IRaffleStock;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
  * 更新奖品库存任务
  */
 
-@Slf4j
 @Component
 public class UpdateAwardStockJob {
+    private static final Log log = Log.get(UpdateAwardStockJob.class);
 
     @Resource
     private IRaffleStock raffleStock;

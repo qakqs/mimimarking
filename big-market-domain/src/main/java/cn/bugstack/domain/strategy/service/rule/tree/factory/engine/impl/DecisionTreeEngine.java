@@ -5,14 +5,14 @@ import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class DecisionTreeEngine implements IDecisionTreeEngine {
+    private static final Log log = Log.get(DecisionTreeEngine.class);
 
     private final Map<String, ILogicTreeNode> logicTreeNodeHashMap;
 

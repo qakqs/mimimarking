@@ -11,15 +11,15 @@ import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactor
 import cn.bugstack.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
 
 import static cn.bugstack.domain.strategy.model.valobj.LogicChainEnum.DEFAULT;
 
-@Slf4j
 public  abstract class AbstractRaffleStrategy implements IRaffleStrategy {
+    private static final Log log = Log.get(AbstractRaffleStrategy.class);
 
     protected IStrategyRepository strategyRepository;
 

@@ -4,15 +4,15 @@ import cn.bugstack.domain.strategy.model.valobj.StrategyAwardVO;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class DefaultLogicChain extends AbstractLogicChain {
+    private static final Log log = Log.get(DefaultLogicChain.class);
     @Resource
     private IStrategyDispatch strategyArmoryDispatch;
 

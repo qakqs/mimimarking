@@ -14,7 +14,7 @@ import cn.bugstack.domain.strategy.service.rule.tree.factory.DefaultTreeFactory;
 import cn.bugstack.domain.strategy.service.rule.tree.factory.engine.IDecisionTreeEngine;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-@Slf4j
 public class DefaultRaffleStrategy extends AbstractRaffleStrategy implements IRaffleAward, IRaffleStock, IRaffleRule {
+    private static final Log log = Log.get(DefaultRaffleStrategy.class);
 
 
     public DefaultRaffleStrategy(IStrategyRepository strategyRepository, IStrategyDispatch strategyDispatch,

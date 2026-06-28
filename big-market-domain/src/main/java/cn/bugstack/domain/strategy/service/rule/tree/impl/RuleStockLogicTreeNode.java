@@ -9,15 +9,15 @@ import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardStockKeyVO;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 /**
  * 库存节点
  */
-@Slf4j
 @Component
 public class RuleStockLogicTreeNode implements ILogicTreeNode {
+    private static final Log log = Log.get(RuleStockLogicTreeNode.class);
 
     @Resource
     private IStrategyDispatch strategyDispatch;

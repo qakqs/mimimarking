@@ -2,14 +2,14 @@ package cn.bugstack.domain.task.service.impl;
 
 import cn.bugstack.domain.task.repository.ITaskRepository;
 import cn.bugstack.types.common.TaskEntity;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
-@Slf4j
 public class OrderAuditTask implements Callable<String> {
+    private static final Log log = Log.get(OrderAuditTask.class);
     List<String> batch = new ArrayList<>();
     private ITaskRepository taskRepository;
 
@@ -21,6 +21,7 @@ public class OrderAuditTask implements Callable<String> {
     @Override
     public String call() {
         try {
+            Thread.sleep(100);
             for (String s : batch) {
                 List<TaskEntity> taskEntities = taskRepository.queryNoSendMessageTaskList();
                 log.info(taskEntities.toString());

@@ -34,7 +34,7 @@ import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,10 +50,10 @@ import java.util.List;
 
 import static cn.bugstack.types.common.ResponseCode.ILLEGAL_PARAMETER;
 
-@Slf4j
 @RestController
 @RequestMapping("/api/raffle/activity")
 public class RaffleActivityController implements IRaffleActivityService {
+    private static final Log log = Log.get(RaffleActivityController.class);
     @Resource
     private IActivityArmory activityArmory;
 

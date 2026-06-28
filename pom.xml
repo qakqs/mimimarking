@@ -40,11 +40,6 @@
         <dependencies>
             <dependency>
                 <groupId>org.apache.dubbo</groupId>
-                <artifactId>dubbo</artifactId>
-                <version>3.2.9</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.dubbo</groupId>
                 <artifactId>dubbo-spring-boot-starter</artifactId>
                 <version>3.2.9</version>
             </dependency>

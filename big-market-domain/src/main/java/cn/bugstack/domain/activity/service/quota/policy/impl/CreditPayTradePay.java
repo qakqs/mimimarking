@@ -4,14 +4,14 @@ import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.domain.activity.service.quota.policy.ITradePolicy;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 import static cn.bugstack.domain.activity.model.valobj.OrderStateVO.wait_pay;
 
 @Component
-@Slf4j
 public class CreditPayTradePay implements ITradePolicy {
+    private static final Log log = Log.get(CreditPayTradePay.class);
 
     @Resource
     private IActivityRepository activityRepository;

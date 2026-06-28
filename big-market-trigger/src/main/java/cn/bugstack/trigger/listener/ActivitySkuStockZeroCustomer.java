@@ -5,7 +5,7 @@ import cn.bugstack.types.event.BaseEvent;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.TypeReference;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.amqp.rabbit.annotation.Queue;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,9 +16,9 @@ import java.util.HashMap;
 /**
  * sku库存耗尽时的mq消息处理
  */
-@Slf4j
 @Component
 public class ActivitySkuStockZeroCustomer {
+    private static final Log log = Log.get(ActivitySkuStockZeroCustomer.class);
 
     @Value("${spring.rabbitmq.topic.activity_sku_stock_zero}")
     private String topic;

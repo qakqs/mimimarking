@@ -17,7 +17,7 @@ import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.common.TaskEntity;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -25,8 +25,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 import java.util.List;
 
 @Component
-@Slf4j
 public class BehaviorRebateRepository implements IBehaviorRebateRepository {
+    private static final Log log = Log.get(BehaviorRebateRepository.class);
     @Resource
     private IDailyBehaviorRebateDao dailyBehaviorRebateDao;
     @Resource

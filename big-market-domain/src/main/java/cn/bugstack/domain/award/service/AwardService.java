@@ -11,14 +11,14 @@ import cn.bugstack.types.common.TaskStateVO;
 import cn.bugstack.types.event.BaseEvent;
 import cn.bugstack.types.event.SendAwardMessage;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
 
-@Slf4j
 @Component
 public class AwardService implements IAwardService {
+    private static final Log log = Log.get(AwardService.class);
 
     @Resource
     IAwardRepository awardRepository;

@@ -18,7 +18,7 @@ import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.redisson.api.RBlockingQueue;
 import org.redisson.api.RDelayedQueue;
 import org.redisson.api.RLock;
@@ -31,9 +31,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-@Slf4j
 @Repository
 public class ActivityRepository implements IActivityRepository {
+    private static final Log log = Log.get(ActivityRepository.class);
     @Resource
     private IRedisService redisService;
     @Resource

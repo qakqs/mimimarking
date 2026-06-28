@@ -10,12 +10,12 @@ import cn.bugstack.domain.activity.model.valobj.ActivityStateVO;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import com.alibaba.fastjson.JSON;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 
 import java.util.Date;
 
-@Slf4j
 public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPartakeService {
+    private static final Log log = Log.get(AbstractRaffleActivityPartake.class);
 
     protected final IActivityRepository activityRepository;
 

@@ -5,7 +5,7 @@ import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
  *
  * @author bugstack.cn
  */
-@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    private static final Log log = Log.get(GlobalExceptionHandler.class);
 
     /**
      * Handle business exceptions (AppException)

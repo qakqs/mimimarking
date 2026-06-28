@@ -13,12 +13,12 @@ import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.domain.strategy.model.entity.ActionChainModel;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@Slf4j
 public abstract class AbstractRaffleActivityAccountQuota extends RaffleActivityAccountQuotaSupport implements IRaffleActivityAccountQuotaService {
+    private static final Log log = Log.get(AbstractRaffleActivityAccountQuota.class);
 
 
     private ConfigurableApplicationContext applicationContext;

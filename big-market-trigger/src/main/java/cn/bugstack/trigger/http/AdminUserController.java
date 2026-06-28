@@ -8,7 +8,7 @@ import cn.bugstack.trigger.api.dto.resp.Response;
 import cn.bugstack.trigger.api.dto.resp.UserDetailResponseDTO;
 import cn.bugstack.trigger.api.dto.resp.UserPageResponseDTO;
 import cn.bugstack.types.common.ResponseCode;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,10 +20,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 @RestController
 @RequestMapping("/admin/user")
 public class AdminUserController implements cn.bugstack.trigger.api.IAdminUserService {
+    private static final Log log = Log.get(AdminUserController.class);
 
     private static final SimpleDateFormat DATE_FMT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 

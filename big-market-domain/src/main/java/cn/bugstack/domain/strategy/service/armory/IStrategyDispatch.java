@@ -3,7 +3,7 @@ package cn.bugstack.domain.strategy.service.armory;
 import java.util.Date;
 
 /**
- * @author Fuzhengwei bugstack.cn @小傅哥
+ * @
  * @description 策略抽奖调度
  * @create 2023-12-31 15:15
  */

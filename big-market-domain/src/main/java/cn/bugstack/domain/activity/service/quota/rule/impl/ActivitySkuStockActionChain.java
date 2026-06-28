@@ -7,12 +7,12 @@ import cn.bugstack.types.exception.AppException;
 import cn.bugstack.domain.strategy.model.entity.ActionChainModel;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
-@Slf4j
 @Component
 public class ActivitySkuStockActionChain extends AbstractActivityChain {
+    private static final Log log = Log.get(ActivitySkuStockActionChain.class);
 
     @Resource
     private IActivityDispatch activityDispatch;

@@ -4,7 +4,7 @@ import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.domain.activity.service.quota.policy.ITradePolicy;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 import static cn.bugstack.domain.activity.model.valobj.OrderStateVO.completed;
 
 @Component
-@Slf4j
 public class RebateNoPayPolicy implements ITradePolicy {
+    private static final Log log = Log.get(RebateNoPayPolicy.class);
 
     @Resource
     private IActivityRepository activityRepository;

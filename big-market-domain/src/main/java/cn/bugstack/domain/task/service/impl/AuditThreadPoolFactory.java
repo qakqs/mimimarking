@@ -1,13 +1,13 @@
 package cn.bugstack.domain.task.service.impl;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Slf4j
 public class AuditThreadPoolFactory {
+    private static final Log log = Log.get(AuditThreadPoolFactory.class);
 
     public static ThreadPoolExecutor createThreadPool(String name, int coreSize, int maxSize,
                                                       int queueCapacity, long keepAliveSeconds) {

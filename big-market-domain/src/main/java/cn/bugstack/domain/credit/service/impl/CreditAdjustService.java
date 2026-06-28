@@ -11,12 +11,12 @@ import cn.bugstack.domain.credit.service.ICreditAdjustService;
 import cn.bugstack.types.common.TaskEntity;
 import cn.bugstack.types.event.BaseEvent;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
 public class CreditAdjustService implements ICreditAdjustService {
+    private static final Log log = Log.get(CreditAdjustService.class);
 
     @Resource
     private ICreditRepository creditRepository;

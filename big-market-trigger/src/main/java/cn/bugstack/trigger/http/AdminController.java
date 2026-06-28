@@ -8,7 +8,7 @@ import cn.bugstack.domain.strategy.model.valobj.LogicChainEnum;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeEnum;
 import cn.bugstack.trigger.api.dto.req.CreateNewActivityReq;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
+    private static final Log log = Log.get(AdminController.class);
 
     @Resource
     IAdminActivityService adminActivityService;

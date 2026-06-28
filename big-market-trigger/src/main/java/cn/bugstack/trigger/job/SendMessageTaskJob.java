@@ -3,16 +3,16 @@ package cn.bugstack.trigger.job;
 import cn.bugstack.types.common.TaskEntity;
 import cn.bugstack.domain.task.service.ITaskService;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
-@Slf4j
 @Component
 public class SendMessageTaskJob {
+    private static final Log log = Log.get(SendMessageTaskJob.class);
     @Resource
     private ITaskService taskService;
     @Resource

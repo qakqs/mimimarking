@@ -10,7 +10,7 @@ import cn.bugstack.domain.award.service.distribute.IDistributeAward;
 import cn.bugstack.types.common.Constants;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,8 @@ import java.math.BigDecimal;
 import java.math.MathContext;
 
 @Component("user_credit_random")
-@Slf4j
 public class UserCreditRandomAward implements IDistributeAward {
+    private static final Log log = Log.get(UserCreditRandomAward.class);
 
     @Resource
     private IAwardRepository awardRepository;

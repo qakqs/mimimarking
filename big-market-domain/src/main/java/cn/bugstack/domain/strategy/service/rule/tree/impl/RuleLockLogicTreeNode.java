@@ -9,15 +9,15 @@ import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import jakarta.annotation.Resource;
-import lombok.extern.slf4j.Slf4j;
+import cn.bugstack.types.common.Log;
 import org.springframework.stereotype.Component;
 
 /**
  * 次数锁节点
  */
-@Slf4j
 @Component
 public class RuleLockLogicTreeNode implements ILogicTreeNode {
+    private static final Log log = Log.get(RuleLockLogicTreeNode.class);
 
     @Resource
     private IStrategyRepository strategyRepository;
