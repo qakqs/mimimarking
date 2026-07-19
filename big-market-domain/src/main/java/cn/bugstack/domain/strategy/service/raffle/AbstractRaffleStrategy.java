@@ -4,7 +4,7 @@ import cn.bugstack.domain.strategy.model.entity.RaffleAwardEntity;
 import cn.bugstack.domain.strategy.model.entity.RaffleFactorEntity;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.bugstack.domain.strategy.model.valobj.StrategyAwardVO;
-import cn.bugstack.domain.strategy.respository.IStrategyRepository;
+import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.IRaffleStrategy;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.chain.factory.DefaultChainFactory;
@@ -75,7 +75,6 @@ public  abstract class AbstractRaffleStrategy implements IRaffleStrategy {
 
         return RaffleAwardEntity.builder()
                 .awardId(treeStrategyAward.getAwardId())
-                .awardConfig(treeStrategyAward.getLogicModel())
                 .awardTitle(strategyAward.getAwardTitle())
                 .sort(strategyAward.getSort())
                 .awardConfig(treeStrategyAward.getAwardRuleValue())

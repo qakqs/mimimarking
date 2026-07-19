@@ -6,21 +6,24 @@ import cn.bugstack.domain.activity.model.entity.ActivityAccountMonthEntity;
 import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
-import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.domain.activity.model.valobj.UserRaffleOrderStateVO;
 import cn.bugstack.types.exception.AppException;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.stereotype.Component;
 
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 @Component
 public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake {
 
-    private final SimpleDateFormat dateFormatMonth = new SimpleDateFormat("yyyy-MM");
-    private final SimpleDateFormat dateFormatDay = new SimpleDateFormat("yyyy-MM-dd");
+    // DateTimeFormatter is thread-safe, safe for the singleton @Component scope.
+    private static final DateTimeFormatter DATE_FORMAT_MONTH = DateTimeFormatter.ofPattern("yyyy-MM");
+    private static final DateTimeFormatter DATE_FORMAT_DAY = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     protected RaffleActivityPartakeService(IActivityRepository activityRepository) {
         super(activityRepository);
@@ -37,7 +40,8 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
         if (activityAccountEntity.getTotalCountSurplus() <= 0) {
             throw new AppException(ResponseCode.ACTIVITY_COUNT_ZERO_ERROR);
         }
-        String month = dateFormatMonth.format(now);
+        LocalDate nowLocal = toLocalDate(now);
+        String month = DATE_FORMAT_MONTH.format(nowLocal);
         // 查&校验月额度
         ActivityAccountMonthEntity activityAccountMonthEntity = activityRepository.queryActivityAccountMonthByUserId(userId, activityId, month);
 
@@ -56,7 +60,7 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
         }
 
         // 查&校验日额度
-        String day = dateFormatDay.format(now);
+        String day = DATE_FORMAT_DAY.format(nowLocal);
         ActivityAccountDayEntity activityAccountDayEntity = activityRepository.queryActivityAccountDayByUserId(userId, activityId, day);
         if (activityAccountDayEntity != null && activityAccountDayEntity.getDayCountSurplus() <= 0) {
             throw new AppException(ResponseCode.ACTIVITY_COUNT_ZERO_ERROR);
@@ -86,9 +90,8 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
     }
 
     @Override
-    protected UserRaffleOrderEntity buildUserRaffleOrder(String userId, Long activityId, Date now) {
-        ActivityEntity activityEntity = activityRepository.queryRaffleActivityByActivityId(activityId);
-        // 构建订单
+    protected UserRaffleOrderEntity buildUserRaffleOrder(String userId, Long activityId, ActivityEntity activityEntity, Date now) {
+        // 复用 createOrder 已查的活动实体，避免重复查询
         UserRaffleOrderEntity userRaffleOrder = new UserRaffleOrderEntity();
         userRaffleOrder.setUserId(userId);
         userRaffleOrder.setActivityId(activityId);
@@ -99,6 +102,13 @@ public class RaffleActivityPartakeService extends AbstractRaffleActivityPartake 
         userRaffleOrder.setOrderState(UserRaffleOrderStateVO.create);
         userRaffleOrder.setEndDateTime(activityEntity.getEndDateTime());
         return userRaffleOrder;
+    }
+
+    private static LocalDate toLocalDate(Date date) {
+        if (date instanceof java.sql.Date) {
+            return ((java.sql.Date) date).toLocalDate();
+        }
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 
 }

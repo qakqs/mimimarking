@@ -103,7 +103,7 @@ public class RaffleActivityController implements IRaffleActivityService {
     @RequestMapping(value = "draw", method = RequestMethod.POST)
     @Override
     public Response<ActivityDrawResponseDTO> draw(@RequestBody ActivityDrawRequestDTO request) {
-        log.info("活动抽奖，开始 request:{}", JSON.toJSONString(request));
+        log.info("活动抽奖，开始 userId:{} activityId:{}", request.getUserId(), request.getActivityId());
 
         // 参与活动：创建参与活动订单&记录
         UserRaffleOrderEntity order = raffleActivityPartakeService.createOrder(PartakeRaffleActivityEntity
@@ -134,7 +134,7 @@ public class RaffleActivityController implements IRaffleActivityService {
                 .build();
         awardService.saveUserAwardRecord(userAwardRecord);
 
-        log.info("活动抽奖，完成 request:{} awardId:{}", JSON.toJSONString(request), raffleAwardEntity.getAwardId());
+        log.info("活动抽奖，完成 userId:{} activityId:{} awardId:{}", request.getUserId(), request.getActivityId(), raffleAwardEntity.getAwardId());
 
         return Response.<ActivityDrawResponseDTO>builder()
                 .code(ResponseCode.SUCCESS.getCode())
@@ -234,7 +234,7 @@ public class RaffleActivityController implements IRaffleActivityService {
             skuProductResponseDTO.setActivityCount(activityCount);
             skuProductResponseDTOS.add(skuProductResponseDTO);
         }
-        log.info("查询sku商品集合完成 activityId:{} skuProductResponseDTOS:{}", activityId, JSON.toJSONString(skuProductResponseDTOS));
+        log.info("查询sku商品集合完成 activityId:{} size:{}", activityId, skuProductResponseDTOS.size());
         return Response.<List<SkuProductResponseDTO>>builder()
                 .code(ResponseCode.SUCCESS.getCode())
                 .info(ResponseCode.SUCCESS.getInfo())

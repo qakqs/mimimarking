@@ -21,7 +21,7 @@ spring:
     pool-name: Retail_HikariCP
     minimum-idle: 15
     idle-timeout: 180000
-    maximum-pool-size: 25
+    maximum-pool-size: 100
     auto-commit: true
     max-lifetime: 1800000
     connection-timeout: 30000

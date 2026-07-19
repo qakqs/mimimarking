@@ -2,8 +2,8 @@ package cn.bugstack.trigger.listener;
 
 import cn.bugstack.domain.activity.service.IRaffleActivitySkuStockService;
 import cn.bugstack.types.event.BaseEvent;
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.TypeReference;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import jakarta.annotation.Resource;
 import cn.bugstack.types.common.Log;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -39,7 +39,7 @@ public class ActivitySkuStockZeroCustomer {
             skuStock.clearQueueValue();
 
         } catch (Exception e) {
-            log.error("监听活动sku库存消耗为0消息，消费失败 topic: {} message: {}", topic, message);
+            log.error("监听活动sku库存消耗为0消息，消费失败 topic: {} message: {}", topic, message, e);
             throw e;
         }
     }

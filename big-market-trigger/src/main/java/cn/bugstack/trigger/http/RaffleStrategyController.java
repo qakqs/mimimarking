@@ -56,14 +56,14 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     @RequestMapping(value = "strategy_armory", method = RequestMethod.GET)
     @Override
     public Response<Boolean> strategyArmory(@RequestParam Long strategyId) {
-        log.info("抽奖策略装配开始 strategyId：{}", strategyId);
+        log.info("抽奖策略装配开始 strategyId:{}", strategyId);
         boolean armoryStatus = strategyArmory.assembleLotteryStrategy(strategyId);
         Response<Boolean> response = Response.<Boolean>builder()
                 .code(ResponseCode.SUCCESS.getCode())
                 .info(ResponseCode.SUCCESS.getInfo())
                 .data(armoryStatus)
                 .build();
-        log.info("抽奖策略装配完成 strategyId：{} response: {}", strategyId, JSON.toJSONString(response));
+        log.info("抽奖策略装配完成 strategyId:{} success:{}", strategyId, response.getData());
         return response;
     }
 
@@ -73,7 +73,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
     @RequestMapping(value = "query_raffle_award_list", method = RequestMethod.POST)
     @Override
     public Response<List<RaffleAwardListResponseDTO>> queryRaffleAwardList(@RequestBody RaffleAwardListRequestDTO request) {
-        log.info("查询抽奖奖品列表开始 requestDTO：{}", request);
+        log.info("查询抽奖奖品列表开始 requestDTO:{}", request);
         Validator.validateOrThrow(request);
 
         // 查询奖品配置
@@ -138,7 +138,7 @@ public class RaffleStrategyController implements IRaffleStrategyService {
                         .awardIndex(raffleAwardEntity.getSort())
                         .build())
                 .build();
-        log.info("随机抽奖完成 strategyId: {} response: {}", requestDTO.getStrategyId(), JSON.toJSONString(response));
+        log.info("随机抽奖完成 strategyId:{} success:{}", requestDTO.getStrategyId(), response.getData());
         return response;
     }
 

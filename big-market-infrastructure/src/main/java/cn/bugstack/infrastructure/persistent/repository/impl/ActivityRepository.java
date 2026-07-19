@@ -1,8 +1,8 @@
 package cn.bugstack.infrastructure.persistent.repository.impl;
 
 import cn.bugstack.domain.activity.event.ActivitySkuStockZeroMessageEvent;
-import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
-import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
 import cn.bugstack.domain.activity.model.entity.*;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.bugstack.domain.activity.model.valobj.ActivityStateVO;
@@ -341,7 +341,7 @@ public class ActivityRepository implements IActivityRepository {
                 );
                 if (totalCount != 1) {
                     status.setRollbackOnly();
-                    log.error("写入创建参与活动 总账户额度不足，异常 userId{} activityId{}", userId, activityId);
+                    log.error("写入创建参与活动 总账户额度不足，异常 userId: {} activityId: {}", userId, activityId);
                     throw new AppException(ResponseCode.CREATE_RAFFLE_ACTIVITY_ORDER_ERROR);
                 }
                 // 更新月账户
@@ -356,7 +356,7 @@ public class ActivityRepository implements IActivityRepository {
 
                     if (totalCountMonth != 1) {
                         status.setRollbackOnly();
-                        log.error("写入创建参与活动 月度账户额度不足，异常 userId{} activityId{}", userId, activityId);
+                        log.error("写入创建参与活动 月度账户额度不足，异常 userId: {} activityId: {}", userId, activityId);
                         throw new AppException(ResponseCode.CREATE_RAFFLE_ACTIVITY_ORDER_ERROR);
                     }
                 } else {
@@ -392,7 +392,7 @@ public class ActivityRepository implements IActivityRepository {
 
                     if (totalCountDay != 1) {
                         status.setRollbackOnly();
-                        log.error("写入创建参与活动 日度账户额度不足，异常 userId{} activityId{}", userId, activityId);
+                        log.error("写入创建参与活动 日度账户额度不足，异常 userId: {} activityId: {}", userId, activityId);
                         throw new AppException(ResponseCode.CREATE_RAFFLE_ACTIVITY_ORDER_ERROR);
                     }
                 } else {
@@ -427,7 +427,7 @@ public class ActivityRepository implements IActivityRepository {
                         .build());
             } catch (Exception e) {
                 status.setRollbackOnly();
-                log.error("写入创建参与活动 记录失败 userId{} activityId{}", userId, activityId, e);
+                log.error("写入创建参与活动 记录失败 userId: {} activityId: {}", userId, activityId, e);
                 throw new AppException(ResponseCode.CREATE_RAFFLE_ACTIVITY_ORDER_ERROR);
             }
             return 1;

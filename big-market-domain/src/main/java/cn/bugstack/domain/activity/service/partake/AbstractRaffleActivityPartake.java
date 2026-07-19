@@ -2,7 +2,7 @@ package cn.bugstack.domain.activity.service.partake;
 
 import cn.bugstack.domain.activity.service.IRaffleActivityPartakeService;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
-import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.model.entity.PartakeRaffleActivityEntity;
 import cn.bugstack.domain.activity.model.entity.UserRaffleOrderEntity;
@@ -53,7 +53,7 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
         CreatePartakeOrderAggregate createPartakeOrderAggregate = this.doFilterAccount(userId, activityId, currentDate);
 
         // 4. 构建订单
-        UserRaffleOrderEntity userRaffleOrder = this.buildUserRaffleOrder(userId, activityId, currentDate);
+        UserRaffleOrderEntity userRaffleOrder = this.buildUserRaffleOrder(userId, activityId, activityEntity, currentDate);
 
         // 5. 填充抽奖单实体对象
         createPartakeOrderAggregate.setUserRaffleOrderEntity(userRaffleOrder);
@@ -67,5 +67,5 @@ public abstract class AbstractRaffleActivityPartake implements IRaffleActivityPa
 
     protected abstract CreatePartakeOrderAggregate doFilterAccount(String userId, Long activityId, Date now);
 
-    protected abstract UserRaffleOrderEntity buildUserRaffleOrder(String userId, Long activityId, Date now);
+    protected abstract UserRaffleOrderEntity buildUserRaffleOrder(String userId, Long activityId, ActivityEntity activityEntity, Date now);
 }

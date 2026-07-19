@@ -3,7 +3,7 @@ package cn.bugstack.domain.strategy.service.raffle;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardData;
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;
 import cn.bugstack.domain.strategy.model.valobj.*;
-import cn.bugstack.domain.strategy.respository.IStrategyRepository;
+import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.IRaffleAward;
 import cn.bugstack.domain.strategy.service.IRaffleRule;
 import cn.bugstack.domain.strategy.service.IRaffleStock;

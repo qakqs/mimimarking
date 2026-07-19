@@ -1,8 +1,8 @@
 package cn.bugstack.domain.activity.repository;
 
 
-import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
-import cn.bugstack.domain.activity.model.aggreate.CreatePartakeOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreatePartakeOrderAggregate;
 import cn.bugstack.domain.activity.model.entity.*;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;

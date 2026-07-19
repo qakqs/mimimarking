@@ -1,6 +1,6 @@
 package cn.bugstack.domain.activity.service.quota.policy.impl;
 
-import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
 import cn.bugstack.domain.activity.service.quota.policy.ITradePolicy;
 import jakarta.annotation.Resource;

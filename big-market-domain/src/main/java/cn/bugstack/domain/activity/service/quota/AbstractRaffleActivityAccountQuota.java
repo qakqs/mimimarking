@@ -8,7 +8,7 @@ import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityCha
 import cn.bugstack.domain.credit.model.valobj.TradeTypeVO;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
-import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;
 import cn.bugstack.domain.strategy.model.entity.ActionChainModel;

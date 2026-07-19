@@ -4,7 +4,7 @@ import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;
 import cn.bugstack.domain.strategy.model.valobj.RuleLogicCheckTypeVO;
 import cn.bugstack.domain.strategy.model.entity.TreeActionEntity;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeEnum;
-import cn.bugstack.domain.strategy.respository.IStrategyRepository;
+import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.types.common.ResponseCode;
 import cn.bugstack.types.exception.AppException;

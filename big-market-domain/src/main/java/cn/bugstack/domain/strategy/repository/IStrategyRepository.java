@@ -1,4 +1,4 @@
-package cn.bugstack.domain.strategy.respository;
+package cn.bugstack.domain.strategy.repository;
 
 
 import cn.bugstack.domain.strategy.model.entity.StrategyAwardEntity;

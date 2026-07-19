@@ -31,7 +31,7 @@ public class OrderAuditTask implements Callable<String> {
             return "1";
 
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("订单审核任务执行失败", e);
         }
         return null;
     }

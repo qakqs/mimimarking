@@ -9,7 +9,7 @@ import cn.bugstack.domain.admin.model.entity.AdminStrategyRuleEntity;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeVO;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeVO;
 import cn.bugstack.domain.strategy.model.valobj.RuleTreeNodeLineVO;
-import cn.bugstack.domain.strategy.respository.IStrategyRepository;
+import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.trigger.api.dto.req.RuleTreeCreateRequestDTO;
 import cn.bugstack.trigger.api.dto.req.RuleTreeNodeLineSaveRequestDTO;
 import cn.bugstack.trigger.api.dto.req.RuleTreeNodeSaveRequestDTO;

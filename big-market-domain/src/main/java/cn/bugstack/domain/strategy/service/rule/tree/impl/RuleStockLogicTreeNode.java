@@ -1,6 +1,6 @@
 package cn.bugstack.domain.strategy.service.rule.tree.impl;
 
-import cn.bugstack.domain.strategy.respository.IStrategyRepository;
+import cn.bugstack.domain.strategy.repository.IStrategyRepository;
 import cn.bugstack.domain.strategy.service.armory.IStrategyDispatch;
 import cn.bugstack.domain.strategy.service.rule.tree.ILogicTreeNode;
 import cn.bugstack.domain.strategy.model.valobj.LogicTreeNodeVO;

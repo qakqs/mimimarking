@@ -1,4 +1,4 @@
-package cn.bugstack.domain.activity.model.aggreate;
+package cn.bugstack.domain.activity.model.aggregate;
 
 import cn.bugstack.domain.activity.model.entity.ActivityAccountDayEntity;
 import cn.bugstack.domain.activity.model.entity.ActivityAccountEntity;

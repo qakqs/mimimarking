@@ -39,7 +39,7 @@ public class RebateMessageCustomer {
     @RabbitListener(queuesToDeclare = @Queue(value = "${spring.rabbitmq.topic.send_rebate}"))
     public void listener(String message) {
         try {
-            log.info("用户返利消息，消费处理 topic：{}， message:{}", topic, message);
+            log.info("用户返利消息，消费处理 topic: {} message: {}", topic, message);
             BaseEvent.EventMessage<RebateMessage> rebateMessageEventMessage = JSON.parseObject(message, new TypeReference<BaseEvent.EventMessage<RebateMessage>>() {
             });
             RebateMessage rebateMessage = rebateMessageEventMessage.getData();
@@ -72,7 +72,7 @@ public class RebateMessageCustomer {
 
 
         } catch (Exception e) {
-            log.error("用户返利消息，消费失败 topic：{}， message:{}", topic, message, e);
+            log.error("用户返利消息，消费失败 topic: {} message: {}", topic, message, e);
         }
     }
 }

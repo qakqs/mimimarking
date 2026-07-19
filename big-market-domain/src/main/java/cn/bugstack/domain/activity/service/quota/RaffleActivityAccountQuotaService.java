@@ -5,7 +5,7 @@ import cn.bugstack.domain.activity.service.IRaffleActivitySkuStockService;
 import cn.bugstack.domain.activity.service.quota.rule.factory.DefaultActivityChainFactory;
 import cn.bugstack.domain.strategy.model.entity.ActivityEntity;
 import cn.bugstack.domain.activity.repository.IActivityRepository;
-import cn.bugstack.domain.activity.model.aggreate.CreateQuotaOrderAggregate;
+import cn.bugstack.domain.activity.model.aggregate.CreateQuotaOrderAggregate;
 import cn.bugstack.domain.activity.model.valobj.OrderStateVO;
 import cn.bugstack.domain.activity.model.valobj.ActivitySkuStockKeyVO;
 import org.apache.commons.lang3.RandomStringUtils;

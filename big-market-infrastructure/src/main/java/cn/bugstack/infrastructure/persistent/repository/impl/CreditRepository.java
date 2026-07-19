@@ -113,7 +113,7 @@ public class CreditRepository implements ICreditRepository {
             taskDao.updateTaskSendMessageCompleted(task);
             log.info("调整账户积分记录，发送MQ消息完成 userId: {} orderId:{} topic: {}", userId, creditOrderEntity.getOrderId(), task.getTopic());
         } catch (Exception e) {
-            log.error("调整账户积分记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic());
+            log.error("调整账户积分记录，发送MQ消息失败 userId: {} topic: {}", userId, task.getTopic(), e);
             taskDao.updateTaskSendMessageFail(task);
         }
 
